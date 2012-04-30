@@ -1,4 +1,13 @@
-/htdocs/set_env.php
+htdocs/set_env.php
+pear/*
+smarty/cache/*
+smarty/compile/*
+session/cookie/*
+log/*
+htpasswd/*
+
+
+
 
 
 
