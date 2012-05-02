@@ -235,28 +235,28 @@
 
 // --------------------------- SMARTY  ----------------
 
-	$smarty =& new Smarty;
-	
-	$smarty->template_dir = $app_root .'/templates/';
-	$smarty->compile_dir  = $app_root .'/smarty/compile';
-	$smarty->cache_dir    = $app_root .'/smarty/cache';
-	$smarty->config_dir   = $app_root .'/smarty/configs/';
+   $smarty =& new Smarty;
+      
+   $smarty->template_dir = $app_root .'/templates/';
+   $smarty->compile_dir  = $app_root .'/smarty/compile';
+   $smarty->cache_dir    = $app_root .'/smarty/cache';
+   $smarty->config_dir   = $app_root .'/smarty/configs/';
    $smarty->force_compile = true;
-	$smarty->debugging = false; //$_allevo_config['log']['enabled'];
-	$smarty->setCompileCheck = true;
-	$smarty->caching = false;
-	$smarty->allow_php_templates=false;
-	$smarty->cache_lifetime = 300;
+   $smarty->debugging = false; //$_allevo_config['log']['enabled'];
+   $smarty->setCompileCheck = true;
+   $smarty->caching = false;
+   $smarty->allow_php_templates=false;
+   $smarty->cache_lifetime = 300;
 
-	$timer->setMarker('smarty');
+   $timer->setMarker('smarty');
 
 // --------------------------- Datenbank einstellungen ----------------
 
 
-	$options = array(
-		'debug'       => 5,
-		'portability' => MDB2_PORTABILITY_ALL,
-	);
+   $options = array(
+      'debug'       => 0,
+      'portability' => MDB2_PORTABILITY_ALL,
+   );
 	
 	$dsn = $_allevo_config['dsn'];
 	
@@ -292,35 +292,34 @@
 
 // ---------------- sprache ermitteln. --------------------
 
-		if(empty($_SESSION['sprache'])){
-			$_SESSION['sprache'] = 'de';
-			setlocale(LC_ALL, $_allevo_config['locale']);
-		}elseif( isset($_GET['language'])){
-				switch ($_GET['language']) {
-				  case 'de':
-					  $_SESSION['sprache'] = 'de';
-					  $_allevo_config['locale'] = array('de_CH.utf8', 'de_DE.UTF8', 'de_DE.ISO8859-1', 'de_DE', 'de', 'ge');
-					  break;
-				  case 'en':
-					  $_SESSION['sprache'] = 'en';
-					  $_allevo_config['locale'] = array('en_US.UTF8', 'en_US.UTF-8', 'en_US.8859-1', 'en_US');
-					  break;
-				  case 'fr':
-					  $_SESSION['sprache'] = 'fr';
-					  $_allevo_config['locale'] = array('fr_FR.UTF8', 'fr.UTF8', 'fr_FR.UTF-8', 'fr.UTF-8');
-					  break;
-					default:  
-					  $_SESSION['sprache'] = 'de';
-					  $_allevo_config['locale'] = array('de_CH.utf8', 'de_DE.UTF8', 'de_DE.ISO8859-1', 'de_DE', 'de', 'ge');
-					  break;
-				}
-         setlocale(LC_ALL, $_allevo_config['locale']);
-		}else{
-         setlocale(LC_ALL, $_allevo_config['locale']);
+   if(empty($_SESSION['sprache'])){
+      $_SESSION['sprache'] = 'de';
+      setlocale(LC_ALL, $_allevo_config['locale']);
+   }elseif( isset($_GET['language'])){
+      switch ($_GET['language']) {
+         case 'de':
+            $_SESSION['sprache'] = 'de';
+            $_allevo_config['locale'] = array('de_CH.utf8', 'de_DE.UTF8', 'de_DE.ISO8859-1', 'de_DE', 'de', 'ge');
+            break;
+         case 'en':
+            $_SESSION['sprache'] = 'en';
+            $_allevo_config['locale'] = array('en_US.UTF8', 'en_US.UTF-8', 'en_US.8859-1', 'en_US');
+            break;
+         case 'fr':
+            $_SESSION['sprache'] = 'fr';
+            $_allevo_config['locale'] = array('fr_FR.UTF8', 'fr.UTF8', 'fr_FR.UTF-8', 'fr.UTF-8');
+            break;
+         default:  
+            $_SESSION['sprache'] = 'de';
+            $_allevo_config['locale'] = array('de_CH.utf8', 'de_DE.UTF8', 'de_DE.ISO8859-1', 'de_DE', 'de', 'ge');
+            break;
+      }
+      setlocale(LC_ALL, $_allevo_config['locale']);
+   }else{
+      setlocale(LC_ALL, $_allevo_config['locale']);
+   }
 		
-		}
-		
-		
+
 	// ################################################## //			
 	// ---------------- Nested_sets. --------------------	//
 	// ################################################## //			
@@ -342,18 +341,18 @@
       'uuid' => 'uuid'
    );
 	
-	$NestedSets =& DB_NestedSet::factory('DB', $dsn, $nestedSets_param);
+   $NestedSets =& DB_NestedSet::factory('DB', $dsn, $nestedSets_param);
 
-	$NestedSets->setAttr(array(
+   $NestedSets->setAttr(array(
       'node_table' => 'nested_set',
       'lock_table' => 'nested_set_locks',
       'secondarySort' => 'left_id',
       'debug' => '0'
    ));
 
-	$NestedSets->setsortMode('SLV');		
-	
-	$rootnodes = $NestedSets->getRootNodes(true);		
+   $NestedSets->setsortMode('SLV');		
+      
+   $rootnodes = $NestedSets->getRootNodes(true);		
 
    foreach($rootnodes as $key => $value){
    
@@ -388,16 +387,16 @@
 	
 // ---------------- Liveuser --------------------  
    $liveuser = array(
-		'loggedIn' => $LU->isLoggedIn(),
-		'handle' => $LU->getProperty('handle'),
-		'Last_Login' => date('d.m.Y H:i', $LU->getProperty('lastlogin')),
-		'status' => $LU->getStatus(),
-		'auth_user_id' => $LU->getProperty('auth_user_id'),
-		'owner_user_id' => $LU->getProperty('owner_user_id'),
-		'owner_group_id' => $LU->getProperty('owner_group_id'),
-		'perm_user_id' => $LU->getProperty('perm_user_id'),
-		'is_active' => $LU->getProperty('is_active'),
-		'email' => $LU->getProperty('email') 
+      'loggedIn' => $LU->isLoggedIn(),
+      'handle' => $LU->getProperty('handle'),
+      'Last_Login' => date('d.m.Y H:i', $LU->getProperty('lastlogin')),
+      'status' => $LU->getStatus(),
+      'auth_user_id' => $LU->getProperty('auth_user_id'),
+      'owner_user_id' => $LU->getProperty('owner_user_id'),
+      'owner_group_id' => $LU->getProperty('owner_group_id'),
+      'perm_user_id' => $LU->getProperty('perm_user_id'),
+      'is_active' => $LU->getProperty('is_active'),
+      'email' => $LU->getProperty('email') 
    );
 
    $params_get_groups = array( 
