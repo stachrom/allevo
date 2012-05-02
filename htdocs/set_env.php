@@ -103,18 +103,15 @@
 
    // bellow do not touch anything
 
-
    // Setup include path
    $host = $_SERVER['HTTP_HOST'];
    $app_root = $_allevo_config['app_root'];
    $pear = dirname(__FILE__).'/../pear/PEAR';
    $horde_pear = '/home/www/stachura.ch/htdocs/horde/libs';
-   //$zend_framework = dirname(__FILE__).'/../zendframework/library';
 
 
    // header pictures must contain  string = /img/
    $header_pictures = $app_root . '/img/template/stadttheater/header';
-
 
    define('IS_AJAX', isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
    define('SMARTY_DIR', $app_root.'smarty/3.x/libs/');
@@ -122,7 +119,6 @@
     
    // Load the Horde Framework Core
    set_include_path($app_root.'libs/'. PATH_SEPARATOR. $pear . PATH_SEPARATOR. $horde_pear );
-
 
    //require_once HORDE_BASE . '/lib/Application.php';
    require_once HORDE_BASE . '/libs/Horde/Autoloader/Default.php';
@@ -150,87 +146,83 @@
    include 'tager/manager.php';
    include 'global_functions.php'; 
 
-
    // HORDE RPC parameter 
    // JSON-RPC endpoint
-	$rpc_endpoint = 'http://horde4.finishers.ch/rpc.php';
+   $rpc_endpoint = 'http://horde4.finishers.ch/rpc.php';
 
-	$rpc_options = array(
-		'request.username' => 'admin',
-		'request.password' => '',
-		'request.timeout'  => 5
-	);
-	
-	$rpc_parameter = array();
+   $rpc_options = array(
+      'request.username' => 'admin',
+      'request.password' => '',
+      'request.timeout'  => 5
+   );
+      
+   $rpc_parameter = array();
 
    // timer  benchmaerk
-	$timer = new Benchmark_Timer(TRUE);
-	$timer->start();
+   $timer = new Benchmark_Timer(TRUE);
+   $timer->start();
    
-
    // Change error handling as necessary
    // PEAR_ERROR_RETURN, PEAR_ERROR_PRINT, PEAR_ERROR_TRIGGER, PEAR_ERROR_DIE or PEAR_ERROR_CALLBACK
    // PEAR::setErrorHandling(PEAR_ERROR_PRINT);
    // error handling
    // Pear Error handling
 
-	$logger = &Log::singleton('file', $app_root.$_allevo_config['log']['name'], 'allevo', $_allevo_config['log']['file']);
-	$mask = Log::MAX($_allevo_config['log']['level']);
-	$logger->setMask($mask);
+   $logger = &Log::singleton('file', $app_root.$_allevo_config['log']['name'], 'allevo', $_allevo_config['log']['file']);
+   $mask = Log::MAX($_allevo_config['log']['level']);
+   $logger->setMask($mask);
 
-	if($_allevo_config['log']['enabled'] == false){
-		define("LOGGING", TRUE);
-		
-		function errorHandler($code, $message, $file, $line){
-			 global $logger;
-		
-			 /* Map the PHP error to a Log priority. */
-			 switch ($code) {
-			 case E_WARNING:
-			 case E_USER_WARNING:
-				  $priority = PEAR_LOG_WARNING;
-				  break;
-			 case E_NOTICE:
-			 case E_USER_NOTICE:
-				  $priority = PEAR_LOG_NOTICE;
-				  break;
-			 case E_ERROR:
-			 case E_USER_ERROR:
-				  $priority = PEAR_LOG_ERR;
-				  break;
-			 default:
-				  $priority = PEAR_LOG_INFO;
-			 }
-		
-			 $logger->log($message . ' in ' . $file . ' at line ' . $line, $priority);
-		}
+   if($_allevo_config['log']['enabled'] == false){
+      define("LOGGING", TRUE);
+         
+      function errorHandler($code, $message, $file, $line){
+         global $logger;
+ 
+         /* Map the PHP error to a Log priority. */
+         switch ($code) {
+            case E_WARNING:
+            case E_USER_WARNING:
+               $priority = PEAR_LOG_WARNING;
+               break;
+            case E_NOTICE:
+            case E_USER_NOTICE:
+               $priority = PEAR_LOG_NOTICE;
+               break;
+            case E_ERROR:
+            case E_USER_ERROR:
+               $priority = PEAR_LOG_ERR;
+               break;
+            default:
+               $priority = PEAR_LOG_INFO;
+         }
 
-		set_error_handler('errorHandler');
-		
+         $logger->log($message . ' in ' . $file . ' at line ' . $line, $priority);
+      }
+      
+      set_error_handler('errorHandler');
+      
+   }else{
+      //error_reporting(0);
+   }
 
-	}else{
-		//error_reporting(0);
-	}
-		
-		$timer->setMarker('logging');	
-	
+   $timer->setMarker('logging');	
 
-	 //$logger->log("Log entry $i", PEAR_LOG_EMERG );
-	 //$logger->log("Log entry $i", PEAR_LOG_ALERT );
-	 //$logger->log("Log entry $i", PEAR_LOG_CRIT );
-	 //$logger->log("Log entry $i", PEAR_LOG_ERR );
-	 //$logger->log("Log entry notice", PEAR_LOG_NOTICE );
-	 //$logger->log("Log entry warning", PEAR_LOG_WARNING );
-	 //$logger->log("Log entry info", PEAR_LOG_INFO );
-	 //$logger->log("Log entry debug", PEAR_LOG_DEBUG );
-	 //$logger->log(serialize($_SERVER), PEAR_LOG_INFO );	 
+   //$logger->log("Log entry $i", PEAR_LOG_EMERG );
+   //$logger->log("Log entry $i", PEAR_LOG_ALERT );
+   //$logger->log("Log entry $i", PEAR_LOG_CRIT );
+   //$logger->log("Log entry $i", PEAR_LOG_ERR );
+   //$logger->log("Log entry notice", PEAR_LOG_NOTICE );
+   //$logger->log("Log entry warning", PEAR_LOG_WARNING );
+   //$logger->log("Log entry info", PEAR_LOG_INFO );
+   //$logger->log("Log entry debug", PEAR_LOG_DEBUG );
+   //$logger->log(serialize($_SERVER), PEAR_LOG_INFO );	 
 
 
-	if(LOGGING == true){
-		//PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, 'eHandler');
-	}else{
+   if(LOGGING == true){
+      //PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, 'eHandler');
+   }else{
 
-	}
+   }
 
 
 // --------------------------- SMARTY  ----------------
@@ -277,15 +269,13 @@
 
 # authentifikation und rechte ermittelt via liveuser
 
- 	require_once 'liveuser/config.php';
-	$timer->setMarker('liveuser config');
+   require_once 'liveuser/config.php';
+   $timer->setMarker('liveuser config');
 		
-	if($LU->isLoggedIn()){
+   if($LU->isLoggedIn()){
       require_once 'liveuser/konstanten.php';
       $timer->setMarker('liveuser konstanten');	
-	}
-
-
+   }
 // ---------------- sprache ermitteln. --------------------
 
    if(empty($_SESSION['sprache'])){
@@ -351,16 +341,16 @@
    $rootnodes = $NestedSets->getRootNodes(true);		
 
    foreach($rootnodes as $key => $value){
-   
+
       switch ($SERVER_NAME[0]) {
          case 'www':
-				if($value['id'] == 1 ){
-					$standard_id = $value['id'];
-				}
+            if($value['id'] == 1 ){
+               $standard_id = $value['id'];
+            }
             break;  
          default:
-			$standard_id = 1;
-		}
+            $standard_id = 1;
+      }
    }	
 	
 // ---------------- Regex Pattern --------------------
@@ -401,7 +391,7 @@
       ) 
    );
 
-	$user_is_in_group = $lu_admin->perm->getGroups($params_get_groups);
+   $user_is_in_group = $lu_admin->perm->getGroups($params_get_groups);
 
    $smarty->assign('liveuser', $liveuser, true);
    $smarty->assign("Adresse", $_allevo_config['adresse'], true);
