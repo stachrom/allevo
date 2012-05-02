@@ -78,15 +78,15 @@ $_allevo_config = array(
    'adresse'  => array(
       'name'     => 'Stachura',             
       'vorname'  => 'Roman',
-      'strase'   => 'moosackerstrasse',
-      'nummer'   => '19',
-      'plz'      => '8405',
-      'email'    => 'info@stachura.ch',
+      'strasse'   => '',
+      'nummer'   => '',
+      'plz'      => '',
+      'email'    => '',
    ),
    'module'  => array(	
       'google'  => array(				
          'maps'  => array(
-            'api_key'   => 'ABQIAAAAtY6cA31_J5PKzXWqu2xuBhRwWqG_G-LkagiCytLZFcaS0g4qRRQ7JdO6jAXo1U4oryuGt7FC5xjFlQ',
+            'api_key'   => '',
             'latitude'  => '47.54663986006874', # http://mapki.com/ #
             'longitude' => '8.844938278198242', # http://www.mapbuilder.net/ #
             'zoom'      => '13'
@@ -176,7 +176,7 @@ include 'tager/manager.php';
 	// XML-RPC options, usually username and password
 	$rpc_options = array(
 		'request.username' => 'admin',
-		'request.password' => 'admin',
+		'request.password' => '',
 		'request.timeout'  => 5
 	);
 	
