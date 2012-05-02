@@ -1,4 +1,4 @@
-htdocs/set_env.php
+password.php
 pear/*
 smarty/cache/*
 smarty/compile/*
