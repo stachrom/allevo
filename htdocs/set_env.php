@@ -130,8 +130,6 @@
 
    //Horde_Registry::appInit('horde');
 
-
-
    /* PEAR base class. */
    include_once SMARTY_DIR . 'Smarty.class.php';
    require_once ('PEAR.php');
@@ -150,7 +148,6 @@
    require_once ('pear_error_handler.php');
 
    include 'tager/manager.php';
-
    include 'global_functions.php'; 
 
 
@@ -244,8 +241,7 @@
 	$smarty->compile_dir  = $app_root .'/smarty/compile';
 	$smarty->cache_dir    = $app_root .'/smarty/cache';
 	$smarty->config_dir   = $app_root .'/smarty/configs/';
-	
-    $smarty->force_compile = true;
+   $smarty->force_compile = true;
 	$smarty->debugging = false; //$_allevo_config['log']['enabled'];
 	$smarty->setCompileCheck = true;
 	$smarty->caching = false;
@@ -262,7 +258,6 @@
 		'portability' => MDB2_PORTABILITY_ALL,
 	);
 	
-
 	$dsn = $_allevo_config['dsn'];
 	
 	// uses MDB2::factory() to create the instance
@@ -290,19 +285,17 @@
 	$timer->setMarker('liveuser config');
 		
 	if($LU->isLoggedIn()){
-	 require_once 'liveuser/konstanten.php';
-	 $timer->setMarker('liveuser konstanten');	
+      require_once 'liveuser/konstanten.php';
+      $timer->setMarker('liveuser konstanten');	
 	}
-
 
 
 // ---------------- sprache ermitteln. --------------------
 
-  
 		if(empty($_SESSION['sprache'])){
-				$_SESSION['sprache'] = 'de';
-				setlocale(LC_ALL, $_allevo_config['locale']);
-			 }elseif( isset($_GET['language'])){
+			$_SESSION['sprache'] = 'de';
+			setlocale(LC_ALL, $_allevo_config['locale']);
+		}elseif( isset($_GET['language'])){
 				switch ($_GET['language']) {
 				  case 'de':
 					  $_SESSION['sprache'] = 'de';
@@ -321,10 +314,9 @@
 					  $_allevo_config['locale'] = array('de_CH.utf8', 'de_DE.UTF8', 'de_DE.ISO8859-1', 'de_DE', 'de', 'ge');
 					  break;
 				}
-				setlocale(LC_ALL, $_allevo_config['locale']);
-				
+         setlocale(LC_ALL, $_allevo_config['locale']);
 		}else{
-		setlocale(LC_ALL, $_allevo_config['locale']);
+         setlocale(LC_ALL, $_allevo_config['locale']);
 		
 		}
 		
@@ -333,22 +325,21 @@
 	// ---------------- Nested_sets. --------------------	//
 	// ################################################## //			
 
-	
 	$nestedSets_param = array(
-    	'id'        => 'id', # required
-    	'parent_id' => 'rootid', # required
-    	'order_num' => 'norder', # required
-    	'level'     => 'level', # required
-    	'left_id'   => 'l', # required
-    	'right_id ' => 'r', # required
-    	'name'      => 'name',
-    	'active'    => 'active',
-    	'owner_user_id' => 'owner_user_id',
-		'owner_group_id' => 'owner_group_id',
-    	'link' => 'link',
-		'rewrite' => 'rewrite',
-		'query_string' => 'query_string',
-		'uuid' => 'uuid'
+      'id'        => 'id', # required
+      'parent_id' => 'rootid', # required
+      'order_num' => 'norder', # required
+      'level'     => 'level', # required
+      'left_id'   => 'l', # required
+      'right_id ' => 'r', # required
+      'name'      => 'name',
+      'active'    => 'active',
+      'owner_user_id' => 'owner_user_id',
+      'owner_group_id' => 'owner_group_id',
+      'link' => 'link',
+      'rewrite' => 'rewrite',
+      'query_string' => 'query_string',
+      'uuid' => 'uuid'
 	);
 	
 	$NestedSets =& DB_NestedSet::factory('DB', $dsn, $nestedSets_param);
