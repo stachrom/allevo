@@ -258,26 +258,22 @@
       'portability' => MDB2_PORTABILITY_ALL,
    );
 	
-	$dsn = $_allevo_config['dsn'];
-	
-	// uses MDB2::factory() to create the instance
-	// and also attempts to connect to the host
+   $dsn = $_allevo_config['dsn'];
 
-	$mdb2 =& MDB2::connect($_allevo_config['dsn'], $options);
-	
-	for ($__i = 0; $__i < count($GLOBALS['_MDB2_databases']); $__i++) { 
+   $mdb2 =& MDB2::connect($_allevo_config['dsn'], $options);
+ 
+   for ($__i = 0; $__i < count($GLOBALS['_MDB2_databases']); $__i++) { 
       $GLOBALS['_MDB2_databases'][$__i]->dsn['password'] = '* hidden *'; 
       $GLOBALS['_MDB2_databases'][$__i]->connected_dsn['password'] = '* hidden *'; 
    } 
 
-	$mdb2->setFetchMode(MDB2_FETCHMODE_ASSOC);
-	
-	if (PEAR::isError($mdb2)) {
+   $mdb2->setFetchMode(MDB2_FETCHMODE_ASSOC);
+ 
+   if (PEAR::isError($mdb2)) {
       die($mdb2->getMessage());
-	}
+   }
 
-	$timer->setMarker('mbd2');
-
+   $timer->setMarker('mbd2');
 
 # authentifikation und rechte ermittelt via liveuser
 
