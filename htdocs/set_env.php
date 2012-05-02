@@ -99,6 +99,7 @@
    );
    // Password
    require_once ('password.php'); 
+   require_once ('global_functions.php'); 
 
    // bellow do not touch anything
 
