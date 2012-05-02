@@ -273,7 +273,7 @@
 	$mdb2->setFetchMode(MDB2_FETCHMODE_ASSOC);
 	
 	if (PEAR::isError($mdb2)) {
-		 die($mdb2->getMessage());
+      die($mdb2->getMessage());
 	}
 
 	$timer->setMarker('mbd2');
@@ -325,7 +325,7 @@
 	// ---------------- Nested_sets. --------------------	//
 	// ################################################## //			
 
-	$nestedSets_param = array(
+   $nestedSets_param = array(
       'id'        => 'id', # required
       'parent_id' => 'rootid', # required
       'order_num' => 'norder', # required
@@ -340,10 +340,9 @@
       'rewrite' => 'rewrite',
       'query_string' => 'query_string',
       'uuid' => 'uuid'
-	);
+   );
 	
 	$NestedSets =& DB_NestedSet::factory('DB', $dsn, $nestedSets_param);
-
 
 	$NestedSets->setAttr(array(
       'node_table' => 'nested_set',
@@ -351,46 +350,44 @@
       'secondarySort' => 'left_id',
       'debug' => '0'
    ));
-		
+
 	$NestedSets->setsortMode('SLV');		
 	
 	$rootnodes = $NestedSets->getRootNodes(true);		
 
    foreach($rootnodes as $key => $value){
    
-			switch ($SERVER_NAME[0]) {
-			 
-			 case 'www':
-					 if($value['id'] == 1 ){
-							$standard_id = $value['id'];
-						}
-				  break;  
-			default:
-					$standard_id = 1;
+      switch ($SERVER_NAME[0]) {
+         case 'www':
+				if($value['id'] == 1 ){
+					$standard_id = $value['id'];
+				}
+            break;  
+         default:
+			$standard_id = 1;
 		}
    }	
 	
-
 // ---------------- Regex Pattern --------------------
  
-		$pattern = array();
-		$pattern['bin']            ='/^[01]+$/';
-		$pattern['int']	         ='/^[0-9]+$/';
-      $pattern['int_kronolith']  ='/^[0-9]{10}?$/';
-		$pattern['alphanumeric']	='/^[a-zA-Z0-9_äÄöÖüÜß]+$/u';	
-		$pattern['password']	      ='/^[a-zA-Z0-9-_?+*%$!&☺®.©()=@¦§äÄöÖüÜß]+$/u';
-		$pattern['datum']          ='/^(0[1-9]|[12][0-9]|3[01])[\/\-](0[1-9]|1[012])[\/\-]\d{4}$/'; // DD-MM-YYYY or DD/MM/YYYY
-		$pattern['username']	      ='/^[a-zA-Z0-9-_äÄöÖüÜß]+$/u';
-		$pattern['rightlevel']	   ='/^[1-3]+$/u';
-		$pattern['eventUID']       ='/^[0-9]{14}[.][a-zA-Z0-9\-_]{23}@.+(.ch)$/';
-		$pattern['objectid']       ='/^[a-zA-Z0-9\-]{23}+$/';
-		$pattern['turbaID']        ='/^[a-zA-Z0-9\-]{23}+$/';
-		$pattern['0-5']            ='/^[0-5]{1}+$/';
-		$pattern['text']           ='/^[0-9a-zA-Z-]+$/';
-		$pattern['filter']         ='/^[ABCJSMFK45]{1,2}+$/';
+   $pattern = array();
+   $pattern['bin']            ='/^[01]+$/';
+   $pattern['int']	         ='/^[0-9]+$/';
+   $pattern['int_kronolith']  ='/^[0-9]{10}?$/';
+   $pattern['alphanumeric']	='/^[a-zA-Z0-9_äÄöÖüÜß]+$/u';	
+   $pattern['password']	      ='/^[a-zA-Z0-9-_?+*%$!&☺®.©()=@¦§äÄöÖüÜß]+$/u';
+   $pattern['datum']          ='/^(0[1-9]|[12][0-9]|3[01])[\/\-](0[1-9]|1[012])[\/\-]\d{4}$/'; // DD-MM-YYYY or DD/MM/YYYY
+   $pattern['username']	      ='/^[a-zA-Z0-9-_äÄöÖüÜß]+$/u';
+   $pattern['rightlevel']	   ='/^[1-3]+$/u';
+   $pattern['eventUID']       ='/^[0-9]{14}[.][a-zA-Z0-9\-_]{23}@.+(.ch)$/';
+   $pattern['objectid']       ='/^[a-zA-Z0-9\-]{23}+$/';
+   $pattern['turbaID']        ='/^[a-zA-Z0-9\-]{23}+$/';
+   $pattern['0-5']            ='/^[0-5]{1}+$/';
+   $pattern['text']           ='/^[0-9a-zA-Z-]+$/';
+   $pattern['filter']         ='/^[ABCJSMFK45]{1,2}+$/';
 	
 // ---------------- Liveuser --------------------  
-	$liveuser = array(
+   $liveuser = array(
 		'loggedIn' => $LU->isLoggedIn(),
 		'handle' => $LU->getProperty('handle'),
 		'Last_Login' => date('d.m.Y H:i', $LU->getProperty('lastlogin')),
@@ -401,7 +398,7 @@
 		'perm_user_id' => $LU->getProperty('perm_user_id'),
 		'is_active' => $LU->getProperty('is_active'),
 		'email' => $LU->getProperty('email') 
-	);
+   );
 
    $params_get_groups = array( 
       'filters' => array(
@@ -416,6 +413,7 @@
    $smarty->assign("version", $_allevo_config['version']);
    $smarty->assign("template_name", "stadttheaterolten");
    $smarty->assign('pfad', "", false);
+   
    $timer->setMarker('ende config');
 
 ?>
