@@ -1,0 +1,341 @@
+/* color and iteration examples */
+a.toggle-area {
+    color:#004c6d;
+    display:inline-block;
+
+
+    border: 1px solid #9EA8C6;
+    background: #ECEFFB;
+    border-radius: 3px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.25);
+    text-decoration:none;
+
+
+    
+    padding:1.6em;
+    text-align:center;
+}
+
+/* xy and curve examples */
+span.toggle-area {
+    background:#ff8800;
+    display:block;
+    height:10px;
+    width:10px;
+}
+
+/* module examples */
+div.toggle-area {
+    position:relative;
+    width:22em;
+    overflow:hidden;
+    border: 1px solid #9EA8C6;
+    background: #ECEFFB;
+    border-radius: 3px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.25);
+}
+
+div.toggle-area .yui3-hd {
+    background-color: #B6BFDA;
+    position:relative;
+    zoom:1;
+}
+
+div.toggle-area .yui3-hd h3 {
+    border:0;
+    color: #30418C;
+    margin:0 25px 0 0;
+}
+
+.toggle-area .yui3-hd a { /* module control (close remove, etc) */
+    background:url(sprite.png) no-repeat;
+    position: absolute;
+    cursor:pointer;
+    display: inline-block; /* prevent IE margin doubling */
+    overflow:hidden;
+    text-decoration:none;
+    text-indent:9999px;
+    height: 20px;
+    width: 21px;
+    top: 4px;
+    right: 4px;
+    border:solid 1px;
+    border-color: #CCD1E1 #6E7BA0 #6E7BA0 #CCD1E1; 
+    background-color: #97A2C4;
+    border-radius: 2px;
+}
+
+.toggle-area .yui3-hd a:hover {
+    background-color:#8793b8;    
+}
+
+div.toggle-area .yui3-bd {
+    clear: both;
+    overflow:hidden;
+    zoom:1;
+}
+
+div.toggle-area .yui3-bd p {
+    margin:0;
+    padding:0.8em 1em 1em;
+}
+
+div.toggle-area .yui3-hd {
+    margin:0;
+    padding:0.5em 1em;
+}
+
+div.toggle-area .yui3-bd p em {
+    font-weight:bold;
+}
+
+/* basic example */
+div.toggle-area a.yui3-remove {
+    background-position:0 0;  /* "X" icon */
+}
+
+.yui3-scroll .yui3-hd {
+    position: relative;
+}
+.yui3-scroll .yui3-bd {
+    height:10em;
+    overflow:hidden;
+}
+
+/* reverse and easing examples */
+.toggle-area a.yui3-toggle {
+    background-position:0 -60px; /* close (minus) icon */
+}
+
+.toggle-area a.yui3-closed  {
+    background-position:0 -30px; /* open (plus) icon */
+}
+
+.toggle-area-stage {
+    background: #eee;
+    height: 400px;
+}
+
+/* Darg and Drop */
+
+permissions
+
+
+.hidden{display:none}
+#assign-rights{
+    background-color: #DCCFBB;
+    font-family: georgia;
+    /* a repeating grid image in the background */
+    background-image: url(http://new.yuilibrary.com/yui/docs/assets/sortable/images/grid.png);
+}
+
+
+#assign-rights{
+    float: none;
+    border: solid 1px #C8B9A4;
+    width: 665px;
+	margin-top:1em;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+#assign-rights #col-left{ 
+    width: 315px;
+}    
+#assign-rights #col-right {
+    width: 345px;
+	
+    padding-bottom: 2em; /* needs bottom padding so objects can drag below last .group-hd */    
+    border-left: solid 1px #C8B9A4;
+}
+
+#assign-rights ul{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+#assign-rights #list1 li,
+#assign-rights #list2 li,
+#assign-rights #list3 li,
+#assign-rights #list4 li{ 
+    float: left; /* the li objects are floated */
+    margin: 3px;
+    background-color: #E9CE98; 
+}
+#assign-rights #list1 li{
+    height: 2em;
+    width: 68px;
+    overflow: hidden; /* this hides the catalog number on the small fish */
+}
+
+#assign-rights #list2 li{
+    height: 2.5em;
+    width: 75px;
+    overflow: hidden; /* this hides the catalog number on the small fish */
+}
+
+
+#assign-rights #list2 .rights div{
+	color:#fff;
+}
+
+
+/* group heads are sortable like other objects but have different style */
+#assign-rights #list2 .group-hd{
+    background-color: #6F6452; 
+    border-color: #EBD6B3 #63532E #63532E #EBD6B3;
+	width: 335px;
+    height: 20px;
+    text-indent: 0.5em;
+    font-weight: bold;
+    color: #fff;
+    line-height: 20px;
+}
+#assign-rights #list3 .group-hd,
+#assign-rights #list4 .group-hd{
+    background-color: #6F6452; 
+    border-color: #EBD6B3 #63532E #63532E #EBD6B3;
+	width: 335px;
+    height: 20px;
+    text-indent: 0.5em;
+    font-weight: bold;
+    color: #fff;
+    line-height: 20px;
+}
+#assign-rights #list1 .group-hd{
+    background-color: #6F6452; 
+    border-color: #EBD6B3 #63532E #63532E #EBD6B3;
+    width: 95%;
+    height: 20px;
+    text-indent: 0.5em;
+    font-weight: bold;
+    color: #fff;
+    line-height: 20px;
+}
+#assign-rights #list1 .treemanager,
+#assign-rights #list2 .treemanager{
+	background-color: rgba(0, 153, 204, 1);
+}
+
+#assign-rights #list1 .usermanagement,
+#assign-rights #list2 .usermanagement{
+	background-color: rgba(102, 153, 0, 0.9);
+}
+#assign-rights #list1 .statistik,
+#assign-rights #list2 .statistik{
+	background-color: rgba(204, 0, 0, 0.8);
+}
+#assign-rights #list1 .news,
+#assign-rights #list2 .news{
+	background-color: rgba(255, 138, 0, 0.7);
+}
+
+#assign-rights #list1 .benutzerverwaltung,
+#assign-rights #list2 .benutzerverwaltung { 
+	background-color: rgba(153, 51, 204, 0.6);
+}
+
+
+
+
+
+
+#assign-rights #list1 .view,
+#assign-rights #list1 .show,
+#assign-rights #list2 .view,
+#assign-rights #list2 .show{
+	background: rgba(0, 0, 0, 0.4);
+}
+#assign-rights #list1 .create,
+#assign-rights #list2 .create{
+	background: rgba(0, 0, 0, 0.1);
+}
+#assign-rights #list1 .edit,
+#assign-rights #list2 .edit{
+	background: rgba(0, 0, 0, 0.3);
+}
+
+#assign-rights #list1 .delete,
+#assign-rights #list2 .delete{
+	background: rgba(0, 0, 0, 0.2);
+}
+
+
+#assign-rights #list1 .view,
+#assign-rights #list1 .show,
+#assign-rights #list1 .create,
+#assign-rights #list1 .edit,
+#assign-rights #list1 .delete{
+	width: 100%;
+    height:2em;
+	cursor: move;
+}
+
+#assign-rights #list3 .group,
+#assign-rights #list4 .group,
+#assign-rights #list2 .view,
+#assign-rights #list2 .show,
+#assign-rights #list2 .create,
+#assign-rights #list2 .edit,
+#assign-rights #list2 .delete{
+	min-width: 68px;
+    height:2em;
+	padding:5px;
+	cursor: move;
+}
+
+
+
+
+#assign-rights li img{
+    width: 100%; /* image scales with size of it's li container */
+}
+#assign-rights li {
+    border: solid 1px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    border-color: #FFEFC2 #9D8F70 #9D8F70 #FFEFC2;
+    -moz-box-shadow: 3px 4px 8px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 3px 4px 8px rgba(0, 0, 0, 0.25);
+    box-shadow: 3px 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+
+#areas li, 
+#users li, 
+#groups li {
+	list-style-type:none;
+
+
+
+}
+
+.eventSend li:hover,
+#areas li:hover, 
+#users li:hover, 
+#groups li:hover {
+	cursor: pointer;
+	text-decoration:underline;
+
+}
+
+#assign-rights #list2 .grouprights, 
+#assign-rights #list2 .userrights{
+
+	background-color: rgba(255, 255, 255, 1);
+	color:#000;
+}
+
+.highlight{
+
+	background-color:rgba(204, 0, 0, 0.1);
+	padding:5px;
+	margin:5px;
+	border: #CC0000 2px solid;
+
+}
+#assign-rights input{
+margin:2px;
+
+}
