@@ -71,11 +71,11 @@
       },
       
       /**
-       * transform a Date into Minutes of the Day.
-       * @method _stringToValideDate
-       * @param {string} timeOfTheDay 8:28 pm / 8:38 am / 8:38:10
-       * modified.
-       * @privat
+       * takes a date string and get out the Minutes of the Day.
+       * @method _timeOfTheDayToMinutes
+       * @param {date} Valide JS Date string --> new Date();
+       * 
+       * @private
       */
       _timeOfTheDayToMinutes : function(date) {
 
@@ -91,8 +91,8 @@
        * transform the time of the day into date string.
        * @method _stringToValideDate
        * @param {string} timeOfTheDay 8:28 pm / 8:38 am / 8:38:10
-       * modified.
-       * @privat
+       * 
+       * @private
       */
       _timeToValideDate : function( timeOfTheDay ) {
       
