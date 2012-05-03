@@ -22,7 +22,7 @@
             compass: {N:"Norden", NO:"Nordosten", O:"Osten", SO:"Südosten",  S:"Süden", SW:"Südwesten", W:"Westen", NW:"Nordwesten"},
             wind: {chill:"gefühlt", speed:"Wind:", direction:"aus Richtung"},
             atmosphere: {visibility:"Sichtweite:", humidity:"Luftfeuchtigkeit:", pressure:"Luftdruck:"},
-            sun: {set:"Sonnenaufgang:", rise:"Sonnenuntergang:", unit:"Uhr"},
+            sun: {set:"Sonnenuntergang:", rise:"Sonnenaufgang:", unit:"Uhr"},
             aktualisierung : "Letzte Aktualisierung:"
         }
       }
