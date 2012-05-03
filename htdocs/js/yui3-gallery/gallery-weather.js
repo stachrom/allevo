@@ -69,7 +69,21 @@
                
          return compass;
       },
+      /*
+       * Pressure is heading up down or not even at all. 
+      */
+      _pressureMove : function(code, string) {
       
+         var pressureDirection = "";
+             code = parseInt(code, 10);
+         
+         // pressure is heading...
+         if (code === 0) pressureDirection = string.steady;
+         else if (code < 0) pressureDirection = string.drop;
+         else pressureDirection = string.rise;
+
+         return pressureDirection;
+      },
       /**
        * takes a date string and get out the Minutes of the Day.
        * @method _timeOfTheDayToMinutes
@@ -127,7 +141,7 @@
                 sunset_min  = that._timeOfTheDayToMinutes(sunset),
                 now_min     = that._timeOfTheDayToMinutes(new Date()),
                 direction   = wind.direction,
-                barometer   = (atmosphere.rising == 1) ? strings.atmosphere.rise : strings.atmosphere.drop,
+                barometer   = that._pressureMove(atmosphere.rising, strings.atmosphere),
                 compass     = '';
 
             var a = lastupdate.split(' ', 6);
