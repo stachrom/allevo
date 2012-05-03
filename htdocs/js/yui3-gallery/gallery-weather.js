@@ -21,7 +21,7 @@
         value: {
             compass: {N:"Norden", NO:"Nordosten", O:"Osten", SO:"Südosten",  S:"Süden", SW:"Südwesten", W:"Westen", NW:"Nordwesten"},
             wind: {chill:"gefühlt", speed:"Wind:", direction:"aus Richtung"},
-            atmosphere: {visibility:"Sichtweite:", humidity:"Luftfeuchtigkeit:", pressure:"Luftdruck:"},
+            atmosphere: {visibility:"Sichtweite:", humidity:"Luftfeuchtigkeit:", pressure:"Luftdruck:", rise:"steigend", drop:"fallend" },
             sun: {set:"Sonnenuntergang:", rise:"Sonnenaufgang:", unit:"Uhr"},
             aktualisierung : "Letzte Aktualisierung:"
         }
@@ -114,26 +114,26 @@
 
          Y.YQL( 'use "http://www.datatables.org/weather/weather.bylocation.xml" as we; select * from we where location="'+location+'" and unit="'+u+'"', function(r) { 
          
-            var result    = r.query.results.weather.rss.channel;
-               astronomy  = result.astronomy,
-               sunrise    = that._timeToValideDate(astronomy.sunrise),
-               sunset     = that._timeToValideDate(astronomy.sunset),
-               lastupdate = result.item.condition.date,
-               units      = result.units,
-               wind       = result.wind,
-               direction  = wind.direction,
-               atmosphere = result.atmosphere,
-               barometer  = (atmosphere.rising == 1) ? "steigend": "fallend",
-               compass    = '';
-
+            var result     = r.query.results.weather.rss.channel;
+                astronomy  = result.astronomy,
+                units      = result.units,
+                wind       = result.wind,
+                atmosphere = result.atmosphere,
+                lastupdate = result.item.condition.date;
                
-            var sunrise_min = that._timeOfTheDayToMinutes(sunrise);
-            var sunset_min = that._timeOfTheDayToMinutes(sunset);
-            var now_min = that._timeOfTheDayToMinutes(new Date());
+            var sunrise     = that._timeToValideDate(astronomy.sunrise),
+                sunset      = that._timeToValideDate(astronomy.sunset),
+                sunrise_min = that._timeOfTheDayToMinutes(sunrise),
+                sunset_min  = that._timeOfTheDayToMinutes(sunset),
+                now_min     = that._timeOfTheDayToMinutes(new Date()),
+                direction   = wind.direction,
+                barometer   = (atmosphere.rising == 1) ? strings.atmosphere.rise : strings.atmosphere.drop,
+                compass     = '';
 
-            var aktualiserung = lastupdate.split(' ', 6);
-                aktualiserung = aktualiserung[4] +' '+  aktualiserung[5];
-            
+            var a = lastupdate.split(' ', 6);
+            var aktualiserung = Y.DataType.Date.parse(a[2]+' '+a[1]+', '+a[3]+' '+a[4] +' '+a[5]);
+                aktualiserung = Y.DataType.Date.format(aktualiserung, {format:"%H:%M"});
+
             // day or night
             if( sunrise_min <= now_min && sunset_min >= now_min ){
                var meridium = 'd', class_m = '';
