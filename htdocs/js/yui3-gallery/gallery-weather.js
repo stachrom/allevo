@@ -96,8 +96,8 @@
       */
       _timeToValideDate : function( timeOfTheDay ) {
       
-        var YMD = Y.DataType.Date.format(new Date(), {format:"%F"});
-        var today = Y.DataType.Date.parse(YMD+" "+timeOfTheDay);
+        var MDY = Y.DataType.Date.format(new Date(), {format:"%D"});
+        var today = Y.DataType.Date.parse(MDY+" "+timeOfTheDay);
         
         return today;
       },
