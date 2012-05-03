@@ -16,10 +16,20 @@
       },
       layout : {
          value: "full"
+      },
+      strings: {
+        value: {
+            compass: {N:"Norden", NO:"Nordosten", O:"Osten", SO:"Südosten",  S:"Süden", SW:"Südwesten", W:"Westen", NW:"Nordwesten"},
+            wind: {chill:"gefühlt", speed:"Wind:", direction:"aus Richtung"},
+            atmosphere: {visibility:"Sichtweite:", humidity:"Luftfeuchtigkeit:", pressure:"Luftdruck:"},
+            sun: {set:"Sonnenaufgang:", rise:"Sonnenuntergang:", unit:"Uhr"},
+            aktualisierung : "Letzte Aktualisierung:"
+        }
       }
      
-   };    
-  
+   }; 
+
+
 
    Y.extend(LocalWeather, Y.Widget, {
  
@@ -41,21 +51,73 @@
       //sync changes
       syncUI : function() {
       },
+      
+      /*
+       * Convert Angle into Direction 
+      */
+      _windDirection : function(angle, direction) {
+
+          // wind direction 
+         if ((angle >= 0 && angle <= 22.5)||(angle > 337.5 && angle <= 360)) compass = direction.N;
+         else if (angle > 22.5  && angle <= 67.5)  compass = direction.NO;
+         else if (angle > 67.5  && angle <= 112.5) compass = direction.O;
+         else if (angle > 112.5 && angle <= 157.5) compass = direction.SO;
+         else if (angle > 157.5 && angle <= 202.5) compass = direction.S;
+         else if (angle > 202.5 && angle <= 247.5) compass = direction.SW;
+         else if (angle > 247.5 && angle <= 290.5) compass = direction.W;
+         else if (dangle > 290.5 && angle <= 337.5) compass = direction.NW;
+               
+         return compass;
+      },
+      
+      /**
+       * transform a Date into Minutes of the Day.
+       * @method _stringToValideDate
+       * @param {string} timeOfTheDay 8:28 pm / 8:38 am / 8:38:10
+       * modified.
+       * @privat
+      */
+      _timeOfTheDayToMinutes : function(date) {
+
+         var HM = Y.DataType.Date.format( date, {format:"%H:%M"});
+             HM = HM.split(':', 2);
+         var Minutes = parseInt(HM[0], 10) * 60 + parseInt(HM[1], 10);
+
+         return Minutes;
+      },
  
+      
+      /**
+       * transform the time of the day into date string.
+       * @method _stringToValideDate
+       * @param {string} timeOfTheDay 8:28 pm / 8:38 am / 8:38:10
+       * modified.
+       * @privat
+      */
+      _timeToValideDate : function( timeOfTheDay ) {
+      
+        var YMD = Y.DataType.Date.format(new Date(), {format:"%F"});
+        var today = Y.DataType.Date.parse(YMD+" "+timeOfTheDay);
+        
+        return today;
+      },
+
+      //renders the current weather from YQL
       _addWeather : function() {
          var boundingBox = this.get("boundingBox"),
              contentBox  = this.get("contentBox"),
-             username    = this.get('username'),
              location    = this.get('location'),
-             u           = this.get('u');
-             layout      = this.get('layout');
+             u           = this.get('u'),
+             layout      = this.get('layout'),
+             strings     = this.get("strings"),
+             that        = this;
 
          Y.YQL( 'use "http://www.datatables.org/weather/weather.bylocation.xml" as we; select * from we where location="'+location+'" and unit="'+u+'"', function(r) { 
          
-           var result     = r.query.results.weather.rss.channel;
+            var result    = r.query.results.weather.rss.channel;
                astronomy  = result.astronomy,
-               sunrise    = astronomy.sunrise,
-               sunset     = astronomy.sunset,
+               sunrise    = that._timeToValideDate(astronomy.sunrise),
+               sunset     = that._timeToValideDate(astronomy.sunset),
                lastupdate = result.item.condition.date,
                units      = result.units,
                wind       = result.wind,
@@ -63,65 +125,43 @@
                atmosphere = result.atmosphere,
                barometer  = (atmosphere.rising == 1) ? "steigend": "fallend",
                compass    = '';
-               
-               
-           var temp = lastupdate.split(' ', 6);
-           var aktualiserung = temp[4] +' '+  temp[5];
-               
-               // day or night ?
-               temp = sunrise.split(' am', 1);
-               temp = temp[0].split(':', 2);
-           var sunrise_min = parseInt(temp[0], 10) * 60 + parseInt(temp[1], 10);
-              
-               temp = sunset.split(' pm', 1);
-               temp = temp[0].split(':', 2);
-           var sunset_min = parseInt(temp[0], 10) * 60 + (12*60) + parseInt(temp[1], 10);
-               
-           var now = Y.DataType.Date.format(new Date(), {format:"%H:%M"})
-               now = now.split(':', 2);
-           var now_min = parseInt(now[0], 10) * 60 + parseInt(now[1], 10);
-               
-               //var localtime = aktualiserung.split(' ', 2);
-               //var localtime1 = localtime[0].split(':', 2);
-               //localtime_min = parseInt(localtime1[0]) * 60 + parseInt(localtime1[1]);
-               //if(localtime[1] === "pm") localtime_min = localtime_min + (12*60);
 
+               
+            var sunrise_min = that._timeOfTheDayToMinutes(sunrise);
+            var sunset_min = that._timeOfTheDayToMinutes(sunset);
+            var now_min = that._timeOfTheDayToMinutes(new Date());
 
-               if( sunrise_min <= now_min && sunset_min >= now_min ){
-                  var meridium = 'd', class_m = '';
-               }else{
-                  var meridium = 'n', class_m = 'night';
-               }
+            var aktualiserung = lastupdate.split(' ', 6);
+                aktualiserung = aktualiserung[4] +' '+  aktualiserung[5];
+            
+            // day or night
+            if( sunrise_min <= now_min && sunset_min >= now_min ){
+               var meridium = 'd', class_m = '';
+            }else{
+               var meridium = 'n', class_m = 'night';
+            }
                
-               icon = 'assets/weather/'+result.item.condition.code + meridium  +'.png';
-               background = 'assets/weather/background/'+result.item.condition.code + meridium  +'-106755.jpg';
-               
-               // wind direction 
-               if ((direction >= 0 && direction <= 22.5)||(direction > 337.5 && direction <= 360)) compass = "Nord";
-               else if (direction > 22.5  && direction <= 67.5)  compass = "Nordosten";
-               else if (direction > 67.5  && direction <= 112.5) compass = "Osten";
-               else if (direction > 112.5 && direction <= 157.5) compass = "Südosten";
-               else if (direction > 157.5 && direction <= 202.5) compass = "Süden";
-               else if (direction > 202.5 && direction <= 247.5) compass = "Südwesten";
-               else if (direction > 247.5 && direction <= 290.5) compass = "Westen";
-               else if (direction > 290.5 && direction <= 337.5) compass = "Nordwesten";
+            var icon = 'assets/weather/'+result.item.condition.code + meridium  +'.png';
+            var background = 'assets/weather/background/'+result.item.condition.code + meridium  +'-106755.jpg';
+            
+            compass = that._windDirection(direction, strings.compass);
 
            var html = '<div id="yw-forecast" class="'+ class_m +'" style=" background:url(\''+background+'\'); background-size: cover;" >';
                html += '<div id="yw-cond" class="'+ class_m +'" >'+result.location.city+'</div>';
 
             if(layout === "full"){
                html += '<dl>'; 
-               html += '<dt>gefühlt:</dt><dd>'+wind.chill+'°'+units.temperature+'</dd>';
-               html += '<dt>Luftdruck:</dt><dd>'+atmosphere.pressure+' '+ units.pressure+' '+ barometer +'</dd>'; 
-               html += '<dt>Feuchtigkeit:</dt><dd>'+atmosphere.humidity+' % </dd>'; 
-               html += '<dt>Sichtweite:</dt><dd>'+atmosphere.visibility+' '+ units.distance+'</dd>';
-               html += '<dt>Wind:</dt><dd>'+wind.speed+' '+ units.speed+' aus Richtung '+compass+'</dd>'; 
-               html += '<dt>Sonnenaufgang:</dt><dd>'+sunrise+'</dd>'; 
-               html += '<dt>Sonnenuntergang:</dt><dd>'+sunset+'</dd>';               
+               html += '<dt>'+strings.wind.chill+'</dt><dd>'+wind.chill+'°'+units.temperature+'</dd>';
+               html += '<dt>'+strings.atmosphere.pressure+'</dt><dd>'+atmosphere.pressure+' '+ units.pressure+' '+ barometer +'</dd>'; 
+               html += '<dt>'+strings.atmosphere.humidity+'</dt><dd>'+atmosphere.humidity+' % </dd>'; 
+               html += '<dt>'+strings.atmosphere.visibility+'</dt><dd>'+atmosphere.visibility+' '+ units.distance+'</dd>';
+               html += '<dt>'+strings.wind.speed+'</dt><dd>'+wind.speed+' '+ units.speed+' '+strings.wind.direction+' '+compass+'</dd>'; 
+               html += '<dt>'+strings.sun.rise+'</dt><dd>'+Y.DataType.Date.format( sunrise, {format:"%R"})+ ' '+strings.sun.unit+'</dd>'; 
+               html += '<dt>'+strings.sun.set+'</dt><dd>'+Y.DataType.Date.format( sunset, {format:"%R"})+' '+strings.sun.unit+'</dd>';                 
                html += '</dl>'; 
             }               
               
-               html += '<em> Letzte Aktualisierung '+aktualiserung+'</em>'; 
+               html += '<em>'+strings.aktualisierung+' '+aktualiserung+'</em>'; 
                
                html += '<div class="forecast-temp">'+
                           '<div id="yw-temp">'+result.item.condition.temp+'°</div>'+
@@ -134,8 +174,9 @@
          });
       }
       
+      
    });
  
    Y.LocalWeather = LocalWeather;
  
-}, '1.0', {require: ["widget", "substitute", "yql", "datatype-date-format"]});
+}, '1.0', {require: ["widget", "substitute", "yql", "datatype-date"]});
