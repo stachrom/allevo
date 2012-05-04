@@ -17,13 +17,6 @@
                                     '<dt>{s_sunsetrise}</dt><dd>{sunrise} {s_timeunit}</dd>'+ 
                                     '<dt>{s_sunset}</dt><dd>{sunset} {s_timeunit}</dd>'+                 
                                  '</dl>';
-  
-      
-
-       //WEEKDAY_TEMPLATE: '<th class="{calendar_weekday_class}" role="columnheader" aria-label="{full_weekdayname}">{weekdayname}</th>',
-       //weekdays =  ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
-       //fullweekdays =  ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-      
 
    LocalWeather.ATTRS = {
       location : {
@@ -83,7 +76,7 @@
          else if (angle > 157.5 && angle <= 202.5) compass = direction.S;
          else if (angle > 202.5 && angle <= 247.5) compass = direction.SW;
          else if (angle > 247.5 && angle <= 290.5) compass = direction.W;
-         else if (dangle > 290.5 && angle <= 337.5) compass = direction.NW;
+         else if (angle > 290.5 && angle <= 337.5) compass = direction.NW;
                
          return compass;
       },
@@ -150,26 +143,24 @@
          
          if (r.query && r.query.results) {
 
-            var result     = r.query.results.weather.rss.channel;
-            
-            
-            if (result.item.title){
-
-               var city = result.item.title,
-                   astronomy  = "",
-                   units      = "",
-                   wind       = "",
-                   atmosphere = "",
-                   lastupdate = "";               
-
-            }else{
-
-            var astronomy  = result.astronomy,
+            var result     = r.query.results.weather.rss.channel,
+                astronomy  = result.astronomy,
                 units      = result.units,
                 wind       = result.wind,
                 atmosphere = result.atmosphere,
-                lastupdate = result.item.condition.date;
-               
+                item       = result.item;
+            
+            
+            if (result.description === "Yahoo! Weather Error"){
+
+               var city       = result.item.title,
+                   compass    = "",
+                   temperatur = "",
+                   high       = "",
+                   low        = "";
+                   
+            }else{
+
             var sunrise     = that._timeToValideDate(astronomy.sunrise),
                 sunset      = that._timeToValideDate(astronomy.sunset),
                 sunrise_min = that._timeOfTheDayToMinutes(sunrise),
@@ -178,9 +169,10 @@
                 direction   = wind.direction,
                 city        = result.location.city,
                 barometer   = that._pressureMove(atmosphere.rising, strings.atmosphere),
-                temperatur  = result.item.condition.temp,
-                high        = result.item.forecast[0].high,
-                low         = result.item.forecast[0].low,
+                lastupdate  = item.condition.date;
+                temperatur  = item.condition.temp,
+                high        = item.forecast[0].high,
+                low         = item.forecast[0].low,
                 compass     = '';
 
             var a = lastupdate.split(' ', 6);
@@ -200,7 +192,7 @@
             compass = that._windDirection(direction, strings.compass);
             
            }    
-
+            // HTML Template's
            var html = '<div id="yw-forecast" class="'+ class_m +'" style=" background:url(\''+background+'\'); background-size: cover;" >';
                html += '<div id="yw-cond" class="'+ class_m +'" >'+city+'</div>';
 
