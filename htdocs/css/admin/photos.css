@@ -1,0 +1,267 @@
+#yui-main .yui-g ul {
+    display: block;
+    width: 99%;
+    min-height: 300px;
+    overflow: auto;
+}
+#yui-main .yui-g ul.loading {
+    background-image: url(../../img/admin/uploader/bar.gif);
+    background-repeat: no-repeat;
+    background-position: 40% 40%;
+}
+#yui-main .yui-g ul li {
+    *float: left;
+    display: inline-block;
+    margin: 1em;
+    width: 10%;
+}
+#photoList{
+	 margin-left:0px;
+}
+
+#photoList li{
+	 list-style:none;
+}
+
+
+
+
+#yui-main .yui-g ul li img {
+    border: 3px solid black;
+}
+#yui-main .yui-g ul li.loading img {
+    border: none;
+}
+#yui-main .yui-g ul li.loading {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+}
+#yui-main .yui-g ul li img {
+    width: 100%;
+}
+#yui-main .yui-g ul li img.selected {
+    border: 3px solid #426FD9;
+}
+#yui-main .yui-g ul:after { display: block; clear: both; visibility: hidden; content: '.'; height: 0;}
+.yui3-dd-proxy {
+    background-image: url( ../../img/admin/uploader/countBadge.png );
+    background-repeat: no-repeat;
+    color: white;
+    font-weight: bold;
+}
+.yui3-dd-proxy span {
+    display: block;
+    margin-top: 4px;
+}
+#photoList li a {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size:1em;
+    display: block;
+    background-image: url( ../../img/admin/uploader/folder.png );
+    background-repeat: no-repeat;
+    background-position: 1px 3px;
+    padding: 3px;
+    padding-left: 23px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    text-decoration: none;
+    color: black;
+}
+
+#photoList li a span {
+	font-weight:normal;
+
+}
+
+
+#photoList #remove a {
+    display: block;
+    background-repeat: no-repeat;
+    background-position: 1px 3px;
+    padding: 3px;
+    padding-left: 23px;
+    background-image: url( ../../img/admin/uploader/del.gif );
+
+}
+
+
+
+#photoList li a span {
+    padding-left: 3px;
+    font-size: 80%;
+    color: #333;
+}
+#photoList li a:hover {
+    background-color: #B3D4FF;
+}
+#photoList li.selected a {
+    background-color: #B3D4FF;
+    font-weight: bold;
+}
+#photoList li.all a {
+
+}
+#photoList li.yui3-dd-drop-over a {
+    border-color: black;
+    background-image: url( ../../img/admin/uploader/folder_open.png );
+}
+#bd .yui-b p {
+    margin: 1em;
+}
+.yui3-skin-sam #ft .yui3-slider-rail-x {
+    background-position: 0 8px;
+}
+.yui3-skin-sam #ft strong,
+.yui3-skin-sam #ft em {
+    float: right;
+    background-image: url(../../img/admin/uploader/thumbnail.png);
+    display: block;
+    height: 32px;
+    width: 32px;
+    background-repeat: no-repeat;
+    background-position: 8px 8px;
+}
+.yui3-skin-sam #ft strong {
+    background-image: url(../../img/admin/uploader/thumbnail_large.png);
+    background-position: 0 0;
+}
+.yui3-skin-sam #ft .horiz_slider {
+    float: right;
+	 display:inline-block;
+    margin: 5px 5px 0;
+    padding: 0 5px;
+}
+#yui-main .yui-g ul li.hidden {
+    display: none;
+}
+
+#ft.loading em, #ft.loading strong {
+    display: none;
+}
+
+#manual-media-load,
+#media-reset
+{
+	font-weight:bold;
+	border:1px #666666 solid;
+	display: inline-block;
+	text-align:center;
+	margin:2px;
+	padding:2px;
+	cursor:pointer;
+	zoom:1;
+	background-image: url(http://yui.yahooapis.com/2.8.1/build/assets/skins/sam/sprite.png);
+	background-repeat-x: repeat;
+	background-repeat-y: no-repeat;
+	background-attachment: initial;
+	background-position:0 -200px;
+	background-origin: initial;
+	background-clip: initial;
+	background-color: #2647A0;
+}
+
+/*
+
+Panel for taging pictures
+
+*/
+
+
+.yui3-panel {
+    outline: none;	
+}
+
+.yui3-panel #panelContent {
+    -webkit-box-shadow: 0px 0px 2px black;
+    -moz-box-shadow: 0px 0px 2px black;
+    box-shadow: 0px 0px 2px black;
+	
+}
+.yui3-panel #panelContent .yui3-widget-hd {
+    font-weight: bold;
+    padding: 5px;
+}
+
+#panelContent .yui3-widget-bd {
+    padding: 15px;
+    background: white;
+    text-align: center;
+}
+
+
+.yui3-skin-sam .yui3-widget-mask {
+    background-color: #223460;
+    opacity: 0.9;
+}
+
+#input_tag{
+	text-align:left;
+}
+
+.hidden{
+	display:none;
+}
+
+
+/***************************************/
+/************    TAGS     **************/
+/***************************************/
+
+
+.tag{
+	position: relative;
+	padding:2px;
+	padding-right:12px;
+	border:1px  #666666 solid;
+	color:#fff;
+	background: -webkit-gradient(linear,left bottom,left top,from(#2647A0),color-stop(0.07,#2647A0),color-stop(0.5,#3D67CE),to(#426FD9));
+	background:-moz-gradient(linear,left bottom,left top,from(#2647A0),color-stop(0.07,#2647A0),color-stop(0.5,#3D67CE),to(#426FD9));
+	background:gradient(linear,left bottom,left top,from(#2647A0),color-stop(0.07,#2647A0),color-stop(0.5,#3D67CE),to(#426FD9));
+	margin:2px;
+	display:inline-block;
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-webkit-box-shadow: 1px 2px 4px rgba(0,0,0,.5);
+	-moz-box-shadow: 1px 2px 4px rgba(0,0,0,.5);
+	box-shadow: 1px 2px 4px rgba(0,0,0,.5);
+	background:-webkit-gradient(linear,left bottom,left top,from(#2647A0),color-stop(0.07,#2647A0),color-stop(0.5,#3D67CE),to(#426FD9));
+	background-color: #3961C5;
+	background-image: -webkit-gradient(linear, 0% 100%, 0% 0%, from(#2647A0), color-stop(0.07, #2647A0), color-stop(0.5, #3D67CE), to(#426FD9));
+	cursor:pointer;
+	
+}
+
+.tag-title{
+
+	text-align:left;
+
+}
+
+#pictures_tags{
+	margin:0;
+	padding:0;
+}
+.remove-tag {
+    background: url("http://finishers.stachura.ch/img/admin/tager/delete-small.png") no-repeat;
+    height: 8px;
+    opacity: 0.6;
+    position: absolute;
+    right:2px;
+    top: 6px;
+    visibility: hidden;
+    width: 8px;
+	
+}
+
+.remove-tag:hover { opacity: 1.0; }
+.tag-hover .remove-tag{ visibility: visible; }
+
+#present_tags{
+	text-align:left;
+	padding-left:0;
+}
+
+
+

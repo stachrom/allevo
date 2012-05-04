@@ -53,7 +53,7 @@
          'username' => 'root',
          'password' => '',
          'hostspec' => 'localhost',
-         'database' => 'finishers',
+         'database' => 'allevo_dev',
          'charset'  => 'utf8',
          'new_link'  => true
       ),
@@ -98,8 +98,8 @@
       ),
    );
    // Password
-   require_once ('password.php'); 
-   require_once ('global_functions.php'); 
+
+
 
    // bellow do not touch anything
 
@@ -118,7 +118,7 @@
    define('HORDE_BASE', '/home/www/stachura.ch/htdocs/horde');
     
    // Load the Horde Framework Core
-   set_include_path($app_root.'libs/'. PATH_SEPARATOR. $pear . PATH_SEPARATOR. $horde_pear );
+   set_include_path(get_include_path() . PATH_SEPARATOR .$app_root.'libs/'. PATH_SEPARATOR. $pear . PATH_SEPARATOR. $horde_pear );
 
    //require_once HORDE_BASE . '/lib/Application.php';
    require_once HORDE_BASE . '/libs/Horde/Autoloader/Default.php';
@@ -133,18 +133,15 @@
    require_once ('DB/NestedSet.php');
    require_once ('DB/NestedSet/Output.php');
    require_once ('MDB2.php');
-   require_once ('HTML/Menu.php');
-   require_once ('HTML/Menu/DirectTreeRenderer.php');
-   require_once ('HTML/QuickForm.php');
-   require_once ('HTML/QuickForm/CAPTCHA/Figlet.php');
-   require_once ('HTML/QuickForm/Renderer/ArraySmarty.php');
    require_once ('LiveUser.php');
    require_once ('LiveUser/Admin.php');
    require_once ('Benchmark/Timer.php');
    require_once ('pear_error_handler.php');
 
-   include 'tager/manager.php';
-   include 'global_functions.php'; 
+   include_once ('tager/manager.php');
+   include_once ('global_functions.php');
+   include_once ('password.php');    
+
 
    // HORDE RPC parameter 
    // JSON-RPC endpoint
@@ -338,7 +335,9 @@
 
    $NestedSets->setsortMode('SLV');		
       
-   $rootnodes = $NestedSets->getRootNodes(true);		
+   $rootnodes = $NestedSets->getRootNodes(true);
+
+   $SERVER_NAME = explode(".", $_SERVER["SERVER_NAME"]);   
 
    foreach($rootnodes as $key => $value){
 

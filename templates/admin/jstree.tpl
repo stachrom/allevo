@@ -230,19 +230,19 @@ YUI({
 			requires : ['node','anim','async-queue']
 			},
 		'multi-uploader' : {
-			fullpath : 'js/yui3/uploader.js',
+			fullpath : '/js/yui3/uploader.js',
 			requires : ['uploader', 'gallery-progress-bar', 'cookie']
 			},		
 		'photo':{
-			fullpath : '/javascript/photos.js',
+			fullpath : '/js/photos.js',
 			requires : [ 'node', 'event',  'json-parse', 'io-form',  'json', 'dd-plugin', 'datasource-io', 'transition', 'event-hover', 'event-custom', 'autocomplete', 'autocomplete-highlighters', 'autocomplete-filters', 'anim', 'dd', 'dd-plugin', 'dd-drop-plugin', 'slider', 'stylesheet', 'event-delegate', 'dump', 'json-stringify', 'io', 'panel']
 			},
 		'editor':{
-			fullpath : '/javascript/editor.js',
+			fullpath : '/js/editor.js',
 			requires : ['event', 'dump', 'json', 'node', 'event-delegate', "yui2-animation", "yui2-autocomplete", "yui2-button", "yui2-connection", "yui2-container", "yui2-dom", "yui2-editor", "yui2-element", "yui2-event", "yui2-menu"]
 			},
 		'data-table':{
-			fullpath : '/javascript/data_table_query_string.js',
+			fullpath : '/js/data_table_query_string.js',
 			requires : ['node', 'event-custom', "yui2-animation", "yui2-autocomplete", "yui2-button", "yui2-connection", "yui2-container", "yui2-dom", "yui2-editor", "yui2-element", "yui2-event", "yui2-menu", "yui2-datatable", "yui2-dom", "yui2-dragdrop", "event-custom", "yui2-calendar"]
 			}	
 		}
