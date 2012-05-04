@@ -3,12 +3,12 @@
 include('fusiontable/clientlogin.php');
 include('fusiontable/sql.php');
 include('fusiontable/file.php');
-	// Table id
-	$tableid = 964141;
-	
-	//Enter your username and password
-	$username = "stachrom";
-	$password = "rnga jfvo vgua zvrr";
+ 
+   // Table id
+   $tableid = $_allevo_config['fusiontable']['table_id'];
+   //Enter your username and password
+	$username = $_allevo_config['fusiontable']['user'];
+	$password = $_allevo_config['fusiontable']['password'];
 	
 	$fusion_token =& $mdb2->query('SELECT * FROM fusiontable WHERE id=1');
 	
