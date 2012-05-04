@@ -6,7 +6,25 @@
    }
  
    LocalWeather.NAME = "localWeather";
- 
+   
+   
+   LocalWeather.D_LIST_TEMPLATE ='<dl>'+ 
+                                    '<dt>{s_chill}</dt><dd>{chill}°{u_temperature}</dd>'+
+                                    '<dt>{s_pressure}</dt><dd>{pressure} {u_pressure} {barometer}</dd>'+ 
+                                    '<dt>{s_humidity}</dt><dd>{humidity} % </dd>'+
+                                    '<dt>{s_visibility}</dt><dd>{visibility} {u_distance}</dd>'+
+                                    '<dt>{s_speed}</dt><dd>{speed} {u_speed} {s_direction} {compass}</dd>'+ 
+                                    '<dt>{s_sunsetrise}</dt><dd>{sunrise} {s_timeunit}</dd>'+ 
+                                    '<dt>{s_sunset}</dt><dd>{sunset} {s_timeunit}</dd>'+                 
+                                 '</dl>';
+  
+      
+
+       //WEEKDAY_TEMPLATE: '<th class="{calendar_weekday_class}" role="columnheader" aria-label="{full_weekdayname}">{weekdayname}</th>',
+       //weekdays =  ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+       //fullweekdays =  ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      
+
    LocalWeather.ATTRS = {
       location : {
          value: "Winterthur"
@@ -21,7 +39,7 @@
         value: {
             compass: {N:"Norden", NO:"Nordosten", O:"Osten", SO:"Südosten",  S:"Süden", SW:"Südwesten", W:"Westen", NW:"Nordwesten"},
             wind: {chill:"gefühlt", speed:"Wind:", direction:"aus Richtung"},
-            atmosphere: {visibility:"Sichtweite:", humidity:"Luftfeuchtigkeit:", pressure:"Luftdruck:", rise:"steigend", drop:"fallend" },
+            atmosphere: {visibility:"Sichtweite:", humidity:"Luftfeuchtigkeit:", pressure:"Luftdruck:", rise:"steigend", drop:"fallend", drop_rapidly:"rapide fallend", steady:"stabil" },
             sun: {set:"Sonnenuntergang:", rise:"Sonnenaufgang:", unit:"Uhr"},
             aktualisierung : "Letzte Aktualisierung:"
         }
@@ -75,11 +93,12 @@
       _pressureMove : function(code, string) {
       
          var pressureDirection = "";
-             code = parseInt(code, 10);
-         
+         code = parseInt(code, 10);
+
          // pressure is heading...
          if (code === 0) pressureDirection = string.steady;
-         else if (code < 0) pressureDirection = string.drop;
+         else if (code === 1) pressureDirection = string.drop;
+         else if (code >= 2) pressureDirection = string.drop_rapidly;
          else pressureDirection = string.rise;
 
          return pressureDirection;
@@ -128,8 +147,24 @@
 
          Y.YQL( 'use "http://www.datatables.org/weather/weather.bylocation.xml" as we; select * from we where location="'+location+'" and unit="'+u+'"', function(r) { 
          
+         
+         if (r.query && r.query.results) {
+
             var result     = r.query.results.weather.rss.channel;
-                astronomy  = result.astronomy,
+            
+            
+            if (result.item.title){
+
+               var city = result.item.title,
+                   astronomy  = "",
+                   units      = "",
+                   wind       = "",
+                   atmosphere = "",
+                   lastupdate = "";               
+
+            }else{
+
+            var astronomy  = result.astronomy,
                 units      = result.units,
                 wind       = result.wind,
                 atmosphere = result.atmosphere,
@@ -141,7 +176,11 @@
                 sunset_min  = that._timeOfTheDayToMinutes(sunset),
                 now_min     = that._timeOfTheDayToMinutes(new Date()),
                 direction   = wind.direction,
+                city        = result.location.city,
                 barometer   = that._pressureMove(atmosphere.rising, strings.atmosphere),
+                temperatur  = result.item.condition.temp,
+                high        = result.item.forecast[0].high,
+                low         = result.item.forecast[0].low,
                 compass     = '';
 
             var a = lastupdate.split(' ', 6);
@@ -159,9 +198,11 @@
             var background = 'assets/weather/background/'+result.item.condition.code + meridium  +'-106755.jpg';
             
             compass = that._windDirection(direction, strings.compass);
+            
+           }    
 
            var html = '<div id="yw-forecast" class="'+ class_m +'" style=" background:url(\''+background+'\'); background-size: cover;" >';
-               html += '<div id="yw-cond" class="'+ class_m +'" >'+result.location.city+'</div>';
+               html += '<div id="yw-cond" class="'+ class_m +'" >'+city+'</div>';
 
             if(layout === "full"){
                html += '<dl>'; 
@@ -174,16 +215,18 @@
                html += '<dt>'+strings.sun.set+'</dt><dd>'+Y.DataType.Date.format( sunset, {format:"%R"})+' '+strings.sun.unit+'</dd>';                 
                html += '</dl>'; 
             }               
-              
                html += '<em>'+strings.aktualisierung+' '+aktualiserung+'</em>'; 
-               
                html += '<div class="forecast-temp">'+
-                          '<div id="yw-temp">'+result.item.condition.temp+'°</div>'+
-                           '<p>H:'+result.item.forecast[0].high+'° L: '+result.item.forecast[0].low+'°</p>'+
+                          '<div id="yw-temp">'+temperatur+'°</div>'+
+                           '<p>H:'+high+'° L: '+low+'°</p>'+
                           '</div>';
                html += '<div class="forecast-icon" style=" background:url(\''+icon+'\'); _background-image/* */: none; filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=\''+icon+'\', sizingMethod="crop"); "></div>';                                         
-               html += '</div>';  
+               html += '</div>'; 
 
+         }else{
+            var html = '<div id="error" > No Results received from the Weatherchannel </div>';
+            Y.log(r);
+         }
             contentBox.setContent(html);
          });
       }
