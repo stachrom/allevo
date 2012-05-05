@@ -1,4 +1,4 @@
-<fieldset><legend style="font-size:1.5em;"> Applikation <span style="color:blue;">{$edit_Appplication.application_name.value} </span> managen:</legend>
+﻿<fieldset><legend style="font-size:1.5em;"> Applikation <span style="color:blue;">{$edit_Appplication.application_name.value} </span> managen:</legend>
                  <br>
                  <h2> Module f&uuml;r die Applikation:"{$edit_Appplication.application_name.value}" </h2>
 

@@ -663,20 +663,9 @@ include '../set_env.php';
 		exit;
 		
 	}else{
-
 	//print_r($_REQUEST);
 	//header('Content-type: application/json; charset=utf-8');
 	//echo json_encode($_response);
-	
-
-		
-	echo"<pre>";
-		print_r($_response);
-	echo"</pre>";
-
-	
-	}
-	
-
-
+    //print_r($_response);
+}
 ?>

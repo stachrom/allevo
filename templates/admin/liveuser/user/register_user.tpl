@@ -1,4 +1,4 @@
-<div class="wrapper">
+﻿<div class="wrapper">
 		<p id="form-status"></p>
       <form id="registerForm" name="registerForm" action="?action=create_new_user" >
       <fieldset><legend><b>Register</b></legend>

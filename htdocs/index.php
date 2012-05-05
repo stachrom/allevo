@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 session_start();
 
@@ -678,7 +678,7 @@ if($table_data){
 // print_r($_SESSION);
 
 
-if ( empty($content))header("Location: /index.php",TRUE,301);
+if ( empty($content) && $id!=1 )header("Location: /index.php",TRUE,301);
 
 
 

@@ -4,14 +4,11 @@
 	<label for="liveuser-input">Search Users: </label><br>
 	<input id="liveuser-input" type="text">
 </div>
-  
-<div id="edit_user_overlay">
-  	<div class="yui3-widget-hd"></div>
-	<div id="widget" class="yui3-widget-bd"></div>
-    <div class="yui3-widget-ft"></div>
-</div>
+ <div id="results" class="yui3-1"></div> 
+ 
+
    
-<div id="results" class="yui3-1"></div> 
+
 
 
 

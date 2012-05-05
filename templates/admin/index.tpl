@@ -143,19 +143,22 @@ YUI({
   
   var loadModulBenutzer = function (callbackFunction) {
         // Lazy load model.
-        Y.lazyLoad( 'autocomplete', 'autocomplete-highlighters', 'datasource-io','gallery-form', "json", 'overlay','dump', 'console',  function (errors, attached) {
+        Y.lazyLoad( 'autocomplete', 'autocomplete-highlighters', 'datasource-io','gallery-form', "json-parse", 'overlay','dump',   function (errors, attached) {
 		
             // If there was a problem, deal with it.
             if (errors) {
                 callbackFunction(false);
                 return;
             }
+            
+            Y.log("alle attached ? " + Y.dump(attached));
+            
 
-			if (attached['gallery-form']) {
+			if (attached['gallery-form'] && attached['json-parse']) {
 
 				var editBtn   = Y.one('#editBtn'),
-					deleteBtn = Y.one('#deleteBtn'),
-					 loader    = Y.Node.create('<img src="loader.gif">'),
+					deleteBtn  = Y.one('#deleteBtn'),
+					 loader    = Y.Node.create('<img src="/img/waiting.gif">'),
 					 results   = Y.one('#results'),
 					 overlay,
 					 f,
@@ -195,7 +198,7 @@ YUI({
 					}
 		  
 		  
-				  var ds = new Y.DataSource.IO({
+				  var dsLuUser = new Y.DataSource.IO({
 					source: '/request/search.php?action=search_liveuser_user'
 					});
 		  
@@ -207,23 +210,21 @@ YUI({
 			 resultHighlighter: 'wordMatch',
 			 resultFormatter: LuUserFormatter,
 			 requestTemplate: '&q={query}',
-			 source: ds,
-			 
-			
-			 
-			 resultListLocator: function (response) {
-			 
-				    var data = response[0].responseText; // Response data.
-	
+			 source: dsLuUser,
+          resultListLocator: function (response) {
+
+            var data = response[0].responseText; // Response data.
+            
+            data = Y.Lang.trim(data);
+
 				try {
-					 var json_data = Y.JSON.parse(data);
-					 Y.log("json : " + Y.dump(json_data.result));
+					var json_data = Y.JSON.parse(data);
 				}
-				catch (response) {
-					 //alert("Invalid json data");
+				catch (e) {
+               alert("not json sorry...");
 				}
 
-				    var results = json_data.result;
+				var results = json_data.result;
 				
 				if (results && !Y.Lang.isArray(results)) {
 					 results = [results];
@@ -253,8 +254,9 @@ YUI({
 
 		 var handleSuccessEditUserForm = function(id, o, a) {
 		 // Create an overlay to edit a user (Form).
-				
-				    var data = o.responseText; 
+       
+         var data = o.responseText; 
+         data = Y.Lang.trim(data);
 	
 		      try {
 					 var json_data = Y.JSON.parse(data);
@@ -263,12 +265,7 @@ YUI({
 					 alert("Invalid json data");
 					 json_data= [];
 				}			
-		 
-			
-			  	
-				Y.log("DATAFORM: " + Y.dump(json_data.result));  
-				
-				
+
 				destroyOverlay();
 			  
 			   createOverlay(); 
@@ -291,6 +288,7 @@ YUI({
 							////////////////////////
 							
 							var data = args.response.responseText;
+                     data = Y.Lang.trim(data);
 										
 							try {
 									var json_data = Y.JSON.parse(data);
@@ -322,7 +320,8 @@ YUI({
 			overlay = new Y.Overlay({
 				 srcNode      : "#edit_user_overlay",
 				 width        : '400px',
-				 height       : '780px',
+             height       : '600px',
+             shim         : true,
 				 zIndex       : 100,
 				 headerContent: '<a title="hide panel" id="hideOverlay" ><em>hide</em></a>',
              centered     : true,
@@ -333,9 +332,9 @@ YUI({
 			
 			
 			
-			 Y.one('#hideOverlay').on('click', function(e){ 
+			Y.one('#hideOverlay').on('click', function(e){ 
 							  destroyOverlay(); 
-						 });
+			});
 						 
 						 
        Y.one('#edit_user_overlay').setStyle('display', 'block');

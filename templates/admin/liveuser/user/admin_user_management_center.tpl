@@ -1,4 +1,4 @@
-{config_load file="allevo.conf" section="usermanagement"}
+﻿{config_load file="allevo.conf" section="usermanagement"}
 
 	<span style="color:red ">{$LiveUserRightComments}</span>
 	

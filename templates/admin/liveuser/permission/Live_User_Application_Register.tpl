@@ -1,4 +1,4 @@
-
+﻿
 
  { if $smarty.get.cmd == 'EditApplication' or $smarty.post.cmd == 'EditApplication'}
 

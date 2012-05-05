@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 session_start();
 include 'set_env.php';
 include 'locale/german.php';
@@ -17,7 +17,7 @@ $smarty->assign('metatag_header', array(
    if (!$LU->checkRightLevel('USERMANAGEMENT_RIGHT_EDIT', (int)$LU->getProperty('owner_user_id'), (int)$LU->getProperty('owner_group_id') )) {
 
    }else{
-        
+
    }
 	
 
@@ -63,7 +63,7 @@ if(!$LU->isLoggedIn()){
 
    if(IS_AJAX){
 
-      header("Content-Type: application/json");
+      header('Content-type: application/json; charset=utf-8');
       echo json_encode($_response);
       exit;
    }
@@ -94,9 +94,8 @@ if(!$LU->isLoggedIn()){
 		$logger->log('ajax requests '. $ajax_request, PEAR_LOG_DEBUG );
 		$logger->log('ajax respond '. serialize($respond), PEAR_LOG_DEBUG );
 		
-		header("Content-Type: application/json");
+		header('Content-type: application/json; charset=utf-8');
 		echo json_encode($_response);
-
 		exit;
 	}
 
