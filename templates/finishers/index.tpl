@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html> 
-<html lang="de" > 
+<!DOCTYPE html>
+<html lang="de">
 <head>
 	<meta charset="utf-8"> 
 	<title>finishers Winterthur</title> 
-	<link rel="stylesheet"  href="http://yui.yahooapis.com/combo?3.5.0/build/cssfonts/fonts-min.css&amp;3.5.0/build/cssreset/reset-min.css&amp;3.5.0/build/cssgrids/grids-min.css">
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,800italic,600italic' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="http://yui.yahooapis.com/combo?3.5.0/build/cssfonts/fonts-min.css&amp;3.5.0/build/cssreset/reset-min.css&amp;3.5.0/build/cssgrids/grids-min.css">
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,800italic,600italic"  >
 	<link rel="stylesheet" href="css/main.css" >
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" >
 	<!--[if IE]>
@@ -13,16 +13,7 @@
   
 
 <script src="http://yui.yahooapis.com/3.5.0/build/yui/yui-min.js"></script>
-
-{*
-<script src="http://yui3.stachura.ch/build/yui/yui-min.js"></script>
-<script src="http://yui.yahooapis.com/3.5.0pr6/build/yui/yui-min.js"></script>
-<script src="http://yui.yahooapis.com/3.4.1/build/yui/yui-min.js"></script>
-<script src="http://yui3.stachura.ch/build/yui/yui-min.js"></script>
-<script src="http://yuinightly.kludg.com/seed?filter=min"></script>
-*}
-
-<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+<script src="https://apis.google.com/js/plusone.js"></script>
 
 </head>
  
@@ -32,25 +23,22 @@
     <header id="hd" >
     	<div class="content" id="hd-content">
       <div id="wetter"> </div>
-		<div id="logo"> <a href="index.php"  title="home"> <img src="img/finishers_logo.png" alt="Logo Triathlon Klub Finishers" > </a> </div>
-		
-        <aside>
+		<aside>
 			<ul id="headerlink"> 
 				<li> <a href="http://horde.finishers.ch">Horde 4.0</a> </li>
-                <li> 
+            <li> 
 				{if $liveuser.loggedIn} 
-                    User: <span style="color:black">{$liveuser.handle} </span> <a href="?logout=1">Logout</a> | <a href="./admin.php">Administration</a>
-                    <a id="show-loginOverlay" style="display:none;" href="#">Login</a>
-                {else}
-                    <a id="show-loginOverlay" href="#">Login</a>
-                {/if}
-          		</li>     
-            </ul> 
-            
+                User: <span style="color:black">{$liveuser.handle} </span> <a href="?logout=1">Logout</a> | <a href="./admin.php">Administration</a>
+                <a id="show-loginOverlay" style="display:none;" href="#">Login</a>
+            {else}
+                <a id="show-loginOverlay" href="#">Login</a>
+            {/if}
+          	</li>     
+         </ul>  
 			<form id="main-search" class="search" action="http://finishers.ch/search" method="get" role="search">
-    		<input type="search" class="search-input yui3-aclist-input" name="q" placeholder="Search Trainings / Webpage / Mitglieder" autocomplete="off" >
+            <input type="search" class="search-input yui3-aclist-input" name="q" placeholder="Search Trainings / Webpage / Mitglieder" autocomplete="off" >
 			</form>
-        </aside>
+      </aside>
 
         <div class="yui3-g">
 			<div id="main-nav" class="yui3-u">
@@ -380,7 +368,7 @@ YUI().use('scrollview',  'scrollview-paginator', function (Y) {
 						<hr>
 						<h2>Schwimmen</h2>
 					</div>
-					<img src="img/startseite/schwimmen.jpg" alt="" width="100%">
+					<img src="img/startseite/schwimmen.jpg" alt="" style="width:100%">
 				</a>
 			</div>
     	</div>
@@ -392,7 +380,7 @@ YUI().use('scrollview',  'scrollview-paginator', function (Y) {
 						<hr>
 						<h2>Laufen</h2>
 					</div>
-					<img src="img/startseite/laufen.jpg" alt="" width="100%">
+					<img src="img/startseite/laufen.jpg" alt="" style="width:100%">
 				</a>
 			</div>
 		</div>
@@ -404,7 +392,7 @@ YUI().use('scrollview',  'scrollview-paginator', function (Y) {
 						<hr>
 						<h2>Radfahren</h2>
 					</div>
-					<img src="img/startseite/velofahren.jpg" alt="" width="100%">
+					<img src="img/startseite/velofahren.jpg" alt="" style="width:100%">
 				</a>
 			</div>
     	</div>
@@ -416,7 +404,7 @@ YUI().use('scrollview',  'scrollview-paginator', function (Y) {
 						<hr>
 						<h2>Nordic Walking</h2>
 					</div>
-					<img src="img/startseite/walking.jpg" alt="" width="100%">
+					<img src="img/startseite/walking.jpg" alt="" style="width:100%">
 				</a>
 			</div>
     	</div>     
@@ -480,33 +468,19 @@ YUI().use('scrollview',  'scrollview-paginator', function (Y) {
 			<div class="yui3-u-1-4"> 
 				<div class="content">
 					<b> Quick Links : </b>             
-					 <ul> 
-						<li><a href="?id=646" alt="mitglied werden" >mitglied werden</a> </li>
-						<li><a href="?id=614"alt="Trainings">Trainings</a></li>
-						<li><a href="?id=493"alt="Junioren">Junioren</a></li>
-						<li><a href="?id=612"alt="Mitglieder"> Mitglieder</a> </li>
-						<li><a href="?id=498"alt="Mitglieder"> News</a></li>
-					</ul>
+					 
 				</div>
 			</div> 
 			<div class="yui3-u-1-4"> 
 				<div class="content" >
 					<b>Sponsoren </b>    
-					<ul>
-						<li><a href="?id=652#swica" alt="sponsoren: Swica" > Swica </a></li>
-						<li><a href="?id=652#StopAndGo" alt="sponsoren: Stop and Go" > Stop and Go </a> </li>
-						<li><a href="?id=652#Wintifit" alt="sponsoren: Wintifit" > Wintifit </a> </li>
-						<li><a href="?id=652#BikeStop" alt="sponsoren: Bike Stop" > Bike Stop </a> </li>
-						<li><a href="?id=652#UnifilAG" alt="sponsoren: Unifil AG" > Unifil AG </a> </li>
-						<li><a href="?id=652#Agrola" alt="sponsoren: Swica" > Agrola </a> </li>
-						<li><a href="?id=652#GSFood" alt="sponsoren: GS Food" > GS Food </a> </li>
-					</ul>
+					
 				</div>
 			</div>       
 			<div class="yui3-u-1-4"> 
 				<div class="content">
 					<p style=" text-align:right">
-					Letzte Änderung:  <time pubdate="pubdate" datetime={$content.modified|date_format:"%Y-%m-%d"} >{$content.modified|date_format:"%A der %d. %B %Y"}</time>
+					Letzte Änderung:  <time datetime="{$content.modified|date_format:"%Y-%m-%d"}" >{$content.modified|date_format:"%A der %d. %B %Y"}</time>
 					</p>
 				</div>
 			</div> 

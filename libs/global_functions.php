@@ -1,5 +1,4 @@
 <?php
-
    // time funktion.
    function secondsToTime($seconds) {
       // extract hours
@@ -150,15 +149,10 @@
                      $content['tags'] = $tager->getTags($args);
                   }
                }	
-
             }
             return $content;
       }else{
          // there is no content. what shall we do?
       }
    }
-
-
-
-
-?>	
+?>

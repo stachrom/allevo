@@ -1,4 +1,4 @@
-﻿<?php
+<?php
    // Client specific variables
    //allevo Config array
    $_allevo_config = array(	
@@ -99,7 +99,7 @@
    );
    // Password
 
-
+  
 
    // bellow do not touch anything
 
@@ -109,9 +109,10 @@
    $pear = dirname(__FILE__).'/../pear/PEAR';
    $horde_pear = '/home/www/stachura.ch/htdocs/horde/libs';
 
-
    // header pictures must contain  string = /img/
    $header_pictures = $app_root . '/img/template/stadttheater/header';
+   
+
 
    define('IS_AJAX', isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
    define('SMARTY_DIR', $app_root.'smarty/3.x/libs/');
@@ -119,6 +120,9 @@
     
    // Load the Horde Framework Core
    set_include_path(get_include_path() . PATH_SEPARATOR .$app_root.'libs/'. PATH_SEPARATOR. $pear . PATH_SEPARATOR. $horde_pear );
+   
+   
+
 
    //require_once HORDE_BASE . '/lib/Application.php';
    require_once HORDE_BASE . '/libs/Horde/Autoloader/Default.php';
@@ -137,11 +141,10 @@
    require_once ('LiveUser/Admin.php');
    require_once ('Benchmark/Timer.php');
    require_once ('pear_error_handler.php');
-
-   include_once ('tager/manager.php');
-   include_once ('global_functions.php');
-   include_once ('password.php');    
-
+   
+   include_once ('tager/manager.php');   
+   include_once ('password.php');
+   include_once ('global_functions.php'); 
 
    // HORDE RPC parameter 
    // JSON-RPC endpoint
@@ -170,7 +173,7 @@
    $logger->setMask($mask);
 
    if($_allevo_config['log']['enabled'] == false){
-      define("LOGGING", TRUE);
+      define("LOGGING", true);
          
       function errorHandler($code, $message, $file, $line){
          global $logger;
@@ -200,6 +203,7 @@
       
    }else{
       //error_reporting(0);
+      define("LOGGING", false);
    }
 
    $timer->setMarker('logging');	
@@ -232,12 +236,14 @@
    $smarty->config_dir   = $app_root .'/smarty/configs/';
    $smarty->force_compile = true;
    $smarty->debugging = false; //$_allevo_config['log']['enabled'];
-   $smarty->setCompileCheck = true;
+   //$smarty->setCompileCheck = true;
    $smarty->caching = false;
    $smarty->allow_php_templates=false;
    $smarty->cache_lifetime = 300;
 
    $timer->setMarker('smarty');
+   
+
 
 // --------------------------- Datenbank einstellungen ----------------
 
@@ -400,5 +406,9 @@
    $smarty->assign('pfad', "", false);
    
    $timer->setMarker('ende config');
+   
+   
+
+
 
 ?>

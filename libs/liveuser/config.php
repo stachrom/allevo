@@ -224,7 +224,7 @@ class LU_Default_observer{
 
 
     if (!$LU->init()) {
-        var_dump($LU->getErrors());
+        $LU->getErrors();
         die();
     }
 
@@ -250,7 +250,7 @@ class LU_Default_observer{
 			$ajax_request = ob_get_contents();
         ob_end_clean();
 		
-		$logger->log('session shit '. $ajax_request, PEAR_LOG_DEBUG );
+		//$logger->log('session shit '. $ajax_request, PEAR_LOG_DEBUG );
 	
 	
 
