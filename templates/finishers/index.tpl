@@ -10,8 +10,6 @@
 	<!--[if IE]>
 	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-  
-
 <script src="http://yui.yahooapis.com/3.5.0/build/yui/yui-min.js"></script>
 <script src="https://apis.google.com/js/plusone.js"></script>
 
@@ -220,11 +218,6 @@
 		</footer>     
 	</div>
 	
-
-	
-
-		
-
 
    {if $news AND $content.nested_set_id != 1}
    {include file='finishers/news.tpl'} 

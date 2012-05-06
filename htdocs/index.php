@@ -5,7 +5,10 @@ session_start();
 
 include 'set_env.php';
 include 'locale/german.php';
-	
+$dir_img = $_allevo_config['app_root'].'htdocs/'.$_allevo_config['relativ_upload_path'];
+$server_bilder = check_dir($dir_img);
+
+
 
     $_offset = array_key_exists('offset', $_GET)   ? (int) trim($_GET['offset'])  : 0 ;
     $_offset = array_key_exists('offset', $_POST)  ? (int) trim($_POST['offset']) : $_offset;
@@ -369,8 +372,6 @@ $content =& $mdb2->queryRow('SELECT * FROM nested_set_content WHERE nested_set_i
 
 
 if ( empty($content) && $id!=1 )header("Location: /index.php",TRUE,301);
-
-
 
 $smarty->assign('content',  unserialize_content($content, true), true);
 
