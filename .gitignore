@@ -5,7 +5,7 @@ smarty/compile/*
 session/cookie/*
 log/*
 htpasswd/*
-
+/htdocs/img/upload/*
 
 
 
