@@ -751,20 +751,20 @@ YUI({
 	lang:'de',
 	modules : {
 		'hoverable' : {
-			fullpath : 'http://www.stachura.ch/js/yui3/hoverable-min.js',
+			fullpath : '/js/yui3/hoverable-min.js',
 			requires : ['event-hover', 'node-base', 'node-event-delegate']
 		},
 		'search':{
-			fullpath : 'http://finishers.stachura.ch/js/yui3/search.js',
+			fullpath : '/js/yui3/search.js',
 			requires : ['autocomplete','autocomplete-highlighters','node-pluginhost']
 		},
 		'overlay-login':{
-			fullpath : 'http://finishers.stachura.ch/js/yui3/overlay_login.js',
+			fullpath : 'js/yui3/overlay_login.js',
 			requires : [ 'gallery-formmgr', 'panel', 'dd-plugin', 'io-form', 'json']
 		},
       'gallery-localWeather':{
 			fullpath : 'js/yui3-gallery/gallery-weather.js',
-			requires : ['widget', 'substitute', 'yql', 'datatype-date-format']
+			requires : ['widget', 'substitute', 'yql', "datatype-date-format", "datatype-date-parse" ]
 		}
   
 	}

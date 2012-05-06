@@ -5,27 +5,27 @@
 //include 'user_management/LiveUserGroup.php';
 
 	$perm_type 	= $LU->getProperty('perm_type');
-   	$status 	= $LU->getStatus();
+   $status 	= $LU->getStatus();
  	$handle 	= $LU->getProperty('handle');
 
 
 	$limit  	= array_key_exists('limit',  $_REQUEST) ? (int) trim($_REQUEST['limit'])  :10;
-	$limit   	= preg_match($pattern['int'], $limit)  ? $limit  : '';
+	$limit   = preg_match($pattern['int'], $limit)  ? $limit  : '';
 	
 	$offset 	= array_key_exists('offset', $_REQUEST) ? (int) trim($_REQUEST['offset']) :0;
-	$offset   	= preg_match($pattern['int'], $offset)  ? $offset  : '';
+	$offset  = preg_match($pattern['int'], $offset)  ? $offset  : '';
 	 
 	$action 	= array_key_exists('action', $_GET)   ? (string) trim($_GET['action'])   : '';
 	$action 	= array_key_exists('action', $_POST)  ? (string) trim($_POST['action'])  : $action;
-	$action   	= preg_match($pattern['alphanumeric'], $action)  ? $action  : '';
+	$action  = preg_match($pattern['alphanumeric'], $action)  ? $action  : '';
  
 	$source 	= array_key_exists('source', $_GET)   ? (string) trim($_GET['source'])   : '';
 	$source 	= array_key_exists('source', $_POST)  ? (string) trim($_POST['source'])  : $source;
-	$source    	= preg_match($pattern['alphanumeric'], $source )  ? $source   : '';
+	$source  = preg_match($pattern['alphanumeric'], $source )  ? $source   : '';
  
 	$target 	= array_key_exists('target', $_GET)   ? (string) trim($_GET['target'])   : '';
 	$target 	= array_key_exists('target', $_POST)  ? (string) trim($_POST['target'])  : $target;
-	$target    	= preg_match($pattern['alphanumeric'], $target )  ?$target   : '';
+	$target  = preg_match($pattern['alphanumeric'], $target )  ?$target   : '';
  
 	$name		= array_key_exists('name', $_GET)   ? (string) trim($_GET['name'])        : '';
 	$name		= array_key_exists('name', $_POST)  ? (string) trim($_POST['name'])       : $name;
@@ -116,43 +116,31 @@
     );							
 	}
 
-
-
-
-
-
-
-    $UserRechteAllevo = $lu_admin->perm->getRights($params_userrechte);
+   $UserRechteAllevo = $lu_admin->perm->getRights($params_userrechte);
 	 
-	 
+   $area_param = array(
+      'fields' => array('area_define_name', 'area_id'),
+      'filters' => array('application_id' => APPLICATION_ID) 
+   );
 
-
-
-
-
-    $area_param = array(
-			'fields' => array('area_define_name', 'area_id'),
-			'filters' => array('application_id' => APPLICATION_ID) 
-                   );
-
-    $liveuser_areas = $lu_admin->perm->getAreas($area_param);
+   $liveuser_areas = $lu_admin->perm->getAreas($area_param);
   	$auth_users     = $lu_admin->getUsers($params_users);
 	 
-	 foreach ($auth_users as $key => $value){
+   foreach ($auth_users as $key => $value){
 	 
-			if ($auth_user_id == $value['auth_user_id']){
-				$user_data = $value;
-			}
-						
-			$all_perm_user_ids[] = $value['perm_user_id'];
-	}
+      if ($auth_user_id == $value['auth_user_id']){
+         $user_data = $value;
+      }
+
+      $all_perm_user_ids[] = $value['perm_user_id'];
+   }
 
   
   	$smarty->assign('auth_users', $auth_users);
 	$smarty->assign('UserRechteAllevo',   $UserRechteAllevo);
-    $smarty->assign('allevo_area',   $allevo_area);
-    $smarty->assign('LiveUserApplications', $LiveUserApplications);
-    $smarty->assign('LiveUserAreas', $liveuser_areas);
+   $smarty->assign('allevo_area',   $allevo_area);
+   $smarty->assign('LiveUserApplications', $LiveUserApplications);
+   $smarty->assign('LiveUserAreas', $liveuser_areas);
 	 
 	//print_r($auth_users);
 	//print_r($allevo_area);
@@ -170,7 +158,7 @@
 	
 	if($LU->checkRightLevel( USERMANAGEMENT_VIEW, $LU->getProperty('owner_user_id'), $LU->getProperty('owner_group_id')) or $LU->getProperty('perm_user_id') == $perm_user_id ){
 
-			if($action == "showUser"){
+      if($action == "showUser"){
 
 									
 									
@@ -200,7 +188,7 @@
 
 									}
 										
-										$result_auth = $lu_admin->auth->getUsers($params_auth);
+									$result_auth = $lu_admin->auth->getUsers($params_auth);
 										
 										
 										 //$_response['result_auth'] = $result_auth;
@@ -212,10 +200,8 @@
 									
 
          if( is_array($result) ){
-			
-	
-				foreach( $result as $key => $value ){
 				
+				foreach( $result as $key => $value ){
 
 						switch($key){
 							case 'perm_type':
@@ -243,7 +229,6 @@
 								);
 								break;
 							case 'geschlecht':
-							
 									$form[] = array( 
 									'name' => $key, 
 									'label' => $key, 
@@ -255,7 +240,6 @@
 														array('label'=>'Mann', 'value'=> '1') 
 												) 
 								);
-						
 								break;	
 							case 'bemerkungen':
 								$form[] = array( 'name' => $key, 'label' => $key, 'value' => $value, 'type'  => 'TextareaField');
@@ -293,11 +277,22 @@
 				
 					$form[] = array( 'name' => 'submit',   'type'  => 'SubmitButton', 'value' => 'Save');
 				   $form[] = array( 'name' => 'reset',    'type'  => 'ResetButton',  'value' => 'Reset');
-				// sich selbst löschen ist nicht gut.	
-				if($perm_user_id == $LU->getProperty('perm_user_id')){	
-					$form[] = array( 'name' => 'submit',   'type'  => 'SubmitButton', 'value' => 'Delete');
-				}
-					
+               
+               
+               if( $LU->checkRightLevel( USERMANAGEMENT_DELETE, $LU->getProperty('owner_user_id'), $LU->getProperty('owner_group_id')) ){
+               
+                  if($perm_user_id == $LU->getProperty('perm_user_id')){
+       
+                  }else{
+                     $form[] = array( 'name' => 'DeleteUser',   'type'  => 'SubmitButton', 'value' => 'Delete');
+                  }
+                  
+               }
+               
+               
+               
+				// sich selbst löschen ist nicht gut.
+
 					$_response['result'] = $form;
 					$_response['status'] = 200;
 					$_response['statusmsg'] ='Show User Account';
@@ -317,7 +312,12 @@
 	//########################################################################//			
 
 	if( $LU->checkRightLevel( USERMANAGEMENT_EDIT, $LU->getProperty('owner_user_id'), $LU->getProperty('owner_group_id')) or $LU->getProperty('perm_user_id') == $perm_user_id ){	
+   
+      $_response['post']= $_POST;
 
+      if( $_POST['DeleteUser'] == "Delete"){
+
+      }
 	
 				if($action == "update_user_account"){
 
@@ -358,10 +358,9 @@
 				
 					$owner_user_id = preg_match($pattern['int'], $_REQUEST['owner_user_id']) ? (int)$_REQUEST['owner_user_id'] : false;
 					$owner_user_id != false ? ($user_data['owner_user_id'] = $owner_user_id) : false;
-								
+				
 					$user_data['is_active']= preg_match($pattern['bin'], $_REQUEST['is_active']) ? (int)$_REQUEST['is_active'] : 0;
 					
-								
 					$perm_type_data = preg_match($pattern['0-5'], $_REQUEST['perm_type']) ? (int)$_REQUEST['perm_type'] : false;
 					$perm_type_data != false ? ($user_data['perm_type'] = $perm_type_data) : false;
 					
@@ -371,7 +370,7 @@
 					$username != false ? ($user_data['handle'] = $username) : false;
 
 							// $data['auth_user_id']=''; // do not change manualy !!!
-				  }
+				}
 						
 						$result = $lu_admin->updateUser($user_data, $perm_user_id); 
 						
@@ -389,9 +388,12 @@
 							$_response['status'] = 400;
 							$_response['statusmsg']= 'User Account is not eddited';
 							$_response['extra']= $user_data;
+                     
 							
 
 						}
+                  
+                  
 			}	
 	}
 	
@@ -409,8 +411,6 @@
 
 		
 	}else{
-	
-	
 
 		if( $action == "deleteUser" ){
 

@@ -131,11 +131,7 @@ YUI({
 
 
 			};
-			
-			
-			
-			
-		
+
 			callbackFunction(true);
 			
         });
@@ -147,8 +143,8 @@ YUI({
 		
             // If there was a problem, deal with it.
             if (errors) {
-                callbackFunction(false);
-                return;
+               callbackFunction(false);
+               return;
             }
             
             Y.log("alle attached ? " + Y.dump(attached));
@@ -321,7 +317,6 @@ YUI({
 				 srcNode      : "#edit_user_overlay",
 				 width        : '400px',
              height       : '600px',
-             shim         : true,
 				 zIndex       : 100,
 				 headerContent: '<a title="hide panel" id="hideOverlay" ><em>hide</em></a>',
              centered     : true,
@@ -330,14 +325,11 @@ YUI({
 			
 			overlay.render();
 			
-			
-			
 			Y.one('#hideOverlay').on('click', function(e){ 
 							  destroyOverlay(); 
 			});
-						 
-						 
-       Y.one('#edit_user_overlay').setStyle('display', 'block');
+
+         Y.one('#edit_user_overlay').setStyle('display', 'block');
 		}
 		
 

@@ -124,7 +124,7 @@
       
         var MDY = Y.DataType.Date.format(new Date(), {format:"%m/%d/%Y"});
         var today = Y.DataType.Date.parse(MDY+" "+timeOfTheDay);
-        
+    
         return today;
       },
 
@@ -141,6 +141,8 @@
          Y.YQL( 'use "http://www.datatables.org/weather/weather.bylocation.xml" as we; select * from we where location="'+location+'" and unit="'+u+'"', function(r) { 
          
          
+         
+         
          if (r.query && r.query.results) {
 
             var result     = r.query.results.weather.rss.channel,
@@ -149,7 +151,7 @@
                 wind       = result.wind,
                 atmosphere = result.atmosphere,
                 item       = result.item;
-            
+    
             
             if (result.description === "Yahoo! Weather Error"){
 
@@ -160,7 +162,6 @@
                    low        = "";
                    
             }else{
-
             var sunrise     = that._timeToValideDate(astronomy.sunrise),
                 sunset      = that._timeToValideDate(astronomy.sunset),
                 sunrise_min = that._timeOfTheDayToMinutes(sunrise),
@@ -228,4 +229,4 @@
  
    Y.LocalWeather = LocalWeather;
  
-}, '1.0', {require: ["widget", "substitute", "yql", "datatype-date"]});
+}, '1.0', {require: ["widget", "substitute", "yql", "datatype-date-format", "datatype-date-parse" ]});

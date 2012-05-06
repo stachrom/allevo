@@ -369,7 +369,8 @@
    $pattern['0-5']            ='/^[0-5]{1}+$/';
    $pattern['text']           ='/^[0-9a-zA-Z-]+$/';
    $pattern['filter']         ='/^[ABCJSMFK45]{1,2}+$/';
-	
+
+
 // ---------------- Liveuser --------------------  
    $liveuser = array(
       'loggedIn' => $LU->isLoggedIn(),
@@ -393,8 +394,8 @@
    $user_is_in_group = $lu_admin->perm->getGroups($params_get_groups);
 
    $smarty->assign('liveuser', $liveuser, true);
-   $smarty->assign("Adresse", $_allevo_config['adresse'], true);
-   $smarty->assign("version", $_allevo_config['version']);
+   $smarty->assign("Adresse",  $_allevo_config['adresse'], true);
+   $smarty->assign("version",  $_allevo_config['version']);
    $smarty->assign("template_name", "stadttheaterolten");
    $smarty->assign('pfad', "", false);
    

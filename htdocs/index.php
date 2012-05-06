@@ -3,16 +3,8 @@
 session_start();
 
 
-
-
-    include 'set_env.php';
-    include 'locale/german.php';
-	
-
-    
-    
-	$dir_img = $_allevo_config['app_root'].'htdocs/'.$_allevo_config['relativ_upload_path'];
-	$server_bilder = check_dir($dir_img);
+include 'set_env.php';
+include 'locale/german.php';
 	
 
     $_offset = array_key_exists('offset', $_GET)   ? (int) trim($_GET['offset'])  : 0 ;
@@ -86,99 +78,6 @@ if($eventUID){
 get_kronolith_event($eventUID);
 
 }
-
-
-
-function get_turba_contact( $turbaID = false){
-
-	global $smarty;
-	global $_allevo_config;
-	global $rpc_options; 
-	global $rpc_endpoint;   
-
-	// Horde Turba API Call --> contacts.getContact
-    $turba_sources = $_allevo_config['horde']['module']['turba']['sources'];
-    $rpc_parameters_turba = array(
-        'source' => $turba_sources['0'],
-        'objectId' => $turbaID
-    );    
-
-	//print_r($rpc_parameters_turba);
-	
-	try {
-
-		$http_client = new Horde_Http_Client($rpc_options);
-		
-		$result  = Horde_Rpc::request(
-			'jsonrpc',
-			$rpc_endpoint,
-			'contacts.getContact',
-			$http_client,
-			$rpc_parameters_turba
-		);
-	
-	}catch (Exception $e) {	
-
-		echo 'Caught exception: ',  $e->getMessage(), "\n";
-
-	}
- 
-
-    // wenn der event gelöscht oder nicht auffindbar ist, dann permanent redirect auf index.php
-    if (is_a($result, 'PEAR_Error'))header("Location: http://".$_SERVER['HTTP_HOST']."/index.php",TRUE,301);
-    
-    
-	if (!is_a($result->result, 'PEAR_Error') and is_object($result->result) ){
-      
-         
-         $contact = $result->result;
-         $contactUID = $result->result->__uid;
-         
-         //print_r($contact);
-
-		// fill php buffer. --> $kronolith_event_buffer
-		ob_start();     
-		echo'
-		
-		<img src="http://images.finishers.ch/?turbaID='.$turbaID.'" alt="'.$contact->name.'">
-		<br>
-			<dl>
-			<dt>Name: </dt>
-			<dd>'.$contact->name.'</dd>';
-        if ($contact->vorstand || $contact->trainer || $contact->beisitzer){
-		echo'<dt>Funktion:</dt>
-			 <dd>'.$contact->vorstand.' '.$contact->trainer.' '.$contact->beisitzer.'</dd>';
-        }
-		echo'
-			<dt>Tel:</dt>
-			<dd>'.$contact->cellPhone.'</dd>
-			<dt>E-mail:</dt>
-			<dd>'.$contact->email.'</dd>
-			<dt>Info:</dt>
-			<dd>'.$contact->notes.'</dd>
-			</dl>
-		';
-		$turba_contact_buffer = ob_get_contents();
-		
-		ob_end_clean();
-    }
-     $smarty->assign('turba_contact', $turba_contact_buffer, true);
-}
-
-    
-
-
-if ($turbaID){
-
-get_turba_contact( $turbaID);
-
-}
-
-
-
-
-
-
 
 
     $addSQL = array( 'where' => 'active = 1');
@@ -466,215 +365,6 @@ $content =& $mdb2->queryRow('SELECT * FROM nested_set_content WHERE nested_set_i
 
 
 
-         if ($content['title'] == "Mitglieder"){
-            
-
-            
-                $path = 'turba/admin/LofVYGVu5LFPRRgUSwaR4uA';
-                $turba_properties = array(
-                                    'name', 
-                                    'funktion'    
-                            );    
-
-                $rpc_parameters = array(
-                                    'path' => $path, 
-                                    'properties' => $turba_properties
-                            );  
-				try {
-
-					$http_client = new Horde_Http_Client($rpc_options);
-				
-					$turba_browse = Horde_Rpc::request(
-						'jsonrpc',
-						$GLOBALS['rpc_endpoint'],
-						'contacts.browse',
-						$http_client,
-						$rpc_parameters
-						);
-			
-				}catch (Exception $e) {	
-
-					echo 'Caught exception: ',  $e->getMessage(), "\n";
-
-				}	
-
- 
-            
-                ob_start();				
-                echo'<ul id="addressBook">';
-
-                foreach($turba_browse->result as $key => $contact){
-                      
-                        $dataTags = '';
-                      
-                     if( is_string($contact->vorstand)){
-                        $dataTags[0]  = "vorstand";
-                      }
-                      if(is_string($contact->beisitzer)){
-                        $dataTags[1]  = "beisitzer";
-                      }
-                     if(is_string($contact->trainer)){
-                        $dataTags[2]  = "trainer";
-                      }
-                     if($contact->anrede){
-                        $dataTags[3]  = $contact->anrede;
-                     }
-                     if($contact->homeCity){
-                        $dataTags[4]  = $contact->homeCity;
-                     }
-                     if($contact->memberstatus){
-                     
-                     switch ($contact->memberstatus) {
-                            case 'P':
-                                        $dataTags[5]  = 'passiv';
-                                     break;
-                            case 'Eintritt':
-                                        $dataTags[5]  = 'neu eintritt';
-                                     break;
-                            case 'Austritt':
-                                        $dataTags[5]  = 'austritt';
-                                     break;
-                            case 'G':
-                                        $dataTags[5]  = 'gönner';
-                                     break;
-                            case 'E':
-                                        $dataTags[5]  = 'ehrenmitglied';  
-                                     break;
-                            case 'A':
-                                        $dataTags[5]  = 'aktiv';
-                                     break;    
-                            case 'W':
-                                        $dataTags[5]  = 'walker';
-                                     break;               
-                            case 'F':
-                                        $dataTags[5]  = 'familie';
-                                      break;
-                            case 'J':
-                                        $dataTags[5]  = 'junior';
-                                     break;                   
-                            }
-                     }
-                     
-                    if($contact->name){
-                        $dataTags[6]  = $contact->name;
-                    }
-					
-                    $path = explode("/", $key);    
-                      
-              echo' <li class="contact" data-tags="'.implode(",", $dataTags).' ">
-						<a href="?turbaID='.end($path).'">'.$contact->name.'</a>
-                    </li>';
-                            
-                    } // end foreach contactrs
-        
-echo' </ul>';      
-        
-    
-        
-    
-     $turba_contacts_buffer = ob_get_contents();
-     ob_end_clean();
-
-
-
-
-     $smarty->assign('turba_contacts', $turba_contacts_buffer, true);        
-
-
-
-
-
-            
-            }
-
-
-if ($content['title'] == "Resultate"){
-
-include('fusiontable/contact.php');
-
-
-$cols = array('count()', 'Email', 'Name', 'Vorname', 'Sportart');
-$condition = "group by Email,Name, Vorname, Sportart";
-$table_data = $ftclient->query(SQLBuilder::select($tableid, $cols, $condition));
-
-
-//$table_info = $ftclient->query(SQLBuilder::describeTable(1065078));
-
-//$cols1 = array( 'count()','Email', 'Timestamp', 'MAXIMUM(\'8-18 Junioren\')', 'MAXIMUM(\'19-30 Hauptklasse\')', 'sum(\'31-39 Altersklasse\')', 'sum(\'40-x Altersklasse\')', Rang, Wettkampftitel);
-//$condition1 = "WHERE 'Rang' <=10 AND 'Wettkämpfe'= 'Wettkampf'  group by Email, Timestamp, Rang, 'Wettkampftitel'";
-//$test = $ftclient->query(SQLBuilder::select('1065078', $cols1, $condition1));
-
-//print_r($test);
-
-if($table_data){
-
-    $table_data = explode("\n", $table_data);
-
-        foreach($table_data as $key => $value){
-          $data_row = explode(",", $value);
-
-            if($data_row['0'] AND $key !=0 ){
-    
-                 $array_sportart[$key] = $data_row['4'];
-
-                 $array_athlets[$key] = array(
-                    'email'=>$data_row['1'], 
-                    'name' => $data_row['2'],
-                    'vorname' => $data_row['3']
-                );
-
-            }
-
-        }
-
-
-
-
-
-    $array_sportart_result = array_unique($array_sportart);
-    $array_athlets_result  = array(); 
-
-    foreach($array_athlets as $d) { 
-       $array_athlets_result[md5(serialize($d))] = $d; 
-    } 
-
-        
-        for ($i = 1989; $i <= date("Y"); $i++) {
-                 $saison[]= $i;
-        }
-
-
-     $smarty->assign('sliderSaisonValueStart', date("Y", $start)-1, true);
-     $smarty->assign('sliderSaisonValueEnd', date("Y", $stop), true);
-      
-      
-     $smarty->assign('sliderSaisonStart', current($saison), true);
-     $smarty->assign('sliderSaisonEnd', end($saison), true);
-      
-      
-     $smarty->assign('dashboard_athleten', $array_athlets_result, true);
-     $smarty->assign('dashboard_sportarten', $array_sportart_result, true);
-
-
-}
-
-
-
-
-
-}
-
-
-
-
-
-//** charset **//
-//header('content-type: text/html; charset: ISO-8859-1');
-//$content['content'] = utf8_decode($content['content']);
-//$content['content2'] = utf8_decode($content['content2']);
-//$content['title'] = utf8_decode($content['title']);
-
-
 // print_r($_SESSION);
 
 
@@ -684,59 +374,38 @@ if ( empty($content) && $id!=1 )header("Location: /index.php",TRUE,301);
 
 $smarty->assign('content',  unserialize_content($content, true), true);
 
+   if(IS_AJAX){
+   
+      if(!$LU->isLoggedIn()){
+      
+      }else{
+         include 'liveuser/index.php';
+      }
 
-
-
-
-    if(IS_AJAX){
-    
-
-        if(!$LU->isLoggedIn()){
-        }else{
-            include 'liveuser/index.php';
-        }
-
-
-
-    
-
-        ob_start();
-        //var_dump($_REQUEST);
-        print_r($_REQUEST);
-        $ajax_request = ob_get_contents();
-        ob_end_clean();
+      ob_start();
+      //var_dump($_REQUEST);
+      print_r($_REQUEST);
+      $ajax_request = ob_get_contents();
+      ob_end_clean();
         
-        $logger->log('ajax requests '. $ajax_request, PEAR_LOG_DEBUG );
-        $logger->log('ajax respond '. serialize($_response), PEAR_LOG_DEBUG );
+      $logger->log('ajax requests '. $ajax_request, PEAR_LOG_DEBUG );
+      $logger->log('ajax respond '. serialize($_response), PEAR_LOG_DEBUG );
         
-    
-        header('Expires: Mon, 25 Dec 1976 05:00:00 GMT');
-        header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
-        header('Cache-Control: no-store, no-cache, must-revalidate');
-        header('Cache-Control: post-check=0, pre-check=0', false);
-        header('Pragma: no-cache');
-        header('Content-type: application/json; charset=utf-8');
-
-        echo json_encode($_response);
-        exit;
-    }
+      header('Content-type: application/json; charset=utf-8');
+      echo json_encode($_response);
+      exit;
+   }
 
 
 
 
 if(!$LU->isLoggedIn()){
-
-    //include 'allevo/libs/forms/login.php';
-
-    $smarty->display('finishers/index.tpl');
-    
+   //include 'allevo/libs/forms/login.php';
+   $smarty->display('finishers/index.tpl');
 }else{
-
-
-    //include 'allevo/libs/forms/login.php';
-    include 'liveuser/index.php';
-
-    $smarty->display('finishers/index.tpl');
+   //include 'allevo/libs/forms/login.php';
+   include 'liveuser/index.php';
+   $smarty->display('finishers/index.tpl');
 }
 
 ?>

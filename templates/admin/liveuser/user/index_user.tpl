@@ -6,16 +6,6 @@
 </div>
  <div id="results" class="yui3-1"></div> 
  
-
-   
-
-
-
-
-
-
-
-
 {foreach $auth_users as $user}
 
      {if $user.perm_user_id == $liveuser.perm_user_id}
