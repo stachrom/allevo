@@ -2,17 +2,18 @@
 <html lang="de">
 <head>
 	<meta charset="utf-8"> 
-	<title>finishers Winterthur</title> 
+	<title>Allevo</title>
+   
 	<link rel="stylesheet" href="http://yui.yahooapis.com/combo?3.5.0/build/cssfonts/fonts-min.css&amp;3.5.0/build/cssreset/reset-min.css&amp;3.5.0/build/cssgrids/grids-min.css">
 	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,800italic,600italic"  >
 	<link rel="stylesheet" href="css/main.css" >
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" >
+   
 	<!--[if IE]>
 	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-<script src="http://yui.yahooapis.com/3.5.0/build/yui/yui-min.js"></script>
-<script src="https://apis.google.com/js/plusone.js"></script>
-
+   <script src="http://yui.yahooapis.com/3.5.0/build/yui/yui-min.js"></script>
+   <script src="https://apis.google.com/js/plusone.js"></script>
 </head>
  
 <body  class="yui3-skin-sam">
@@ -23,7 +24,7 @@
       <div id="wetter"> </div>
 		<aside>
 			<ul id="headerlink"> 
-				<li> <a href="http://horde.finishers.ch">Horde 4.0</a> </li>
+
             <li> 
 				{if $liveuser.loggedIn} 
                 User: <span style="color:black">{$liveuser.handle} </span> <a href="?logout=1">Logout</a> | <a href="./admin.php">Administration</a>
@@ -453,21 +454,19 @@ YUI().use('scrollview',  'scrollview-paginator', function (Y) {
 		<div class="yui3-g">
 			<div class="yui3-u-1-4"> 
 				<div class="content">
-						<a href="javascript:copyright();">© 2004-2011 Finishers </a> <br>
-						<a href="javascript:disclaimer();">Haftungsausschluss</a>
-						<a href="http://finishers.ch/impressum.htm">Impressum</a>
+				
 				</div>
 			</div>	
 			<div class="yui3-u-1-4"> 
 				<div class="content">
-					<b> Quick Links : </b>             
-					 
+          
+			
 				</div>
 			</div> 
 			<div class="yui3-u-1-4"> 
 				<div class="content" >
-					<b>Sponsoren </b>    
-					
+  
+			
 				</div>
 			</div>       
 			<div class="yui3-u-1-4"> 

@@ -1,4 +1,4 @@
-﻿{*config_load file=allevo.conf section="usermanagement"*}
+{*config_load file=allevo.conf section="usermanagement"*}
 {include file="admin/header.tpl" title="Allevo Admin"}
 
 {if $liveuser['loggedIn'] eq 1}
@@ -137,24 +137,24 @@ YUI({
         });
 	};
   
-  var loadModulBenutzer = function (callbackFunction) {
-        // Lazy load model.
-        Y.lazyLoad( 'autocomplete', 'autocomplete-highlighters', 'datasource-io','gallery-form', "json-parse", 'overlay','dump',   function (errors, attached) {
+var loadModulBenutzer = function (callbackFunction) {
+   // Lazy load model.
+   Y.lazyLoad( 'autocomplete', 'autocomplete-highlighters', 'datasource-io','gallery-form', "json-parse", 'overlay','dump',   function (errors, attached) {
 		
-            // If there was a problem, deal with it.
-            if (errors) {
-               callbackFunction(false);
-               return;
-            }
+      // If there was a problem, deal with it.
+      if (errors) {
+         callbackFunction(false);
+         return;
+      }
             
             Y.log("alle attached ? " + Y.dump(attached));
             
 
-			if (attached['gallery-form'] && attached['json-parse']) {
+      if (attached['gallery-form'] && attached['json-parse'] && attached['datasource-io'] ) {
 
-				var editBtn   = Y.one('#editBtn'),
-					deleteBtn  = Y.one('#deleteBtn'),
-					 loader    = Y.Node.create('<img src="/img/waiting.gif">'),
+         var editBtn   = Y.one('#editBtn'),
+				deleteBtn  = Y.one('#deleteBtn'),
+				loader    = Y.Node.create('<img src="/img/waiting.gif">'),
 					 results   = Y.one('#results'),
 					 overlay,
 					 f,
@@ -207,7 +207,7 @@ YUI({
 			 resultFormatter: LuUserFormatter,
 			 requestTemplate: '&q={query}',
 			 source: dsLuUser,
-          resultListLocator: function (response) {
+         resultListLocator: function (response) {
 
             var data = response[0].responseText; // Response data.
             
@@ -226,7 +226,7 @@ YUI({
 					 results = [results];
 				}
 					 return results || [];
-			  }
+			}
 			  
 		  });
 		  
@@ -272,11 +272,7 @@ YUI({
 								  method : 'post',
 								  children  : json_data.result, 
 								});
-								
-				  f.render();
-				  
-				   
-
+	
 				  f.subscribe('success', function (args) {
 							
 							////////////////////////
@@ -306,6 +302,23 @@ YUI({
 							 }
 	
 					});
+               
+               f.subscribe('submit', function (args) {
+               
+                  Y.log("submit"+ Y.dump(args));
+               
+               });
+               
+               
+               f.subscribe('onclickChange', function (args) {
+               
+                  Y.log("onclickChange "+Y.dump(args));
+
+               });
+               
+               f.render();
+               
+               
 
 		 }
 		 
@@ -352,7 +365,7 @@ YUI({
 
 
 
-      }
+   }
 
             callbackFunction(true);
 			

@@ -26,7 +26,7 @@ array(
 
 
         'authContainers' => array(
-              'allevo' => array(
+            'allevo' => array(
                 'type'          => 'MDB2',          // auth container name
                 'expireTime'    => 604800,            // max lifetime of a session in seconds
                 'idleTime'      => 43200,            // max time between 2 requests
@@ -56,11 +56,11 @@ array(
                         'fax' => 'fax',
                         'mobile' => 'mobile',
                         'bemerkungen' => 'bemerkungen',
-						'avatar' => 'avatar'
+                        'avatar' => 'avatar'
                     ),
                     'fields' => array(              // contains any additional or non-default field types
                         'lastlogin' => 'timestamp',
-						'created' => 'timestamp',
+                        'created' => 'timestamp',
                         'is_active' => 'boolean',
                         'owner_user_id' => 'integer',
                         'owner_group_id' => 'integer',
@@ -79,7 +79,7 @@ array(
                         'fax' => 'text',
                         'mobile' => 'text',
                         'bemerkungen' => 'text',
-			'avatar' => 'blob'
+                        'avatar' => 'blob'
                     ),
                     'tables' => array(              // contains additional tables or fields in existing tables
                         'users' => array(
@@ -104,7 +104,7 @@ array(
                                 'fax' => false,
                                 'mobile' => false,
                                 'bemerkungen' => false,
-				'avatar' => false
+                                'avatar' => false
                             )
                         )
                     )
@@ -119,7 +119,7 @@ array(
                 'idleTime'      => 43200,            // max time between 2 requests
                 'allowDuplicateHandles' => 0,
                 'allowEmptyPasswords'   => 0,       //
-                'passwordEncryptionMode'=> 'SHA1',
+                'passwordEncryptionMode'=> 'sha1',
 					 'secret'        => 'asdfeasdf',
                 'storage' => array(
                     'dsn' => $_allevo_config['dsn_horde'],
