@@ -9,9 +9,9 @@
 {foreach $auth_users as $user}
 
      {if $user.perm_user_id == $liveuser.perm_user_id}
-         <li>Deine Rechte:
+         <li><strong>Deine Rechte:</strong>
      {else}
-         <li >
+         <li class="closed toggle">
          {if $user.is_active}
             <img src="img/admin/icon.active.gif">
          {else}
@@ -22,10 +22,12 @@
      
      {/if}
   
-    <ul> 
+      
 	{if $user.perm_type >= 4}
-     <li>Für Master- und Superadministratoren bestehen keine Einschränkungen.</li>
-	{else}     
+    <ul>
+      <li>Für Master- und Superadministratoren bestehen keine Einschränkungen.</li>
+	{else}
+    <ul style="opacity: 0; display: none;" >  
 		{foreach $UserRechteAllevo as $entry}
 			<li id="{$entry@key}_{$entry.0.area_id}"> {$entry@key}: 
          	<ul class="rights"> 

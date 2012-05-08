@@ -125,12 +125,7 @@ YUI({
 
 			};
 			
-			if (attached['right-manager']) {
-			
-			Y.log('manager is ready');
 
-
-			};
 
 			callbackFunction(true);
 			
@@ -139,7 +134,7 @@ YUI({
   
 var loadModulBenutzer = function (callbackFunction) {
    // Lazy load model.
-   Y.lazyLoad( 'autocomplete', 'autocomplete-highlighters', 'datasource-io','gallery-form', "json-parse", 'event-mouseenter', 'event',  'overlay','dump', 'anim',  function (errors, attached) {
+   Y.lazyLoad( 'autocomplete', 'transition', 'autocomplete-highlighters', 'anim', 'datasource-io','gallery-form', "json-parse", 'event-mouseenter', 'event', 'overlay','dump',   function (errors, attached) {
 
       // If there was a problem, deal with it.
       if (errors) {
@@ -147,15 +142,15 @@ var loadModulBenutzer = function (callbackFunction) {
          return;
       }
             
-            Y.log("alle attached ? " + Y.dump(attached));
+      Y.log("alle attached ? " + Y.dump(attached));
             
 
       if (attached['gallery-form'] && attached['json-parse'] && attached['datasource-io']  ) {
-      
-              Y.log("aber hallo ");
-      
+
       Y.on('domready', function () {
-       
+      
+         var manage_user = Y.one('#manage-live-user');
+
          function over(e) {
             e.currentTarget.addClass('live-user-hover');
          }
@@ -183,11 +178,29 @@ var loadModulBenutzer = function (callbackFunction) {
                
                Y.io('admin.php', cfg);
 
-         };   
+         };
 
-        
-            Y.one('#manage-live-user').delegate('hover', over, out, '.live-user');
-            Y.one('#manage-live-user').delegate('click', delete_user, '.live-user-hover');
+
+                   
+
+
+         function animate_list() {
+         
+         var subnode = this.one('ul');
+
+            if ( this.hasClass('closed') ){
+               subnode.show(true);
+               this.removeClass('closed');
+            }else{
+               subnode.hide(true);
+               this.addClass('closed');
+            }
+
+         }; 
+
+          manage_user.delegate('hover', over, out, '.live-user');
+          manage_user.delegate('click', delete_user, '.live-user-hover');
+          manage_user.delegate('click', animate_list, '.toggle');
             
     
       
