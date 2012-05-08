@@ -1,4 +1,4 @@
-﻿{config_load file="allevo.conf" section="usermanagement"}
+{config_load file="allevo.conf" section="usermanagement"}
 
 <div id="live-users-search">
 	<label for="liveuser-input">Search Users: </label><br>
@@ -39,87 +39,6 @@
 {/foreach}
 
 
-{literal}
-<script> 
-
-YUI().use('node', "event", 'json', 'io', 'event-mouseenter', 'dump', 'anim', function (Y) { 
-
-   Y.on('domready', function () {
-
-
-      function over(e) {
-         e.currentTarget.addClass('live-user-hover');
-      }
-      
-      function out(e) {
-         e.currentTarget.removeClass('live-user-hover');    
-      }
-      
-      var handleSucces = function(id, o, a) {
-
-         var data      = o.responseText,
-             json_data = [];      
-         
-         try {
-            json_data = Y.JSON.parse(data);
-         }catch (o) {
-            
-         }			
-
-         if (json_data.status == 200 && json_data.action == "deleteUser" ) {
-
-				Y.log("sucess argument: " + Y.dump('#'+a));
-
-				var parent_node = Y.one('#'+a).get('parentNode');
-
-			   var anim = new Y.Anim({
-					  node: parent_node,
-					  to: { opacity: 0 }
-				 });
-
-    			var onEnd = function() {
-					  var node = this.get('node');
-					  node.get('parentNode').removeChild(node);
-				};
-
-				anim.on('end', onEnd);
-				anim.run();
-
-			}
-
-    
-    }; 
-  
-      
-   function delete_user() {
-
-				var perm_user_id = this.get('children').get('text');
-				var click_id = this.get('id');
-
-				var cfg = {
-					method: 'POST',
-					data:   {
-								'action': 'deleteUser',
-								'perm_user_id': perm_user_id
-					},
-					on:     {success: handleSucces},
-					arguments: click_id 
-				};
-            Y.log("cfg : " + Y.dump(cfg) );
-            
-			   Y.io('admin.php', cfg);
-
-	};   
-
-      Y.one('#manage-live-user').delegate('hover', over, out, '.live-user');
-      Y.one('#manage-live-user').delegate('click', delete_user, '.live-user-hover');
-   
-  });
-
-});
-
-</script> 
-{/literal}
 
 
 
