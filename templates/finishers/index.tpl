@@ -4,7 +4,7 @@
 	<meta charset="utf-8"> 
 	<title>Allevo</title>
    
-	<link rel="stylesheet" href="http://yui.yahooapis.com/combo?3.5.0/build/cssfonts/fonts-min.css&amp;3.5.0/build/cssreset/reset-min.css&amp;3.5.0/build/cssgrids/grids-min.css">
+	<link rel="stylesheet" href="http://yui.yahooapis.com/combo?3.5.1/build/cssfonts/fonts-min.css&amp;3.5.1/build/cssreset/reset-min.css&amp;3.5.1/build/cssgrids/grids-min.css">
 	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,800italic,600italic"  >
 	<link rel="stylesheet" href="css/main.css" >
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" >
@@ -12,7 +12,7 @@
 	<!--[if IE]>
 	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-   <script src="http://yui.yahooapis.com/3.5.0/build/yui/yui-min.js"></script>
+   <script src="http://yui.yahooapis.com/3.5.1/build/yui/yui-min.js"></script>
    <script src="https://apis.google.com/js/plusone.js"></script>
 </head>
  

@@ -435,6 +435,26 @@ margin:5px;
 }
 
 
+/*##################################################################*/
+/*######################     remove user    ########################*/
+/*##################################################################*/
+
+.live-user{
+   background:url(../img/admin/icon.skel.gif);
+   background-position:bottom left;
+   display:inline-block;
+   width:16px;
+   height:16px;
+}
+
+
+.live-user-hover{
+   background:url(../img/admin/del.gif);
+   background-position:bottom left;
+   display:inline-block;
+   width:16px;
+   height:16px;
+}
 
 
 

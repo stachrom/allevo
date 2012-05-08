@@ -277,20 +277,7 @@
 				
 					$form[] = array( 'name' => 'submit',   'type'  => 'SubmitButton', 'value' => 'Save');
 				   $form[] = array( 'name' => 'reset',    'type'  => 'ResetButton',  'value' => 'Reset');
-               
-               
-               if( $LU->checkRightLevel( USERMANAGEMENT_DELETE, $LU->getProperty('owner_user_id'), $LU->getProperty('owner_group_id')) ){
-               
-                  if($perm_user_id == $LU->getProperty('perm_user_id')){
-       
-                  }else{
-                     $form[] = array( 'name' => 'DeleteUser',   'type'  => 'SubmitButton', 'value' => 'Delete');
-                  }
-                  
-               }
-               
-               
-               
+
 				// sich selbst löschen ist nicht gut.
 
 					$_response['result'] = $form;
@@ -312,13 +299,7 @@
 	//########################################################################//			
 
 	if( $LU->checkRightLevel( USERMANAGEMENT_EDIT, $LU->getProperty('owner_user_id'), $LU->getProperty('owner_group_id')) or $LU->getProperty('perm_user_id') == $perm_user_id ){	
-   
-      $_response['post']= $_POST;
 
-      if( $_POST['DeleteUser'] == "Delete"){
-
-      }
-	
 				if($action == "update_user_account"){
 
 					$user_data = array(
