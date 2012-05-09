@@ -402,11 +402,11 @@ $smarty->assign('content',  unserialize_content($content, true), true);
 
 if(!$LU->isLoggedIn()){
    //include 'allevo/libs/forms/login.php';
-   $smarty->display('finishers/index.tpl');
+   $smarty->display('stachura/index.tpl');
 }else{
    //include 'allevo/libs/forms/login.php';
    include 'liveuser/index.php';
-   $smarty->display('finishers/index.tpl');
+   $smarty->display('stachura/index.tpl');
 }
 
 ?>
