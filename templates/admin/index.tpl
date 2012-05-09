@@ -145,7 +145,7 @@ var loadModulBenutzer = function (callbackFunction) {
       Y.log("alle attached ? " + Y.dump(attached));
             
 
-      if (attached['gallery-form'] && attached['json-parse'] && attached['datasource-io']  ) {
+      if (attached['gallery-form']) {
 
       Y.on('domready', function () {
       
