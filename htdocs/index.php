@@ -75,14 +75,6 @@ if($_REQUEST['id'] ){
         }
 
 
-
-
-if($eventUID){
-get_kronolith_event($eventUID);
-
-}
-
-
     $addSQL = array( 'where' => 'active = 1');
 
     $id = preg_match($pattern['int'], $_GET['id'])  ? (int)$_GET['id']  : $standard_id;
@@ -96,30 +88,19 @@ get_kronolith_event($eventUID);
                 $navigation_1[$key]['subnavigation'] = $children;
             }
         }
-    }
+   }
     
     
 
     
 
 
-    if(is_array($current_node)){
+   if(is_array($current_node)){
             
         $breadcrumb = $NestedSets->getParents($id, true, true, false, $addSQL);
         $smarty->assign('breadcrumb',  $breadcrumb, true);
             
-        // Vorstand zusammen fassen 
-        if($current_node['name']=='Vorstand' ){
-            if($vorstand_navigation = $NestedSets->getChildren($current_node['id'], true, true, false, $addSQL)){
-                foreach($vorstand_navigation as $key => $value ){
-                    $vorstand[$key] =& $mdb2->queryRow('SELECT * FROM nested_set_content WHERE nested_set_id ='.$value['id'].'');
-                    $vorstand[$key] = unserialize_content($vorstand[$key]);
-                    //$h2tags = preg_match_all("/(<h2.*>)(.*)(<\/h2>)/U",$vorstand[$key]['content'],$patterns);
-                    //$vorstand[$key]['slogan'] = $patterns[2][0];
-                }
-                $smarty->assign('vorstand',  $vorstand, true);
-            }
-        }
+     
                 
         // news fischen //
 		if($current_node['name']=='News' ){
@@ -169,17 +150,19 @@ get_kronolith_event($eventUID);
 	
                         $smarty->assign('news', $news, true);
                     }
-                }    
-                            
-                // Animation --> slideshow
-                if($value['name']=='Animation'){
+                }
+         
+                // BGPictures --> slideshow
+                if($value['name']=='Backgroundpictures'){
                     if($children = $NestedSets->getChildren($value['id'], true, true, false, $addSQL)){
                         foreach($children as $key => $value ){
-                            $animation[$key] =& $mdb2->queryRow('SELECT content, title  FROM nested_set_content WHERE nested_set_id ='.$value['id'].'');
-                            $animation[$key] = unserialize_content($animation[$key]);                                                                                              
+                            $BGPictures[$key] =& $mdb2->queryRow('SELECT sidepictures  FROM nested_set_content WHERE nested_set_id ='.$value['id'].'');  
+                            $BGPictures[$key] = unserialize_content($BGPictures[$key]);  
                         }
-						shuffle($animation);
-                        $smarty->assign('animation', $animation, true);
+                        
+                        
+						shuffle($BGPictures);
+                        $smarty->assign('BGPictures', $BGPictures, true);
                     }
                 }     
             }    
@@ -188,56 +171,8 @@ get_kronolith_event($eventUID);
 
 	
 	
-    if(is_array($breadcrumb) ){
-            
-        foreach($breadcrumb as $key => $value ){
-		
-		
-		
-			if( $value['name'] == 'Training'){
-			
-			
-				$kronolith_properties = array(
-					 //'name'
-					'displayname'									
-				);    
+   if(is_array($breadcrumb) ){
 
-				$rpc_parameters = array(
-					'path' => 'kronolith/admin',
-					'options' => $kronolith_properties                     
-				);  
-
-								
-				try {
-
-					$http_client = new Horde_Http_Client($rpc_options);
-					
-					$kronolith_browse = Horde_Rpc::request(
-						'jsonrpc',
-						$GLOBALS['rpc_endpoint'],
-						'calendar.browse',
-						$http_client,
-						$rpc_parameters
-					);
-					
-					foreach($kronolith_browse->result as $key_kronolith => $value_kronolith){
-
-						$id_kronolith = explode("/", $key_kronolith);
-
-						if(!strpbrk($value_kronolith->displayname, '.') AND $current_node['name'] == urldecode($value_kronolith->displayname) ){
-							
-							$smarty->assign('calendar_id', $id_kronolith['2'], true);
-							
-						}
-					}
-					
-				}catch (Exception $e) {	
-					echo 'Caught exception: ',  $e->getMessage(), "\n";
-				}
-			}
-			
-			
-		
             switch ($value['level']) {
                case '1':
                     $_SESSION['level_1'] = $key;
@@ -264,9 +199,9 @@ get_kronolith_event($eventUID);
                     $navigation_4 = $NestedSets->getChildren($key, true, true, false, $addSQL);    
                     break;      
             }
-        }
+   }
 	
-    }
+
             
     if($current_node['level']){
             

@@ -18,7 +18,11 @@
 <body id="doc" class="yui3-skin-sam  yui-skin-sam" >
 
 <div id="background">
-   <img class="stretch"  src="img/background2.jpg" alt="hintergundbild">
+
+{foreach $BGPictures  as $BgP}
+<img class="stretch"  src="img/upload/{$BgP.sidepictures.0}" alt="hintergundbild">
+{/foreach}
+
 </div>
 
 
@@ -179,10 +183,6 @@ YUI({
          fullpath : 'js/yui3-gallery/gallery-effects.js',
          requires : ['node','anim','async-queue']
          },
-      'gallery-yquery' : {
-         fullpath : 'js/yui3-gallery/yquery/yquery.js',
-         requires : ['get','event']
-         },
       'toggle-div' : {
          fullpath : 'js/yui3/toggle-div.js',
          requires : ['anim', 'node']
@@ -199,9 +199,9 @@ YUI({
    
  
 }).use(
-   'gallery-yquery',
    'gallery-notify',
    'gallery-localWeather',
+   'gallery-yui-slideshow',
    'overlay-login',
    'toggle-div',
    'event-focus',
@@ -212,6 +212,17 @@ YUI({
    'datatype',
    'dump',  function (Y) {
    
+
+                      
+                  var slideshow = new Y.Slideshow({ 
+                        srcNode: '#background',
+                        duration: 5,
+                        interval: 20
+                     });
+            
+                  slideshow.render();
+
+
    var work_node = Y.one('#toggle-work');
    var toggle_work = work_node.togglediv();
    
