@@ -885,13 +885,6 @@ Y.on('domready', function () {
 
 		});
 
-			
-	
-			
-
-	
-
- 
 });
 	
 </script>

@@ -40,22 +40,11 @@
 		{if $nav.name == "Backgroundpictures"}
 			
 		{else}
-						
 			{if $smarty.session.level_2 == $nav.id}
-				<li class="nav-tab hoverable  nav-tab-active" > <a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}"  title="{$nav.name}"  class="active" >{$nav.name}</a> 
+				<li class="nav-tab hoverable  nav-tab-active" > <a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}"  title="{$nav.name}"  class="active" >{$nav.name}</a> </li> 
 			{else}
-				<li class="nav-tab hoverable"  > <a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}" title="{$nav.name}"  >{$nav.name}</a> 
+				<li class="nav-tab hoverable"  > <a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}" title="{$nav.name}"  >{$nav.name}</a> </li>
 			{/if}
-							
-			{if $nav.subnavigation}
-				<ul class="nav-submenu">
-            {foreach $nav.subnavigation as $nav_2}
-					<li class="nav-child " > <a href="?id={if $nav_2.link}{$nav_2.link}{else}{$nav_2.id}{/if}"  title="{$nav_2.name}"  >{$nav_2.name}</a></li>
-            {/foreach}
-				</ul>
-			{/if}
-            </li>  
-
 		{/if}                            
 		{/foreach}
 		</ul>
@@ -193,8 +182,9 @@ YUI({
 		},
       'gallery-localWeather':{
 			fullpath : 'js/yui3-gallery/gallery-weather.js',
-			requires : ['widget', 'substitute', 'yql', 'datatype-date',]
+			requires : ['widget', 'substitute', 'yql', 'datatype-date']
 		}
+
    }
    
  
@@ -204,6 +194,7 @@ YUI({
    'gallery-yui-slideshow',
    'overlay-login',
    'toggle-div',
+   'gallery-yquery',
    'event-focus',
    'event',
    'node',    
@@ -213,14 +204,13 @@ YUI({
    'dump',  function (Y) {
    
 
-                      
-                  var slideshow = new Y.Slideshow({ 
-                        srcNode: '#background',
-                        duration: 5,
-                        interval: 20
-                     });
-            
-                  slideshow.render();
+   var slideshow = new Y.Slideshow({ 
+      srcNode: '#background',
+      duration: 5,
+      interval: 20
+   });
+    
+   slideshow.render();
 
 
    var work_node = Y.one('#toggle-work');
@@ -237,54 +227,8 @@ YUI({
                   layout : 'full'
 					}).render('#wetter');
 
-   // animate the logo.
-   
-   var logo = Y.one('#logo');
-
-var anim = new Y.Anim({
-    node: logo,
-    from: {
-        backgroundColor:logo.getStyle('backgroundColor')
-    },
-
-    to: {
-        color: '#fff'
-    },
-
-    duration: 1,
-    iterations: 'infinite',
-    direction: 'alternate'
-});
-   
-   
-   
-   
-   var hover = function(e) {
-    var reverse = false,
-        iterations = 'infinite';
-
-    if (anim.get('running')) {
-        anim.pause();
-    }
-    if (e.type === 'mouseout') {
-        reverse = true;
-        iterations = 1;
-    }
-    anim.setAttrs({
-        'reverse': reverse,
-        'iterations': iterations
-    });
-
-    anim.run();
-};
-   
-   logo.on('mouseover', hover);
-   logo.on('mouseout', hover);
-   
-
    login_node = Y.one('#show-loginOverlay')
    var notify = new Y.Notify({prepend:true});
-   
    notify.render();
 
 });
