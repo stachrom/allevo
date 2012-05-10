@@ -1,4 +1,4 @@
-﻿<div id="editor-response"> </div>
+<div id="editor-response"> </div>
 <div class="yui3-g" id="layout_inhalt">
    <div class="yui3-u" id="jsbaum"> 
       <div class="content">
@@ -789,13 +789,23 @@ Y.on('domready', function () {
 
 									 myEditor._undoCache = null;
 									 myEditor._undoLevel = null;
+                            
+                            var contentActive = Y.one('#ContentActive');
+                            
+                            contentActive.on("click", function (e) {
+
+                                 Y.log(e);
+
+                              });
+                            
+                            
 									 
 									 if( typeof data.result.active  != 'undefined' && data.result.active != null && data.result.active == 1){
-									 	Y.one('#ContentActive').set('checked', 1);
+									 	contentActive.set('checked', 1);
 										Y.one('#yahooEditor').addClass('active');
 										Y.one('#yahooEditor').removeClass('inactive');
 									 }else{
-									 	Y.one('#ContentActive').set('checked', 0);
+									 	contentActive.set('checked', 0);
 										Y.one('#yahooEditor').addClass('inactive');
 										Y.one('#yahooEditor').removeClass('active');
 									 }
