@@ -790,25 +790,28 @@ Y.on('domready', function () {
 									 myEditor._undoCache = null;
 									 myEditor._undoLevel = null;
                             
-                            var contentActive = Y.one('#ContentActive');
+                           var contentActive = Y.one('#ContentActive');
+                           var EditorContainer = Y.one('#yahooEditor');
                             
-                            contentActive.on("click", function (e) {
-
-                                 Y.log(e);
-
-                              });
-                            
-                            
-									 
-									 if( typeof data.result.active  != 'undefined' && data.result.active != null && data.result.active == 1){
+                           contentActive.on("click", function (e) {
+                              if(e.currentTarget.get('checked')){
+                                 EditorContainer.addClass('active');
+                                 EditorContainer.removeClass('inactive');
+                              }else{
+                                 EditorContainer.addClass('inactive');
+                                 EditorContainer.removeClass('active');
+                              };
+                           });
+ 
+									if( typeof data.result.active  != 'undefined' && data.result.active != null && data.result.active == 1){
 									 	contentActive.set('checked', 1);
-										Y.one('#yahooEditor').addClass('active');
-										Y.one('#yahooEditor').removeClass('inactive');
-									 }else{
+										EditorContainer.addClass('active');
+										EditorContainer.removeClass('inactive');
+									}else{
 									 	contentActive.set('checked', 0);
-										Y.one('#yahooEditor').addClass('inactive');
-										Y.one('#yahooEditor').removeClass('active');
-									 }
+										EditorContainer.addClass('inactive');
+										EditorContainer.removeClass('active');
+									}
 									 
 									//Y.log("editor: " + Y.dump(data));
 									//myEditor.toolbar.destroyButton('fontname');
