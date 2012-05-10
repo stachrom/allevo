@@ -87,13 +87,16 @@ function YQuery( src ) {
 
 				if( queue.length > 0 ) {
 
+
 					opts.onSuccess	= function( d ) { opts.scope._invokeReady(); };
 					opts.onTimeout = function( d ) { opts.scope._invokeReady(); };
+
+
 
 					Y.Get.script( queue, opts );
 
 				}
-
+            
 			} else {
 				
 				// This gets fired if jQuery autodetect has been overridden
