@@ -162,21 +162,32 @@
 				</div>
 						
 				<div id="uploader_tab"> 
-					<div class="example yui3-skin-sam">
-						<div id="uploaderContainer">
-							<div id="uploaderOverlay" style="position:absolute; z-index:2" ></div>
-							<div id="selectFilesLink" style="z-index:1"><a id="selectLink" href="#" class="button">Select Files</a></div>  
-						</div>
-						<div id="uploadFilesLink"><a id="uploadLink" href="#" class="button" >Upload Files</a></div>
-						<div id="files">
-							<table id="filenames" style="border-width:1px; border-style:solid; padding:5px; width:540px;">
-								<thead>
-								   <tr><th>Filename</th><th>File size</th><th>Prozent uploaded</th></tr>
-								</thead>
-								<tbody></tbody>
-							</table>	
-						</div>
-					</div>
+
+               <div id="uploaderContainer"> 
+                  <div id="selectFilesButtonContainer"></div> 
+                   <div id="uploadFilesButtonContainer">
+                     <button type="button" id="uploadFilesButton" class="yui3-button" style="width:250px; height:35px;">Upload Files</button>
+                  </div> 
+              
+
+               <div id="filelist">
+                  <table id="filenames">
+                     <thead>
+                         <tr><th>File name</th><th>File size</th><th>Percent uploaded</th></tr>
+                         <tr id="nofiles">
+                          <td colspan="3" id="ddmessage">
+                              <strong>No files selected.</strong>
+                          </td>
+                         </tr>
+                      </thead>
+                      <tbody>
+                     </tbody>
+                  </table>  
+               </div>
+             
+               <div id="overallProgress"></div>  
+
+ </div>                
 				</div>
 
 				<div id="url-controller">
@@ -231,7 +242,7 @@ YUI({
 			},
 		'multi-uploader' : {
 			fullpath : '/js/yui3/uploader.js',
-			requires : ['uploader', 'gallery-progress-bar', 'cookie']
+			requires : ['uploader', 'cookie']
 			},		
 		'photo':{
 			fullpath : '/js/photos.js',
@@ -469,9 +480,7 @@ Y.on('domready', function () {
 				if (attached['multi-uploader']) {
 					Y.log('load multiupload ');
 					
-					var overlayRegion = Y.one("#selectLink").get('region');
-					Y.one("#uploaderOverlay").set("offsetWidth", overlayRegion.width);
-					Y.one("#uploaderOverlay").set("offsetHeight", overlayRegion.height);
+				
 					
 				}
 				callbackFunction(true);

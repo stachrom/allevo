@@ -1,100 +1,112 @@
-// multi-uploader implementation for finishers.ch main upload
 YUI.add('multi-uploader', function (Y) {
 
-Y.on('domready', function () {
+   Y.on('domready', function () {
 
-var uploader,
-    selectedFiles = {},
-	path = {};
+   Y.one("#overallProgress").set("text", "Uploader type: " + Y.Uploader.TYPE);
 
 
-Y.log( "is going to be executed....");
- 
-var swfURL =  "/request/uploader.swf";
+   if (Y.Uploader.TYPE != "none" && !Y.UA.ios) { 
+       var uploader = new Y.Uploader({width: "250px", 
+                                      height: "35px", 
+                                      multipleFiles: true,
+                                      swfURL: "request/flashuploader.swf?t=" + Math.random(),
+                                      uploadURL: "request/upload.php",
+                                      simLimit: 2
+                                     });    
+       var uploadDone = false;
 
+       if (Y.Uploader.TYPE == "html5") {
+          uploader.set("dragAndDropArea", "#uploader_tab");
 
-if (Y.UA.ie >= 6) {
-	swfURL += "?t=" + Y.guid();
-}
+          Y.one("#ddmessage").setContent("<strong>Drag and drop files here.</strong>");   
 
-uploader = new Y.Uploader({boundingBox:"#uploaderOverlay", swfURL: swfURL});	
-
-uploader.on("uploaderReady", setupUploader);
-uploader.on("fileselect", fileSelect);
-uploader.on("uploadprogress", updateProgress);
-uploader.on("uploadcomplete", uploadComplete);
-uploader.on("uploadcompletedata", uploadCompleteData);
-
-
-
-
-
-function setupUploader (event) {
-	uploader.set("multiFiles", true);
-	uploader.set("simLimit", 6);
-	uploader.set("log", true);
-	
-	var fileFilters = new Array(
-				{description:"Images", extensions:"*.jpg;*.jpeg;*.png;*.gif"},
-				{description:"Videos", extensions:"*.avi;*.mov;*.mpg"}
-					); 
-	
-    uploader.set("fileFilters", fileFilters); 
-}
-
-function fileSelect (event) {
-
-
-
-	var fileData = event.fileList;	
+          uploader.on(["dragenter", "dragover"], function (event) {
+              var ddmessage = Y.one("#ddmessage");
+              if (ddmessage) {
+                ddmessage.setContent("<strong>Files detected, drop them here!</strong>");
+                ddmessage.addClass("yellowBackground");
+              }
+           });
     
-	for (var key in fileData) {
-	        if (!selectedFiles[fileData[key].id]) {
-			   var output = "<tr><td>" + fileData[key].name + "</td><td>" + 
-			                fileData[key].size + "</td><td><div id='div_" + 
-			                fileData[key].id + "' class='progressbars'></div></td></tr>";
-			   Y.one("#filenames tbody").append(output);
-			  
-			   var progressBar = new Y.ProgressBar({id:"pb_" + fileData[key].id, layout : '<div class="{labelClass}"></div><div class="{sliderClass}"></div>'});
-			       progressBar.render("#div_" + fileData[key].id);
-			       progressBar.set("progress", 0);
-               
-               selectedFiles[fileData[key].id] = true;
-			}
-	}
+           uploader.on(["dragleave", "drop"], function (event) {
+              var ddmessage = Y.one("#ddmessage");
+              if (ddmessage) {
+                ddmessage.setContent("<strong>Drag and drop files here.</strong>");
+                ddmessage.removeClass("yellowBackground");
+              }
+           });
+       }
 
-}
+       uploader.render("#selectFilesButtonContainer");
 
-function updateProgress (event) {
-	var pb = Y.Widget.getByNode("#pb_" + event.id);
-	pb.set("progress", Math.round(100 * event.bytesLoaded / event.bytesTotal));
-	
-	Y.log("progress: "+ Math.round(100 * event.bytesLoaded / event.bytesTotal));
-}
+       uploader.after("fileselect", function (event) {
 
-function uploadComplete (event) {
+          var fileList = event.fileList;
+          var fileTable = Y.one("#filenames tbody");
+          if (fileList.length > 0 && Y.one("#nofiles")) {
+            Y.one("#nofiles").remove();
+          }
 
-	var pb = Y.Widget.getByNode("#pb_" + event.id);
-	pb.set("progress", 100);
+          if (uploadDone) {
+            uploadDone = false;
+            fileTable.setContent("");
+          }
+          
+          Y.each(fileList, function (fileInstance) {
+              fileTable.append("<tr id='" + fileInstance.get("id") + "_row" + "'>" + 
+                                    "<td class='filename'>" + fileInstance.get("name") + "</td>" + 
+                                    "<td class='filesize'>" + fileInstance.get("size") + "</td>" + 
+                                    "<td class='percentdone'>Hasn't started yet</td>"); 
+                             });
+       });
 
-}
+       uploader.on("uploadprogress", function (event) {
+            var fileRow = Y.one("#" + event.file.get("id") + "_row");
+                fileRow.one(".percentdone").set("text", event.percentLoaded + "%");
+       });
 
-function uploadCompleteData (event) {
+       uploader.on("uploadstart", function (event) {
+            uploader.set("enabled", false);
+            Y.one("#uploadFilesButton").addClass("yui3-button-disabled");
+            Y.one("#uploadFilesButton").detach("click");
+       });
 
-	uploader.clearFileList();
+       uploader.on("uploadcomplete", function (event) {
+            var fileRow = Y.one("#" + event.file.get("id") + "_row");
+                fileRow.one(".percentdone").set("text", "Finished!");
+       });
 
-   
-}
+       uploader.on("totaluploadprogress", function (event) {
+                Y.one("#overallProgress").setContent("Total uploaded: <strong>" + 
+                                                     event.percentLoaded + "%" + 
+                                                     "</strong>");
+       });
+
+       uploader.on("alluploadscomplete", function (event) {
+                     uploader.set("enabled", true);
+                     uploader.set("fileList", []);
+                     Y.one("#uploadFilesButton").removeClass("yui3-button-disabled");
+                     Y.one("#uploadFilesButton").on("click", function () {
+                          if (!uploadDone && uploader.get("fileList").length > 0) {
+                             uploader.uploadAll();
+                          }
+                     });
+                     Y.one("#overallProgress").set("text", "Uploads complete!");
+                     uploadDone = true;
+       });
+
+       Y.one("#uploadFilesButton").on("click", function () {
+         if (!uploadDone && uploader.get("fileList").length > 0) {
+            uploader.uploadAll();
+         }
+       });
+
+       
+   } else {
+       Y.one("#uploaderContainer").set("text", "We are sorry, but the uploader technology is not supported on this platform.");
+   }
 
 
-function uploadFiles (event) {
-	uploader.uploadAll("/request/upload.php", "POST", {cookie: "PHPSESSID=" + Y.Cookie.get("PHPSESSID"), pfad: path} );
-}
 
-Y.one("#uploadFilesLink").on("click", uploadFiles);
-
-
-});
-}, '1.0.0', {requires: [
-   'uploader', 'gallery-progress-bar', 'cookie'
-]});
+   });
+}, '1.0.0', {requires: ['uploader', 'cookie']});
