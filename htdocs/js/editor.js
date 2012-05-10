@@ -7,9 +7,6 @@ YUI.add('editor-allevo', function (Y) {
 
 		YUI.namespace('allevo.editor');	
 		YUI.namespace('allevo.editor2');
-      
-
-		
 
 		var Dom = YAHOO.util.Dom,
         Event = YAHOO.util.Event,
@@ -18,8 +15,6 @@ YUI.add('editor-allevo', function (Y) {
 		  myeditor = null,
 		  el = new YAHOO.util.Element('editor-response'),
 		  inhalt = YAHOO.util.Dom.get('editor-response');
-
-		  
 
     var EditorContent2Config = {
         height: '300px',
@@ -132,22 +127,25 @@ YUI.add('editor-allevo', function (Y) {
 		  
 		var gutter = null;
 
-        var myConfig = {
-      		height: '500px', 
-	        width: 'auto', 
-            dompath: true,
-			filterWord: true,
-            removeLineBreaks: false,
-            focusAtStart: false, 
+      var myConfig = {
+         height: '500px', 
+         width: 'auto', 
+         dompath: true,
+         filterWord: true,
+         removeLineBreaks: false,
+         focusAtStart: false, 
         };
 		  
 
         //var save_button = new YAHOO.widget.Button('submitEditor');
 		var saveButton = Y.one('#submitEditor');
-        var myEditor = new YAHOO.widget.Editor('editor', myConfig);
+      var myEditor = new YAHOO.widget.Editor('editor', myConfig);
 
-		delete myEditor.invalidHTML.iframe;
-		delete myEditor.invalidHTML.from;
+      delete myEditor.invalidHTML.iframe;
+      delete myEditor.invalidHTML.from;
+      delete myEditor.invalidHTML.script;
+
+      Y.log(myEditor.invalidHTML);
 			
 			
 
