@@ -237,19 +237,23 @@ YUI({
 			fullpath : '/js/photos.js',
 			requires : [ 'node', 'event',  'json-parse', 'io-form',  'json', 'dd-plugin', 'datasource-io', 'transition', 'event-hover', 'event-custom', 'autocomplete', 'autocomplete-highlighters', 'autocomplete-filters', 'anim', 'dd', 'dd-plugin', 'dd-drop-plugin', 'slider', 'stylesheet', 'event-delegate', 'dump', 'json-stringify', 'io', 'panel']
 			},
-		'editor':{
+		'editor-allevo':{
 			fullpath : '/js/editor.js',
 			requires : ['event', 'dump', 'json', 'node', 'event-delegate', "yui2-animation", "yui2-autocomplete", "yui2-button", "yui2-connection", "yui2-container", "yui2-dom", "yui2-editor", "yui2-element", "yui2-event", "yui2-menu"]
 			},
 		'data-table':{
 			fullpath : '/js/data_table_query_string.js',
 			requires : ['node', 'event-custom', "yui2-animation", "yui2-autocomplete", "yui2-button", "yui2-connection", "yui2-container", "yui2-dom", "yui2-editor", "yui2-element", "yui2-event", "yui2-menu", "yui2-datatable", "yui2-dom", "yui2-dragdrop", "event-custom", "yui2-calendar"]
-			}	
+			},
+      'gallery-yquery':{
+			fullpath : 'js/yui3-gallery/gallery-yquery.js',
+			requires : ['get','event']
+         }          
 		}
 	}).use(
 		'gallery-lazy-load',
 		'tabview',
-		'editor',
+		'editor-allevo',
 		'autocomplete', 
 		'autocomplete-highlighters', 
 		'autocomplete-filters',
@@ -448,7 +452,7 @@ Y.on('domready', function () {
 					callbackFunction(false);
 					return;
 				}
-				if (attached['photo'] && attached['slider'] ) {
+				if (attached['photo'] ) {
 					Y.log('Media Manager');
 				}
 				callbackFunction(true);
@@ -488,23 +492,16 @@ Y.on('domready', function () {
 				callbackFunction(true);
 			});
 		};
-		
-		
-		
 
-
-
-    var jq = Y.YQuery();
+   var jq = Y.YQuery();
  
-
  	var jQueryPlugins = [
 		'js/jstree/jquery.jstree.js', 
 		'js/jstree/jquery.cookie.js',
 		'js/jstree/jquery.hotkeys.js'
 	];
-					
-							 
-	jq.version = '1.7.1';
+	
+	jq.version = '1.7.2';
 
 	jq.use( jQueryPlugins, function(e) {
 			  
@@ -557,7 +554,7 @@ Y.on('domready', function () {
 				var data = {                                  
 					"state" : "open",
 					"data" : {
-						"attr" : { "uuid" : uuid }, 
+						"attr"  : { "uuid" : uuid }, 
 						"title" : node_to_remove.get('text')
 					}			
 				};				

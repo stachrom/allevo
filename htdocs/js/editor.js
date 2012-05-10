@@ -1,13 +1,14 @@
-
 // Editor implementation for the finishers.ch media Manager.
-YUI.add('editor', function (Y) {
-		
+YUI.add('editor-allevo', function (Y) {
+
 	Y.on('domready', function () {				
 
 		var YAHOO = Y.YUI2;	
 
 		YUI.namespace('allevo.editor');	
 		YUI.namespace('allevo.editor2');
+      
+
 		
 
 		var Dom = YAHOO.util.Dom,

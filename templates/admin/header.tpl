@@ -9,16 +9,16 @@
 
 <title>{$Page_Title}</title>
 <link rel="stylesheet" href="http://yui.yahooapis.com/2.8.2/build/reset-fonts-grids/reset-fonts-grids.css" >
-<link rel="stylesheet" href="http://yui.yahooapis.com/combo?3.5.0/build/cssfonts/fonts-min.css&3.5.0/build/cssreset/reset-min.css&3.5.0/build/cssgrids/grids-min.css&3.5.0/build/cssbase/base-min.css">
+<link rel="stylesheet" href="http://yui.yahooapis.com/combo?3.5.1/build/cssfonts/fonts-min.css&3.5.1/build/cssreset/reset-min.css&3.5.1/build/cssgrids/grids-min.css&3.5.1/build/cssbase/base-min.css">
 <link rel="stylesheet" href="http://{$smarty.server.SERVER_NAME}/css/admin/photos.css" >
 <link rel="stylesheet" href="http://{$smarty.server.SERVER_NAME}/css/admin/uploader.css" >
 <link rel="stylesheet" href="http://{$smarty.server.SERVER_NAME}{$pfad}/css/admin.css">
-<link rel="stylesheet" href="http://yui.yahooapis.com/3.5.0/build/cssbutton/cssbutton.css">
+<link rel="stylesheet" href="http://yui.yahooapis.com/3.5.1/build/cssbutton/cssbutton.css">
 <link rel="stylesheet" href="assets/anim/anim.css" >
 
 <style id="styleoverrides"></style>
 
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?3.5.0/build/panel/assets/skins/sam/panel.css">
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?3.5.1/build/panel/assets/skins/sam/panel.css">
 
 
 
@@ -218,15 +218,7 @@ textarea {
 </style>
 
 
-<script src="http://yui.yahooapis.com/3.4.1/build/yui/yui-min.js"></script>
-
-<!-- 
-<script src="http://yui3.stachura.ch/build/yui/yui-min.js"></script>
-<script src="http://yui.yahooapis.com/3.5.0/build/yui/yui-min.js"></script>
-<script src="http://yui.yahooapis.com/3.4.1/build/yui/yui-min.js"></script>
-<script src="http://yui3.stachura.ch/build/yui/yui-min.js"></script>
-<script src="http://yuinightly.kludg.com/seed?filter=min"></script>
- -->
+<script src="http://yui.yahooapis.com/3.5.1/build/yui/yui-min.js"></script>
 
 
 <script type="text/javascript">
