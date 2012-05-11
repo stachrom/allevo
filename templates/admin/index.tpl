@@ -132,18 +132,18 @@ YUI({
         });
 	};
   
-var loadModulBenutzer = function (callbackFunction) {
-   // Lazy load model.
-   Y.lazyLoad( 'autocomplete', 'transition', 'autocomplete-highlighters', 'anim', 'datasource-io','gallery-form', "json-parse", 'event-mouseenter', 'event', 'overlay','dump',   function (errors, attached) {
+   var loadModulBenutzer = function (callbackFunction) {
+      // Lazy load model.
+      Y.lazyLoad( 'autocomplete-base', 'autocomplete-filters', 'transition', 'autocomplete-highlighters', 'anim', 'datasource-io','gallery-form', "json-parse", 'event-mouseenter', 'event', 'overlay','dump',   function (errors, attached) {
 
       // If there was a problem, deal with it.
       if (errors) {
          callbackFunction(false);
          return;
       }
-            
+   
       Y.log("alle attached ? " + Y.dump(attached));
-            
+
 
       if (attached['gallery-form']) {
 
@@ -180,13 +180,9 @@ var loadModulBenutzer = function (callbackFunction) {
 
          };
 
-
-                   
-
-
          function animate_list() {
          
-         var subnode = this.one('ul');
+            var subnode = this.one('ul');
 
             if ( this.hasClass('closed') ){
                subnode.show(true);
@@ -196,33 +192,79 @@ var loadModulBenutzer = function (callbackFunction) {
                this.addClass('closed');
             }
 
-         }; 
+         };
+         
+         function get_user_data(e) {
+
+				var css_id = e.currentTarget.get('id');
+            var array_temp = css_id.split('_',2);
+            var perm_user_id = array_temp[1];
+
+				var cfg = {
+					method: 'GET',
+					data:   'action=showUser&perm_user_id='+ perm_user_id,
+					on:     {success: handleSuccessEditUserForm}
+				};
+	
+			  Y.io('/admin.php', cfg);
+
+         };
+         
 
           manage_user.delegate('hover', over, out, '.live-user');
           manage_user.delegate('click', delete_user, '.live-user-hover');
           manage_user.delegate('click', animate_list, '.toggle');
-            
-    
-      
+          manage_user.delegate('click', get_user_data, '.edit-user');
+
       });
       
+
+      var UserFilter = Y.Base.create('pieFilter', Y.Base, [Y.AutoCompleteBase], {
+         initializer: function () {
+            this._bindUIACBase();
+            this._syncUIACBase();
+         }
+      }),
+      
+      filter = new UserFilter({
+          inputNode: '#liveuser-input',
+          minQueryLength: 0,
+          queryDelay: 0,
+          source: (function () {
+            var results = [];
+            Y.all('#manage-live-user > li').each(function (node) {
+              results.push({
+                node: node,
+                tags: node.getAttribute('username')
+              });
+            });
+
+            return results;
+          }()), 
+          resultTextLocator: 'tags',
+          resultFilters: 'phraseMatch'
+      });
+
+      filter.on('results', function (e) {
+         Y.all('#manage-live-user > li').addClass('hidden');
+         Y.Array.each(e.results, function (result) {
+            result.raw.node.removeClass('hidden');
+         });
+      });
       
 
-         var editBtn   = Y.one('#editBtn'),
-				deleteBtn  = Y.one('#deleteBtn'),
-				loader    = Y.Node.create('<img src="/img/waiting.gif">'),
-					 results   = Y.one('#results'),
-					 overlay,
-					 f,
-					 OVERLAY_TEMPLATE = '<div id="edit_user_overlay">'+
-													'<div class="yui3-widget-hd"></div>'+
-													'<div id="widget" class="yui3-widget-bd"></div>'+
-													'<div class="yui3-widget-ft"></div>'+
-												'</div>';
-
-
-
-				  var LuUserTemplate =
+      var editBtn  = Y.one('#editBtn'),
+         deleteBtn = Y.one('#deleteBtn'),
+         loader    = Y.Node.create('<img src="/img/waiting.gif">'),
+         results   = Y.one('#results'),
+			overlay,
+			f,
+			OVERLAY_TEMPLATE = '<div id="edit_user_overlay">'+
+									 '<div class="yui3-widget-hd"></div>'+
+									 '<div id="widget" class="yui3-widget-bd"></div>'+
+									 '<div class="yui3-widget-ft"></div>'+
+									 '</div>',
+         LuUserTemplate =
 					 '<div class="LuUser">' +
 							  '<div class="hd">' +
 								 '<img src="img/admin/{is_active_icon}">' +
@@ -233,82 +275,13 @@ var loadModulBenutzer = function (callbackFunction) {
 								   '<span class="UserInfo"> {nachname} </span>' +
 								   '<span class="UserInfo">({perm_type})</span>' +
 								'</div>' +
-						  '</div>';
- 
-				  function LuUserFormatter(query, results) {
-					 return Y.Array.map(results, function (result) {
-						 var user = result.raw;
-					 
-						 return Y.Lang.sub(LuUserTemplate, {
-							highlighted    : result.highlighted,
-							is_active_icon : user.is_active_icon,
-							vorname        : user.vorname,
-							nachname       : user.nachname,
-							perm_type      : user.perm_type_text
-						 });
-					  });
-					}
-		  
-		  
-				  var dsLuUser = new Y.DataSource.IO({
-					source: '/request/search.php?action=search_liveuser_user'
-					});
-		  
+						  '</div>',
 
-		  var LuUserSearch = Y.one('#liveuser-input').plug(Y.Plugin.AutoComplete, {
-		  
-			 resultTextLocator: 'handle',
-			 maxResults: 10,
-			 resultHighlighter: 'wordMatch',
-			 resultFormatter: LuUserFormatter,
-			 requestTemplate: '&q={query}',
-			 source: dsLuUser,
-         resultListLocator: function (response) {
-
-            var data = response[0].responseText; // Response data.
-            
+		   handleSuccessEditUserForm = function(id, o, a) {
+            // Create an overlay to edit a user (Form).
+          
+            var data = o.responseText; 
             data = Y.Lang.trim(data);
-
-				try {
-					var json_data = Y.JSON.parse(data);
-				}
-				catch (e) {
-               alert("not json sorry...");
-				}
-
-				var results = json_data.result;
-				
-				if (results && !Y.Lang.isArray(results)) {
-					 results = [results];
-				}
-					 return results || [];
-			}
-			  
-		  });
-		  
-		  
-		  LuUserSearch.ac.after('select', function (a) {
-		  
-				Y.log("perm_user_id : " + Y.dump(a.result.raw.perm_user_id));
-				
-				var perm_user_id = a.result.raw.perm_user_id;
-	
-				var cfg = {
-					method: 'GET',
-					data:   'action=showUser&perm_user_id='+ perm_user_id,
-					on:     {success: handleSuccessEditUserForm}
-				};
-	
-			  Y.io('/admin.php', cfg);
-
-		  });
-
-
-		 var handleSuccessEditUserForm = function(id, o, a) {
-		 // Create an overlay to edit a user (Form).
-       
-         var data = o.responseText; 
-         data = Y.Lang.trim(data);
 	
 		      try {
 					 var json_data = Y.JSON.parse(data);
@@ -319,32 +292,29 @@ var loadModulBenutzer = function (callbackFunction) {
 				}
 
 
-         if (json_data.status == 200 && json_data.action == "deleteUser" ) {
+            if (json_data.status == 200 && json_data.action == "deleteUser" ) {
 
-				Y.log("sucess argument: " + Y.dump('#'+a));
+               Y.log("sucess argument: " + Y.dump('#'+a));
 
-				var parent_node = Y.one('#'+a).get('parentNode');
+               var parent_node = Y.one('#'+a).get('parentNode');
 
-			   var anim = new Y.Anim({
-					  node: parent_node,
-					  to: { opacity: 0 }
-				 });
+               var anim = new Y.Anim({
+                    node: parent_node,
+                    to: { opacity: 0 }
+                });
 
-    			var onEnd = function() {
-					  var node = this.get('node');
-					  node.get('parentNode').removeChild(node);
-				};
+               var onEnd = function() {
+                    var node = this.get('node');
+                    node.get('parentNode').removeChild(node);
+               };
 
-				anim.on('end', onEnd);
-				anim.run();
-            
-            return;
+               anim.on('end', onEnd);
+               anim.run();
+               
+               return;
 
-			}
+            }
 
-
-
-            
 
 				destroyOverlay();
 			  
@@ -387,24 +357,20 @@ var loadModulBenutzer = function (callbackFunction) {
 	
 					});
                
-               f.subscribe('submit', function (args) {
+              f.subscribe('submit', function (args) {
                
                   Y.log("submit"+ Y.dump(args));
                
-               });
+              });
                
-               
-               f.subscribe('onclickChange', function (args) {
+              f.subscribe('onclickChange', function (args) {
                
                   Y.log("onclickChange "+Y.dump(args));
 
                });
                
-               f.render();
-               
-               
-
-		 }
+              f.render();
+         };
 		 
 		 
 		 
