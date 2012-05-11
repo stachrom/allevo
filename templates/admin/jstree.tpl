@@ -617,7 +617,7 @@ Y.on('domready', function () {
 								n.add({'message': r.statusmsg});
 							}else{
 								Y.log("create dump :  " + Y.dump(r));
-								n.add({'message': r.statusmsg +' for '+  r.request, });
+								n.add({'message': r.statusmsg +' for '+  r.request});
 								$.jstree.rollback(data.rlbk);
 							}
 		
@@ -824,7 +824,7 @@ Y.on('domready', function () {
 
 									if (typeof data.result.content  != 'undefined' && data.result.content != null) {
 											Y.one('#editable').setContent(data.result.content);
-											//Y.log("editor: " + Y.dump(myEditor));
+											Y.log("editor: " + Y.dump(data.result.content));
 											myEditor.setEditorHTML(data.result.content);
 									}else{
 											Y.one('#editable').setContent("");

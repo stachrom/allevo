@@ -374,9 +374,9 @@ YUI.add('editor-allevo', function (Y) {
 						 this._focusWindow();
 					} else {
 						 state = 'on';
-						 YAHOO.log('Show the Code Editor', 'info', 'example');
+						 Y.log('Show the Code Editor', 'info', 'example');
 						 this.cleanHTML();
-						 YAHOO.log('Save the Editors HTML', 'info', 'example');
+						 Y.log('Save the Editors HTML', 'info', 'example');
 						 Dom.addClass(iframe, 'editor-hidden');
 						 Dom.removeClass(ta, 'editor-hidden');
 						 this.toolbar.set('disabled', true);
@@ -389,7 +389,9 @@ YUI.add('editor-allevo', function (Y) {
 				}, this, true);
 	
 				this.on('cleanHTML', function(ev) {
-					YAHOO.log('cleanHTML callback fired..', 'info', 'example');
+					Y.log('cleanHTML callback fired..', 'info', 'example');
+               Y.log(ev.html);
+               
 					this.get('element').value = ev.html;
 				}, this, true);
 			  

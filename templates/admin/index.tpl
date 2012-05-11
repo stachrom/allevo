@@ -324,7 +324,7 @@ YUI({
 								  boundingBox: '#widget',
 								  action : '/admin.php',
 								  method : 'post',
-								  children  : json_data.result, 
+								  children  : json_data.result
 								});
 	
 				  f.subscribe('success', function (args) {
@@ -382,7 +382,7 @@ YUI({
              height       : '600px',
 				 zIndex       : 100,
 				 headerContent: '<a title="hide panel" id="hideOverlay" ><em>hide</em></a>',
-             centered     : true,
+             centered     : true
 
 			});
 			
