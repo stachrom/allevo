@@ -11,7 +11,7 @@
      {if $user.perm_user_id == $liveuser.perm_user_id}
          <li><strong>Deine Rechte:</strong>
      {else}
-         <li class="closed toggle">
+         <li class="closed toggle" username="{$user.handle}">
          {if $user.is_active}
             <img src="img/admin/icon.active.gif">
          {else}
