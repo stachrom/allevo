@@ -144,10 +144,12 @@ YUI.add('editor-allevo', function (Y) {
       delete myEditor.invalidHTML.iframe;
       delete myEditor.invalidHTML.from;
       delete myEditor.invalidHTML.script;
-
-      Y.log(myEditor.invalidHTML);
-			
-			
+      delete myEditor.invalidHTML.input;
+      delete myEditor.invalidHTML.button;
+      delete myEditor.invalidHTML.select;
+      delete myEditor.invalidHTML.link;
+      delete myEditor.invalidHTML.style;
+      delete myEditor.invalidHTML.textarea;
 
 			YAHOO.gutter = function() {
 				return {
@@ -250,8 +252,7 @@ YUI.add('editor-allevo', function (Y) {
 					if (state == 'on') {
 						state = 'off';
 						this.toolbar.set('disabled', false);
-						YAHOO.log('Show the Editor', 'info', 'example');
-						YAHOO.log('Inject the HTML from the textarea into the editor', 'info', 'example');
+						Y.log('Inject the HTML from the textarea into the editor', 'info', 'example');
 						this.setEditorHTML(ta.value);
 						if (!this.browser.ie) {
 							this._setDesignMode('on');
@@ -263,9 +264,9 @@ YUI.add('editor-allevo', function (Y) {
 						this._focusWindow();
 					} else {
 						state = 'on';
-						YAHOO.log('Show the Code Editor', 'info', 'example');
+						Y.log('Show the Code Editor', 'info', 'example');
 						this.cleanHTML();
-						YAHOO.log('Save the Editors HTML', 'info', 'example');
+						Y.log('Save the Editors HTML', 'info', 'example');
 						Dom.addClass(iframe, 'editor-hidden');
 						Dom.removeClass(ta, 'editor-hidden');
 						this.toolbar.set('disabled', true);
