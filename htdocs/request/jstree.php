@@ -259,7 +259,8 @@ if(!$LU->isLoggedIn()){
 				$_response['data']['tagged'] = $object_name ;
 
 			}
-
+         
+      return $_response;
    }
    
    
@@ -267,9 +268,8 @@ if(!$LU->isLoggedIn()){
 		
 		if ($action  == "add_tags" ){
 		
-			add_tags($_POST['tags'], $user, $object_name, $type );
-				
-		
+         $_response = add_tags($_POST['tags'], $user, $object_name, $type );
+
 				if( $_response ){
 					$_response['status'] = 200;
 					$_response['statusmsg'] =" object: $object_ids[0] is tagged "; 
