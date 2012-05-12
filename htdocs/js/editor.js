@@ -389,9 +389,6 @@ YUI.add('editor-allevo', function (Y) {
 				}, this, true);
 	
 				this.on('cleanHTML', function(ev) {
-					Y.log('cleanHTML callback fired..', 'info', 'example');
-               Y.log(ev.html);
-               
 					this.get('element').value = ev.html;
 				}, this, true);
 			  
@@ -431,39 +428,11 @@ YUI.add('editor-allevo', function (Y) {
 							this.setStyle('top', '');
 							this.setStyle('left', '');
 							this.setStyle('position', '');
-			
 							this.addClass('editor-hidden');
 				}, this, true); 
 
 			}, myEditor, true);
-		 	 
-			myEditor.on('windowCreateLinkRender', function() {
-				 var body = this._windows.createlink.body;
-				 var label1 = document.createElement('label');
-				 label1.innerHTML = '<strong>Wiki Link:</strong>'+
-											 '<input type="text" id="' +
-											 this.get('id')+'_wikilink_url" name="wikilink_url" size="10" style="width: 200px" value="" />'+
-											 '</label>';
-				  var label2 = document.createElement('label');
-				  label2.innerHTML = '<strong>Wiki Category:</strong><div id="dropDownMenu_' + this.get('id') + '"></div></label>';
-				  var _elem = Dom.get(this.get('id') + '_createlink_url');
-				  Dom.insertBefore(label1, _elem.parentNode);
-				  Dom.insertBefore(label2, _elem.parentNode);
-				  //This stops the menu's A's from bubbling the click
-				  Event.on("dropDownMenu_" + myEditor.get('id'), 'click', function(ev) {
-						Event.stopEvent(ev);
-				  });
-    		});
 
-   		myEditor.on('afterOpenWindow', function(args) {
-			  if (args.win.name == 'createlink') {
-					//CreateLink panel was opened, update the Menu..
-				
-					createDropDownMenu();
-					
-			  }
-    		});
-		
    		myEditor.on('afterOpenWindow', function() {
 			  //When the window opens, disable the url of the image so they can't change it
 			  var url = Dom.get(myEditor.get('id') + '_insertimage_url');
@@ -471,60 +440,30 @@ YUI.add('editor-allevo', function (Y) {
 					url.disabled = true;
 			  }
    		}, myEditor, true);
-		
-		
-		
-
-		
-					//var cleanPaste = new CleanPaste(myEditor);	
-			
-			
-	Y.on('domready', function() {	
-									  
-									  		
-			  
-					myEditor.render();
-					EditorContent2.render();
-					
-					
-
-					
-					var editable = Y.one("#editable");
 
 
-					editable.on("dblclick", function (e) {
+			myEditor.render();
+			EditorContent2.render();
 
-						Y.log("response " + Y.dump('doubleclick'));
-					
-						myEditor.setEditorHTML(Y.one('#editable').get("innerHTML"));
-							
-						Dom.setStyle('yahooEditor-box', 'position', 'static');
-						Dom.setStyle('yahooEditor-box', 'top', '');
-						Dom.setStyle('yahooEditor-box', 'left', '');
-						Dom.setStyle('editable', 'display', 'none');
-						myEditor._focusWindow();
+			var editable = Y.one("#editable");
+
+			editable.on("dblclick", function (e) {
+
+            myEditor.setEditorHTML(Y.one('#editable').get("innerHTML"));
 				
-				});
-
-						  
-
-
-
-
- 
+				Dom.setStyle('yahooEditor-box', 'position', 'static');
+				Dom.setStyle('yahooEditor-box', 'top', '');
+				Dom.setStyle('yahooEditor-box', 'left', '');
+				Dom.setStyle('editable', 'display', 'none');
+            
+				myEditor._focusWindow();
+				
 			});
-		 
-	Y.log("button " + Y.dump(saveButton));
 
+
+		 
     saveButton.on('click', function(e) {
-										 
-																				
-	  	Y.log("save that shit");
-
         	//Event.stopEvent(e);
-
-
-		 
 
         	myEditor.saveHTML();
 			EditorContent2.saveHTML();
@@ -537,8 +476,7 @@ YUI.add('editor-allevo', function (Y) {
 		   var editordata = encodeURIComponent(myEditor.getEditorHTML());
 			Dom.get('editable').innerHTML = editordata;
 			
-			Y.log("query string: " + Y.dump(Y.Lang.type(YUI.allevo.querystring)));
-				
+
 			if( Y.Lang.type(YUI.allevo.querystring) != 'undefined'){
 			
 				var querystring_records = YUI.allevo.querystring.dt.getRecordSet().getRecords();
@@ -563,88 +501,29 @@ YUI.add('editor-allevo', function (Y) {
 					}
 				}
 			}
-			Y.log("querystring: "+ Y.dump(querystring));
-			
-			
-			Y.log("collectmedia : "+ Y.dump(Y.Lang.type(YUI.allevo.Media)));
-
-
-
 
 			if( Y.Lang.type(YUI.allevo.Media) != "undefined" && Y.Lang.type(YUI.allevo.Media.collectmedia) == 'function'){
 				var jsonStr = YUI.allevo.Media.collectmedia();
 			}
 			
-
-			Y.log("querystring: "+ jsonStr);
-
-        	window.setTimeout(function() {
-												
 				var id = Dom.get('nestedsetid').value;	
 				var sUrl = 'http://'+ YUI.allevo.HTTP_HOST +'/request/jstree.php';
             var data  = 'server=server';
             var tags  = Y.one('#ac-input-tags-content').get('value');
-				data += '&editor='+ encodeURIComponent(myEditor.get('textarea').value);
-				data += '&id='+ id;
             data += '&tags='+ tags;
 				data += '&media=' + jsonStr;
 				data += '&query_string=' + Y.JSON.stringify(querystring); 
 				data += '&id=' + Dom.get('nestedsetid').value;
 				data += '&type=savecontent';
+            
+				//Y.log("data" + Y.dump(data));
 
-				Y.log("data" + Y.dump(data));
-	
 				var request = YAHOO.util.Connect.asyncRequest('POST', sUrl, callback, data);
-        	}, 200);
-			
-		  
-		  
     });
- 
- 
+
 	Event.onDOMReady(function() {
         status = Dom.get('status');
 	});
-	 
-	 
-	function createDropDownMenu(namespaces) {
-        if (Dom.get("dropDownMenu_" + myEditor.get('id'))) {
-            //Wipe the old button
-            Dom.get("dropDownMenu_" + myEditor.get('id')).innerHTML = '';
-        }
-		  
-		  YAHOO.log('createDropDown', 'info' );
-		  
-               
-        //fake namespaces array
-        var namespaces = [
-            { name: 'Dav #1' },
-            { name: 'Dav #6' }
-        ];
- 
-        var menuItems = [];
-        for (var i = 0, len = namespaces.length; i < len; ++i) {
-            var m = namespaces[i];
-            menuItems[i] = {
-                text: m.name,
-                value: m.name
-            };
-        }
-           
-        var dropDownMenu = new YAHOO.widget.Button({
-            type: "menu",
-            label:"default",
-            name: "menuItems",
-            menu: menuItems,
-            container: "dropDownMenu_" + myEditor.get('id')
-        });
-        
-        dropDownMenu.getMenu().mouseUpEvent.subscribe(function(ev, args) {
-            Event.stopEvent(args[0]);
-            dropDownMenu.set("label", args[1].cfg.getProperty("text"));
-            dropDownMenu._hideMenu();
-        });
-	}
 
 	YAHOO.util.Event.onAvailable('flickr_search', function() {
 		 YAHOO.log('onAvailable: #flickr_search', 'info', 'example');

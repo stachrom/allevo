@@ -27,8 +27,8 @@
       </form> 
  
       		<span id="ft-note"> <em>*</em> Pflichtfelder </span>
-            <button id="reset" >reset</button>   
-				<button id="send" >register</button>
+            <button id="reset" class="yui3-button">reset</button>   
+				<button id="send" class="yui3-button">register</button>
             
   </div>          
  

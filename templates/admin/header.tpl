@@ -1,24 +1,23 @@
 <!DOCTYPE html>
 <html lang="de">
-<head> 
+<head>
 <meta charset="utf-8">
 
 {foreach key=schluessel item=wert from=$metatag_header}
 <meta name="{$schluessel}" content="{$wert}">
-{/foreach} 
+{/foreach}
 
 <title>{$Page_Title}</title>
 <link rel="stylesheet" href="http://yui.yahooapis.com/2.8.2/build/reset-fonts-grids/reset-fonts-grids.css" >
-<link rel="stylesheet" href="http://yui.yahooapis.com/combo?3.5.1/build/cssfonts/fonts-min.css&3.5.1/build/cssreset/reset-min.css&3.5.1/build/cssgrids/grids-min.css&3.5.1/build/cssbase/base-min.css">
-<link rel="stylesheet" href="http://{$smarty.server.SERVER_NAME}/css/admin/photos.css" >
-<link rel="stylesheet" href="http://{$smarty.server.SERVER_NAME}/css/admin/uploader.css" >
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?3.5.1/build/cssbutton/cssbutton-min.css&3.5.1/build/cssgrids/cssgrids-min.css&3.5.1/build/cssreset/cssreset-min.css&3.5.1/build/cssfonts/cssfonts-min.css&3.5.1/build/cssbase/cssbase-min.css">
+<link rel="stylesheet" href="http://{$smarty.server.SERVER_NAME}/css/admin/photos.css">
+<link rel="stylesheet" href="http://{$smarty.server.SERVER_NAME}/css/admin/uploader.css">
 <link rel="stylesheet" href="http://{$smarty.server.SERVER_NAME}{$pfad}/css/admin.css">
-<link rel="stylesheet" href="http://yui.yahooapis.com/3.5.1/build/cssbutton/cssbutton.css">
+
 <link rel="stylesheet" href="assets/anim/anim.css" >
 
 <style id="styleoverrides"></style>
 
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?3.5.1/build/panel/assets/skins/sam/panel.css">
 
 
 

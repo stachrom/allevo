@@ -53,13 +53,12 @@
 								<h1>Willkommen</h1>
 								Auf der linken Seite einen Navigationspunkt Auswählen. 
 								(Rechte Maustaste für Contextmenu) Dragg and Drop!
-								<h1>Dann Doppelklick </h1>
+								<h1>Doppelklick</h1>
 								auf die Inhaltsfläche für die Bearbeitung des Inhaltes.
 							</div>
 							
 							<div id="yahooEditor-box">
 								<input type="hidden" name="nestedsetid" value="" id="nestedsetid" />
-								<input type="hidden" name="uuid" id="uuid" value="" >
 								<textarea id="editor" name="editor" rows="20" cols="75"> </textarea> 
 							</div>
 							
@@ -118,8 +117,8 @@
 										 <li id="remove"><a href="#">Löschen<span>(0)</span></a></li> 
 									 </ul>
 									 
-									 <a id="manual-media-load" href="#" > alle Bilder Laden </a>
-									 <a id="media-reset" href="#" > Reset </a>
+									 <a id="manual-media-load" href="#" class="yui3-button" > alle Bilder Laden </a>
+									 <a id="media-reset" href="#" class="yui3-button" > Reset </a>
 									 
 									 <h3>Vorhande Tags</h3>
 									 <ul id="pictures_tags" >
@@ -210,7 +209,7 @@
 			   
 	<div>
 	<br>
-		<button type="button" id="submitEditor">Speichern</button> 
+		<button type="button" id="submitEditor" class="yui3-button">Speichern</button> 
 		<div id="status"></div> 
 	</div>
 </div> 
