@@ -263,9 +263,7 @@ if(!$LU->isLoggedIn()){
       return $_response;
    }
    
-   
-   
-		
+
 		if ($action  == "add_tags" ){
 		
          $_response = add_tags($_POST['tags'], $user, $object_name, $type );
