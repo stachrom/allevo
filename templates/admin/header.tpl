@@ -19,10 +19,6 @@
 <style id="styleoverrides"></style>
 
 
-
-
-
-
 <style>
 {literal}
 
@@ -216,31 +212,24 @@ textarea {
 {/strip}
 </style>
 
-
 <script src="http://yui.yahooapis.com/3.5.1/build/yui/yui-min.js"></script>
-
-
 <script type="text/javascript">
 	{literal}
-		YUI().use( 'console',function(Y) {
+	YUI().use( function(Y) {
 		
-		
-		new Y.Console({ logSource: Y.Global }).render();
-		
-		
-			YUI.namespace('allevo');
+      //new Y.Console({ logSource: Y.Global }).render();
+      YUI.namespace('allevo');
 
 	{/literal}
-			YUI.allevo.HTTP_HOST = "{$smarty.server.SERVER_NAME}";
-			YUI.allevo.pfad = "{$pfad}";
+      YUI.allevo.HTTP_HOST = "{$smarty.server.SERVER_NAME}";
+      YUI.allevo.pfad = "{$pfad}";
 	{literal}
-		});
+   });
 	{/literal}
 	
-		{foreach key=schluessel item=wert from=$javascript_header}
-			{$wert}
-		{/foreach}
-
+   {foreach key=schluessel item=wert from=$javascript_header}
+      {$wert}
+   {/foreach}
 </script>
 
 
