@@ -218,16 +218,7 @@
 </div>
 
 
-
-
-
-
-
- 
 {literal}
-
-
-
 
 <script> 
 

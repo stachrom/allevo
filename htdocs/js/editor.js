@@ -1,9 +1,33 @@
 // Editor implementation for the finishers.ch media Manager.
 YUI.add('editor-allevo', function (Y) {
 
-	Y.on('domready', function () {				
+      var YAHOO = Y.YUI2;	
+      
+      YAHOO.widget.TrustingEditor = function(el, attrs) {
+        YAHOO.widget.TrustingEditor.superclass.constructor.call(this, el, attrs );
+      };
+      
+      YAHOO.extend(YAHOO.widget.TrustingEditor, YAHOO.widget.Editor, {
+           _cleanIncomingHTML: function(html) {
+               html = html.replace(/<script([^>]*)>/gi, '<YUI_SCRIPT$1>');
+               html = html.replace(/<\/script([^>]*)>/gi, '</YUI_SCRIPT>');
+               html = YAHOO.widget.TrustingEditor.superclass._cleanIncomingHTML.call(this, html);
+               html = html.replace(/<YUI_SCRIPT([^>]*)>/gi, '&lt;script$1&gt;');
+               html = html.replace(/<\/YUI_SCRIPT([^>]*)>/gi, '&lt;/script&gt;');
+               return html;
+           },
+           cleanHTML: function(html) {
+               if (!html)
+                   html = this.getEditorHTML();
+               delete this.invalidHTML.script;
+               html = html.replace(/&lt;script([^&>]*)&gt;/g, '<script$1>');
+               html = html.replace(/&lt;\/script&gt;/g, '<\/script>');
+               html = YAHOO.widget.TrustingEditor.superclass.cleanHTML.call(this, html);
+               return html;
+           }
+      });
 
-		var YAHOO = Y.YUI2;	
+	Y.on('domready', function () {				
 
 		YUI.namespace('allevo.editor');	
 		YUI.namespace('allevo.editor2');
@@ -139,11 +163,10 @@ YUI.add('editor-allevo', function (Y) {
 
         //var save_button = new YAHOO.widget.Button('submitEditor');
 		var saveButton = Y.one('#submitEditor');
-      var myEditor = new YAHOO.widget.Editor('editor', myConfig);
+      var myEditor = new YAHOO.widget.TrustingEditor('editor', myConfig);
 
       delete myEditor.invalidHTML.iframe;
       delete myEditor.invalidHTML.from;
-      delete myEditor.invalidHTML.script;
       delete myEditor.invalidHTML.input;
       delete myEditor.invalidHTML.button;
       delete myEditor.invalidHTML.select;

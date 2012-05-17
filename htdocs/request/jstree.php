@@ -83,8 +83,10 @@ include '../set_env.php';
 		include( $plugin_path . 'purifier/HTMLPurifier.standalone.php' );
 		$config = HTMLPurifier_Config::createDefault();
 		$config->set('Core.Encoding', 'UTF-8');
-		$config->set('AutoFormat.RemoveEmpty', true);
-		
+		$config->set('AutoFormat.RemoveEmpty', false);
+      $config->set('HTML.Trusted', true);
+      $config->set('HTML.SafeObject', true);
+      $config->set('Output.FlashCompat', true);
 		$purifier = new HTMLPurifier($config);
 		return $purifier;
 	
