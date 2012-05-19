@@ -82,12 +82,36 @@ if($_REQUEST['id'] ){
     $current_node = $NestedSets->pickNode($id, true);
     
    if($navigation_1 = $NestedSets->getChildren(1, true, true, false, $addSQL)){
+  
         foreach($navigation_1 as $key => $value){
-            // Exclude the news childrens from the navigation
+            // Exclude the news childrens from the sub-navigation
+            /*
             if( $value['name'] !== 'News' AND $children = $NestedSets->getChildren($value['id'], true, true, false, $addSQL)){
                 $navigation_1[$key]['subnavigation'] = $children;
             }
+             */
+             
+            // BGPictures --> slideshow
+            if($value['name']=='Backgroundpictures'){
+               if($children = $NestedSets->getChildren($value['id'], true, true, false, $addSQL)){
+                        foreach($children as $key => $value ){
+                            $BGPictures[$key] =& $mdb2->queryRow('SELECT sidepictures  FROM nested_set_content WHERE nested_set_id ='.$value['id'].'');  
+                            $BGPictures[$key] = unserialize_content($BGPictures[$key]);  
+                        }
+                        
+						shuffle($BGPictures);
+                  $smarty->assign('BGPictures', $BGPictures, true);
+               }
+            }  
+             
+             
         }
+     
+      
+
+      
+      
+      
    }
     
     
@@ -152,26 +176,14 @@ if($_REQUEST['id'] ){
                     }
                 }
          
-                // BGPictures --> slideshow
-                if($value['name']=='Backgroundpictures'){
-                    if($children = $NestedSets->getChildren($value['id'], true, true, false, $addSQL)){
-                        foreach($children as $key => $value ){
-                            $BGPictures[$key] =& $mdb2->queryRow('SELECT sidepictures  FROM nested_set_content WHERE nested_set_id ='.$value['id'].'');  
-                            $BGPictures[$key] = unserialize_content($BGPictures[$key]);  
-                        }
-                        
-                        
-						shuffle($BGPictures);
-                        $smarty->assign('BGPictures', $BGPictures, true);
-                    }
-                }     
+                   
             }    
         }
 	}
 
 	
 	
-   if(is_array($breadcrumb) ){
+   if(!empty($breadcrumb) ){
 
             switch ($value['level']) {
                case '1':
@@ -201,8 +213,6 @@ if($_REQUEST['id'] ){
             }
    }
 	
-
-            
     if($current_node['level']){
             
 		switch ($current_node['level']) {
@@ -300,10 +310,6 @@ $link_id =&$mdb2->queryOne('SELECT link FROM nested_set WHERE id = '.$mdb2->quot
 
 
 $content =& $mdb2->queryRow('SELECT * FROM nested_set_content WHERE nested_set_id = '.$id, '', MDB2_FETCHMODE_ASSOC);
-
-
-
-// print_r($_SESSION);
 
 
 if ( empty($content) && $id!=1 )header("Location: /index.php",TRUE,301);

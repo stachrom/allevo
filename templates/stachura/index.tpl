@@ -50,17 +50,38 @@
 		</ul>
    </nav>
 
-   
-   
-
-
 </header> 
    
 <div class="yui3-g"> 
    <aside class="yui3-u-1-4"> 
       <div class="content">
+      
+      
+      {if $navigation_2}
+      
+      <div id="toggle-work" class="yui3-module toggle-area">
+         <div class="yui3-hd">
+            <h2>{$content.title}</h2> 
+         </div>
+         <div class="yui3-bd">
+            <ul>
+         {foreach $navigation_2 as $nav}
+         
+            {if $smarty.session.level_3 == $nav.id}
+               <li class="current" > <a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}"  title="{$nav.name}"  class="active" >{$nav.name}</a> </li> 
+            {else}
+               <li class="nav_level2"  > <a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}" title="{$nav.name}"  >{$nav.name}</a> </li>
+            {/if}
             
-            
+         {/foreach}
+            </ul>
+         </div>
+      </div>  
+         
+      {/if}
+    
+      {if $content.nested_set_id == 1}
+       
          <div id="toggle-work" class="yui3-module toggle-area">
             <div class="yui3-hd">
                <h2>Kürzliche Arbeiten:</h2> 
@@ -78,7 +99,7 @@
                </ul>
             </div>
          </div>   
-            
+
          <h2>Long Term Projekte:</h2> 
          <ul>
             <li><a href="http://nodejs.org/">NodeJS</a>
@@ -101,7 +122,9 @@
          <ul>
             <li><a href="http://westciv.com/tools/box-properties/index.html">CSS3</a></li>
          </ul>              
-         <sup>*</sup> Login ist erforderlich  
+         <sup>*</sup> Login ist erforderlich
+
+      {/if}         
       </div> 
    </aside> 
  
@@ -135,7 +158,7 @@
 <div id="panelContent">
 	<div class="yui3-widget-bd">
 		<p id="form-status"></p>
-		<form id="login" name="login" action="?action=authentication" >
+		<form id="login" name="login" action="?action=authentication"  method="get" >
 			<fieldset><legend><b>Credentials</b></legend>
 				<div class="formmgr-row"> 
 					<label for="handle">Benutzername <em>*</em></label>
@@ -214,18 +237,30 @@ YUI({
 
 
    var work_node = Y.one('#toggle-work');
-   var toggle_work = work_node.togglediv();
+   
+   if (work_node){
+      var toggle_work = work_node.togglediv();
+   }
+   
    
    
    //work_node.addClass('yui3-closed');
    //toggle_work.setStyle("height", "0");
    //toggle_work.fx.set('reverse', true);
+    
+{/literal}
+   
+{if $content.nested_set_id == 1}
 
    wetter = new Y.LocalWeather({
                   location : 'Winterthur',
 						u :'c',
                   layout : 'full'
 					}).render('#wetter');
+               
+{/if}
+   
+{literal}
 
    login_node = Y.one('#show-loginOverlay')
    var notify = new Y.Notify({prepend:true});

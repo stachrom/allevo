@@ -59,7 +59,7 @@ Y.on('domready', function(){
 
 
 	Y.one('#show-loginOverlay').on('click', function(e){
-																	 
+	
 		Y.one('#panelContent').setStyle('display', 'block');															 
 		loginOverlay.show(); 
 		f.initFocus();		// only do this for one form on a page
