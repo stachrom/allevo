@@ -378,8 +378,4 @@
    
    $timer->setMarker('ende config');
    
-   
-
-
-
 ?>
