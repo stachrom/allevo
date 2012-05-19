@@ -13,50 +13,37 @@ Y.on('domready', function(){
   		headerContent: "Authentifizierung",
   		plugins: [Y.Plugin.Drag]
 
-	}),
+	});
 
-	nestedPanel;
+	loginOverlay.addButton({
+		value: "Reset",
+		action: function(e) { 
+			e.preventDefault(); 
+			f.populateForm();	// default_value_map + values in markup	
+			f.enableForm();
+		},
+		section: Y.WidgetStdMod.FOOTER
+	});
 
-	loginOverlay.addButton(
-	  {
-			value: "Reset",
-			action: function(e) { 
-			  e.preventDefault(); 
-				f.populateForm();	// default_value_map + values in markup	
-				f.enableForm();
-			},
-			section: Y.WidgetStdMod.FOOTER
-	  }
-	);
+	loginOverlay.addButton({
+		value: "Cancel",
+		action: function(e) { 
+			e.preventDefault(); 
+			loginOverlay.hide(); 
+		},
+		section: Y.WidgetStdMod.FOOTER
+	});
 
-
-	loginOverlay.addButton(
-	  {
-			value: "Cancel",
-			action: function(e) { 
-			  e.preventDefault(); 
-			  loginOverlay.hide(); 
-			},
-			section: Y.WidgetStdMod.FOOTER
-	  }
-
-	);
-
-
-	loginOverlay.addButton(
-	  {
-			value: "Login",
-			action: function(e) { 
-			  e.preventDefault(); 
-			  send();
-			},
-			section: Y.WidgetStdMod.FOOTER
-	  }
-	);
-
+	loginOverlay.addButton({
+		value: "Login",
+		action: function(e) { 
+			 e.preventDefault(); 
+			 send();
+		},
+		section: Y.WidgetStdMod.FOOTER
+	});
 
 	loginOverlay.render();
-
 
 	Y.one('#show-loginOverlay').on('click', function(e){
 	
@@ -95,55 +82,36 @@ Y.on('domready', function(){
 
 
 	//########################################
-	// YUI ASYNC REQUEST --> yui3.3 IO
+	// YUI ASYNC REQUEST --> yui3.5.1 IO
 	//########################################
-
-		var handleStart = function(id, a) {
-			//Y.log("io:start firing.", "info", "example");
-			//output.set("innerHTML", "<li>Loading news stories via Yahoo! Pipes feed...</li>");
-		}
-
-	
 
 		var handleSuccess = function(id, o, a) {
 
-				var id = id; // Transaction ID.
 				var data = o.responseText; // Response data.
 
 				try {
-					 var json_data = Y.JSON.parse(data);
+					var json_data = Y.JSON.parse(data);
 				}
 				catch (o) {
-
-					
+            
 				}
 
-			 if (json_data.status != 200) {
+			if (json_data.status != 200) {
 
 					f.enableForm();
 					f.displayFormMessage('Passwort oder Benutzername sind falsch', true, true );
 					f.displayMessage('#passwd', '', 'error');
 					f.displayMessage('#handle', '', 'error');
 
-			 }else{
+			}else{
 				  loginOverlay.hide();
 				  f.populateForm();
 
 					window.setTimeout(function() {
 						window.location = "admin.php"
 					}, 500);
-			 } 
+			} 
 		}
-
-
-		var handleComplete = function(id, o, a) {
-
-		}
-
-		var handleFailure = function(id, o, a) {
-
-		}
-
 
 		var cfg = {
 			method: 'GET',
@@ -153,34 +121,29 @@ Y.on('domready', function(){
 				useDisabled: true
 			},
 			on: {
-					start: handleStart,
-					complete: handleComplete,
-					success: handleSuccess,
-					failure: handleFailure
-				},
-			arguments: {
-				start:    'foo',
-				complete: 'bar',
-				end:      'baz'
-			}
+					success: handleSuccess
+				}
 		};
 		
-
 		function send() {
+      
 			f.validateForm();
-				
+		
 			if(f.hasErrors()){
 
 			}else{
-					Y.io('index.php', cfg);
-					f.disableForm();
+				Y.io('index.php', cfg);
+				f.disableForm();
 			}	
 		}
-		
+      
+      // listen to press enter key  and call send 
+      var input = Y.one("#passwd");
+      input.on('key', send, 'enter');
 
- });
+   });
 
 }, '1.0.0', {requires: [
-    'gallery-formmgr', 'panel', 'dd-plugin', 'io-form', 'json'
+    'gallery-formmgr', 'panel', 'dd-plugin', 'io-form', 'json', 'event-key'
 ]});
 

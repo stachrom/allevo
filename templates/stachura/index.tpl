@@ -201,7 +201,7 @@ YUI({
          },
       'overlay-login':{
 			fullpath : 'js/yui3/overlay_login.js',
-			requires : [ 'gallery-formmgr', 'panel', 'dd-plugin', 'io-form', 'json']
+			requires : [ 'gallery-formmgr', 'panel', 'dd-plugin', 'io-form', 'json', 'event-key']
 		},
       'gallery-localWeather':{
 			fullpath : 'js/yui3-gallery/gallery-weather.js',
