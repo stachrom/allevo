@@ -73,6 +73,19 @@ include '../set_env.php';
 	
 	$query = array_key_exists('q', $_GET)   ? (string) trim($_GET['q'])   : "" ;
 	$query = array_key_exists('q', $_POST)  ? (string) trim($_POST['q'])  : $query;
+   
+   $is_root_node = false;
+   
+   if ($target_id){
+      foreach($rootnodes as $key => $value){
+         if($value['id'] == $target_id ){
+            $is_root_node = true;
+         }
+      }
+   }
+
+   
+   
 	
 
 	// HTML purifier
@@ -483,9 +496,7 @@ if(isset($_REQUEST["server"])) {
 			break;
 		case "create": //*******************************************************************************
 
-			//$target_id	= (int) $_REQUEST["target_id"];
-			//$type	= (string)$_REQUEST["move_type"];
-			//$name = (string) $_REQUEST["data"];
+
 			
 			empty($name) ? $name = "new folder" : $name;
 			 
@@ -505,12 +516,13 @@ if(isset($_REQUEST["server"])) {
 			if (!$LU->checkRight(TREEMANAGER_CREATE)){
 
 			}else{
+
 				switch ($move_type) {
 					case "after":
-						$response_id = $NestedSets->createRightNode($target_id, $values, true);
+                     $response_id = $NestedSets->createRightNode($target_id, $values, true);
 						break;
 					case "before":
-						$response_id = $NestedSets->createLeftNode($target_id, $values, true);
+                     $response_id = $NestedSets->createLeftNode($target_id, $values, true);
 						break;
 					case "inside":
 						$response_id = $NestedSets->createSubNode($target_id, $values, true);
@@ -542,15 +554,20 @@ if(isset($_REQUEST["server"])) {
 				$logger->log("error_move_node permissions", PEAR_LOG_INFO );
 				
 			}else{
-			
+         
+
 				switch ($move_type) {
 					case 'after':
+                  if (!$is_root_node){
 						  $response_id = $NestedSets->moveTree( $src_id, $target_id, 'AF', $copy);
 						  $server_answer = "after ".$target_id;
+                  }
 						  break;
 					case 'before':
+                  if (!$is_root_node){
 						 $response_id = $NestedSets->moveTree( $src_id, $target_id, 'BE', $copy);
 						 $server_answer = "before ".$target_id;
+                  }
 						 break;
 					case 'inside':
 						 $response_id = $NestedSets->moveTree( $src_id, $target_id, 'SUB', $copy);

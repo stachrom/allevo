@@ -387,7 +387,7 @@ Y.on('domready', function () {
 
 		var cfg = {
 					method: 'POST',
-					data:   {
+					data: {
 							'action': "remove_tag_from_object",
 							'tag-id': tag_id,
 							'type': 'content',
