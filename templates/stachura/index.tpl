@@ -41,14 +41,34 @@
 			
 		{else}
 			{if $smarty.session.level_2 == $nav.id}
-				<li class="nav-tab hoverable  nav-tab-active" > <a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}"  title="{$nav.name}"  class="active" >{$nav.name}</a> </li> 
+				<li> <a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}"  title="{$nav.name}"  class="current" >{$nav.name}</a> </li> 
 			{else}
-				<li class="nav-tab hoverable"  > <a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}" title="{$nav.name}"  >{$nav.name}</a> </li>
+				<li> <a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}" title="{$nav.name}"  >{$nav.name}</a> </li>
 			{/if}
 		{/if}                            
 		{/foreach}
 		</ul>
    </nav>
+   
+   
+   <nav id="breadcrumb" class="yui3-u-1">
+			<ol role="navigation">   
+			{foreach $breadcrumb as $nav} 
+			   <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+				 <a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}" itemprop="url" title="{$nav.name}"><span itemprop="title">{$nav.name}</span></a>
+			   </li>
+			{/foreach}
+
+			{if $smarty.get.eventUID && !$smarty.get.id}
+
+			{else}
+			<li>{$content.title}</li> 
+			{/if}
+			</ol>                   
+	</nav>
+   
+   
+   
 
 </header> 
    
@@ -68,7 +88,7 @@
          {foreach $navigation_2 as $nav}
          
             {if $smarty.session.level_3 == $nav.id}
-               <li class="current" > <a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}"  title="{$nav.name}"  class="active" >{$nav.name}</a> </li> 
+               <li> <a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}"  title="{$nav.name}"  class="current" >{$nav.name}</a> </li> 
             {else}
                <li class="nav_level2"  > <a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}" title="{$nav.name}"  >{$nav.name}</a> </li>
             {/if}

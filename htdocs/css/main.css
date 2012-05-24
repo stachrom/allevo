@@ -124,7 +124,7 @@ input, select {
 	}
    
    nav {  
-      margin-bottom:2em;
+      
    }
   
 	nav ul li {
@@ -157,9 +157,19 @@ input, select {
  	
    
 
-   
+   #breadcrumb{
+      text-align:right;
+      margin:0;
+      padding:0;
+      margin-bottom:2em;
+   }
 
-
+   #breadcrumb ol li{
+      display:inline-block;
+      font-size:70%;
+      /* For IE 7 */
+      zoom: 1;
+   }
 
 
 
