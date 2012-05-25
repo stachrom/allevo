@@ -99,6 +99,7 @@ include '../set_env.php';
 		$config->set('AutoFormat.RemoveEmpty', false);
       $config->set('HTML.Trusted', true);
       $config->set('HTML.SafeObject', true);
+      $config->set('HTML.SafeIframe', true);
       $config->set('Output.FlashCompat', true);
 		$purifier = new HTMLPurifier($config);
 		return $purifier;

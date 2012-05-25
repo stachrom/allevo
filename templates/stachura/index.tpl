@@ -124,7 +124,7 @@
          <ul>
             <li><a href="http://nodejs.org/">NodeJS</a>
                <ul>
-                  <li><a href="http://kyon.stachura.ch:8000/">Nodejs Hellow World</a></li>
+                  <li><a href="http://nodejs.stachura.ch:8000/">Nodejs Server</a></li>
                   <li><a href="http://howtonode.org/">How To Node </a></li>
                   <li><a href=" http://npm.mape.me/"><strong>N</strong>ode<strong>P</strong>ackage <strong>M</strong>anager </a></li>
                </ul>

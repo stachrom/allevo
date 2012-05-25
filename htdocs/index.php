@@ -126,9 +126,7 @@ session_start();
                 unset($_SESSION['level_6']);
                 break;              
       }
-      
-      
-     
+
       if($breadcrumb = $NestedSets->getParents($id, true, true, false, $addSQL)){ 
          $smarty->assign('breadcrumb',  $breadcrumb, true);
          
@@ -160,10 +158,7 @@ session_start();
                     break;      
             }
          }
-      
-       }
-      
-
+      }
    }
 
    function prepareNavigation($navigation=array()){
@@ -198,15 +193,14 @@ session_start();
    $smarty->assign('navigation_4', prepareNavigation($navigation_4), true);
    $smarty->assign('navigation_5', prepareNavigation($navigation_5), true);
    $smarty->assign('navigation_6', prepareNavigation($navigation_6), true);
+   
    $smarty->assign('navigation_siblings', prepareNavigation($sub_navigation_siblings), true);
    $smarty->assign('carousel_content', $carousel_content, true);
-   
 
    $link_id =& $mdb2->queryOne('SELECT link FROM nested_set WHERE id = '.$mdb2->quote($id));
    $content =& $mdb2->queryRow('SELECT * FROM nested_set_content WHERE nested_set_id = '.$id, '', MDB2_FETCHMODE_ASSOC);
 
-
-   if ( empty($content) && $id!=1 )header("Location: /index.php",TRUE,301);
+   if(empty($content) && $id!=1 )header("Location: /index.php",TRUE,301);
 
    $smarty->assign('content',  unserialize_content($content, true), true);
 
@@ -231,9 +225,6 @@ session_start();
       echo json_encode($_response);
       exit;
    }
-
-
-
 
 if(!$LU->isLoggedIn()){
    //include 'allevo/libs/forms/login.php';

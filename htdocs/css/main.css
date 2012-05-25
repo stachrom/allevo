@@ -152,10 +152,6 @@ input, select {
       text-decoration:none;
       font-style:normal;
 	}
-   
-   
- 	
-   
 
    #breadcrumb{
       text-align:right;
@@ -169,9 +165,22 @@ input, select {
       font-size:70%;
       /* For IE 7 */
       zoom: 1;
+      margin:0;
    }
 
+   #breadcrumb ol li:before {
+      content: "\0020 \203A \0020";
+      color: hsla(57,100%,18%, 0.5);
+   }
 
+   #breadcrumb ol li:first-child:before {
+      content: " ";
+   }
+
+   #breadcrumb  li:first-child:before {
+      content: "\0020 \203A \0020";
+      color: hsla(57,100%,18%, 0.5);
+   }
 
 
 
