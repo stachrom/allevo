@@ -1,4 +1,4 @@
 allevo
 ======
 
-small cms system 
+small CMS
