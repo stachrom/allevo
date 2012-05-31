@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Orbitron:400,500,700,900&text=stachura.ch"  >
 <link rel="stylesheet" media="all" href="/css/main.css"> 
 <link rel="stylesheet" href="assets/anim/anim.css" >
+<link rel="stylesheet" href="css/animation.css" >
 
 <!--[if lt IE 9]>
 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -41,26 +42,84 @@
 			
 		{else}
 			{if $smarty.session.level_2 == $nav.id}
-				<li class="nav-tab hoverable  nav-tab-active" > <a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}"  title="{$nav.name}"  class="active" >{$nav.name}</a> </li> 
+				<li> <a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}"  title="{$nav.name}"  class="current" >{$nav.name}</a> </li> 
 			{else}
-				<li class="nav-tab hoverable"  > <a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}" title="{$nav.name}"  >{$nav.name}</a> </li>
+				<li> <a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}" title="{$nav.name}"  >{$nav.name}</a> </li>
 			{/if}
 		{/if}                            
 		{/foreach}
 		</ul>
    </nav>
-
    
    
+   <nav id="breadcrumb" class="yui3-u-1">
+			<ol role="navigation">   
+			{foreach $breadcrumb as $nav} 
+			   <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+				 <a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}" itemprop="url" title="{$nav.name}"><span itemprop="title">{$nav.name}</span></a>
+			   </li>
+			{/foreach}
 
+			{if $smarty.get.eventUID && !$smarty.get.id}
+
+			{else}
+			<li>{$content.title}</li> 
+			{/if}
+			</ol>                   
+	</nav>
+   
+   
+   
 
 </header> 
    
 <div class="yui3-g"> 
    <aside class="yui3-u-1-4"> 
       <div class="content">
+      
+      	{foreach $content.sidepictures as $pic}
+			   {if $pic}
+			   <img src="img/upload/280px/{$pic}"  alt="{$pic}"  style="width:100%" > 
+			   {/if}
+			{/foreach}
+      
+      {if $navigation_2}
+      
+      <div id="toggle-work" class="yui3-module toggle-area">
+         <div class="yui3-hd">
+         {foreach $breadcrumb as $nav} 
+            {if $smarty.session.level_2 == $nav.id}
+               <h2>{$nav.name}</h2> 
+            {elseif $content.nested_set_id == $smarty.session.level_2}  
+               <h2>{$content.title}</h2>             
+            {/if}
             
             
+            
+         {/foreach}
+         
+         
+         
+         </div>
+         <div class="yui3-bd">
+            <ul>
+         {foreach $navigation_2 as $nav}
+         
+            {if $smarty.session.level_3 == $nav.id}
+               <li> <a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}"  title="{$nav.name}"  class="current" >{$nav.name}</a> </li> 
+            {else}
+               <li class="nav_level2"  > <a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}" title="{$nav.name}"  >{$nav.name}</a> </li>
+            {/if}
+            
+         {/foreach}
+            </ul>
+         </div>
+      </div>  
+         
+      {/if}
+    
+      {if $content.nested_set_id == 1}
+       
          <div id="toggle-work" class="yui3-module toggle-area">
             <div class="yui3-hd">
                <h2>Kürzliche Arbeiten:</h2> 
@@ -78,12 +137,12 @@
                </ul>
             </div>
          </div>   
-            
+
          <h2>Long Term Projekte:</h2> 
          <ul>
             <li><a href="http://nodejs.org/">NodeJS</a>
                <ul>
-                  <li><a href="http://kyon.stachura.ch:8000/">Nodejs Hellow World</a></li>
+                  <li><a href="http://nodejs.stachura.ch:8000/">Nodejs Server</a></li>
                   <li><a href="http://howtonode.org/">How To Node </a></li>
                   <li><a href=" http://npm.mape.me/"><strong>N</strong>ode<strong>P</strong>ackage <strong>M</strong>anager </a></li>
                </ul>
@@ -101,7 +160,9 @@
          <ul>
             <li><a href="http://westciv.com/tools/box-properties/index.html">CSS3</a></li>
          </ul>              
-         <sup>*</sup> Login ist erforderlich  
+         <sup>*</sup> Login ist erforderlich
+
+      {/if}         
       </div> 
    </aside> 
  
@@ -135,7 +196,7 @@
 <div id="panelContent">
 	<div class="yui3-widget-bd">
 		<p id="form-status"></p>
-		<form id="login" name="login" action="?action=authentication" >
+		<form id="login" name="login" action="?action=authentication"  method="get" >
 			<fieldset><legend><b>Credentials</b></legend>
 				<div class="formmgr-row"> 
 					<label for="handle">Benutzername <em>*</em></label>
@@ -178,7 +239,7 @@ YUI({
          },
       'overlay-login':{
 			fullpath : 'js/yui3/overlay_login.js',
-			requires : [ 'gallery-formmgr', 'panel', 'dd-plugin', 'io-form', 'json']
+			requires : [ 'gallery-formmgr', 'panel', 'dd-plugin', 'io-form', 'json', 'event-key']
 		},
       'gallery-localWeather':{
 			fullpath : 'js/yui3-gallery/gallery-weather.js',
@@ -206,26 +267,38 @@ YUI({
 
    var slideshow = new Y.Slideshow({ 
       srcNode: '#background',
-      duration: 5,
-      interval: 20
+      duration: 10,
+      interval: 60
    });
     
    slideshow.render();
 
 
    var work_node = Y.one('#toggle-work');
-   var toggle_work = work_node.togglediv();
+   
+   if (work_node){
+      var toggle_work = work_node.togglediv();
+   }
+   
    
    
    //work_node.addClass('yui3-closed');
    //toggle_work.setStyle("height", "0");
    //toggle_work.fx.set('reverse', true);
+    
+{/literal}
+   
+{if $content.nested_set_id == 1}
 
    wetter = new Y.LocalWeather({
                   location : 'Winterthur',
 						u :'c',
                   layout : 'full'
 					}).render('#wetter');
+               
+{/if}
+   
+{literal}
 
    login_node = Y.one('#show-loginOverlay')
    var notify = new Y.Notify({prepend:true});

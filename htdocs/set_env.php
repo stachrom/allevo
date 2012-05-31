@@ -57,24 +57,6 @@
          'charset'  => 'utf8',
          'new_link'  => true
       ),
-      'dsn_horde'  => array(
-         'phptype'  => 'mysql',
-         'username' => 'root',
-         'password' => '',
-         'hostspec' => 'localhost',
-         'database' => 'horde_4',
-         'charset'  => 'utf8',
-         'new_link'  => true
-      ),				
-      'dsn_yuitable'  => array(
-         'phptype'  => 'mysql',
-         'username' => 'root',
-         'password' => '',
-         'hostspec' => 'localhost',
-         'database' => 'allevo',
-         'charset'  => 'utf8',
-         'new_link'  => true
-      ),			
       'adresse'  => array(
          'name'     => 'Stachura',             
          'vorname'  => 'Roman',
@@ -97,11 +79,6 @@
          )
       ),
    );
-   // Password
-
-  
-
-   // bellow do not touch anything
 
    // Setup include path
    $host = $_SERVER['HTTP_HOST'];
@@ -112,21 +89,15 @@
    // header pictures must contain  string = /img/
    $header_pictures = $app_root . '/img/template/stadttheater/header';
    
-
-
    define('IS_AJAX', isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
    define('SMARTY_DIR', $app_root.'smarty/3.x/libs/');
-   define('HORDE_BASE', '/home/www/stachura.ch/htdocs/horde');
-    
+
    // Load the Horde Framework Core
    set_include_path(get_include_path() . PATH_SEPARATOR .$app_root.'libs/'. PATH_SEPARATOR. $pear . PATH_SEPARATOR. $horde_pear );
-   
-   
-
 
    //require_once HORDE_BASE . '/lib/Application.php';
-   require_once HORDE_BASE . '/libs/Horde/Autoloader/Default.php';
-   require_once HORDE_BASE . '/libs/Horde/Serialize.php';
+   require_once 'Horde/Autoloader/Default.php';
+   require_once 'Horde/Serialize.php';
 
    //Horde_Registry::appInit('horde');
 
@@ -407,8 +378,4 @@
    
    $timer->setMarker('ende config');
    
-   
-
-
-
 ?>

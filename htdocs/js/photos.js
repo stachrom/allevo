@@ -420,7 +420,7 @@ YUI.add('photo', function (Y) {
 	
 
 	Y.delegate('click', function(e) {
-        e.halt();
+      e.halt();
 		Y.log('click event '+ Y.dump(e.currentTarget));
 		Y.one("#object-name").set("value", e.currentTarget.get('title'));
 		Y.one("#image_replacement").setContent("<img src='"+ e.currentTarget.get('src')+"' width='300px' >");

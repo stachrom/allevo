@@ -213,6 +213,7 @@ textarea {
 </style>
 
 <script src="http://yui.yahooapis.com/3.5.1/build/yui/yui-min.js"></script>
+
 <script type="text/javascript">
 	{literal}
 	YUI().use( function(Y) {
