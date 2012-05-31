@@ -1,0 +1,41 @@
+.animation{
+width:300px;
+font-size:1em;
+
+}
+ 
+
+ 
+.animation:hover h1{
+text-shadow:-50px 50px 20px #111;
+-webkit-transition-property:all;
+-webkit-transition-duration:2s;
+-webkit-transform: translate(90px, 170px) scale(1.8, 1.0) rotate(-45deg);
+
+-moz-transition-property:all;
+-moz-transition-duration:2s;
+-moz-transform: translate(90px, 170px) scale(1.8, 1.0) rotate(-45deg);
+
+transition-property:all;
+transition-duration:2s;
+transform: translate(90px, 170px) scale(1.8, 1.0) rotate(-45deg);
+
+
+
+}
+ 
+.animation:hover .copy{
+-webkit-transition-property:all;
+-webkit-transition-duration:2s;
+-webkit-transform: translate(235px, 275px) scale(1.8, 1.0) rotate(45deg);
+
+-moz-transition-property:all;
+-moz-transition-duration:2s;
+-moz-transform: translate(235px, 275px) scale(1.8, 1.0) rotate(45deg);
+
+transition-property:all;
+transition-duration:2s;
+transform: translate(235px, 275px) scale(1.8, 1.0) rotate(45deg);
+
+
+}

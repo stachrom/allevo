@@ -102,6 +102,7 @@ session_start();
             case '2':
                $_SESSION['level_2']=$current_node['id'];
                $navigation_2 = $NestedSets->getChildren($current_node['id'], true, true, false, $addSQL);
+               //$subnaviagtion = $NestedSets->getSubBranch($current_node['id'], true, true, $addSQL);
                unset($_SESSION['level_3']);
                unset($_SESSION['level_4']);    
                unset($_SESSION['level_5']);
@@ -139,6 +140,7 @@ session_start();
                case '2':
                     $_SESSION['level_2'] = $key; 
                     $navigation_2 = $NestedSets->getChildren($key, true, true, false, $addSQL);
+                    //$subnaviagtion = $NestedSets->getSubBranch($current_node['id'], true, true, $addSQL);
                     break;
                case '3':
                     $_SESSION['level_3'] = $key; 
@@ -199,6 +201,7 @@ session_start();
 
    $link_id =& $mdb2->queryOne('SELECT link FROM nested_set WHERE id = '.$mdb2->quote($id));
    $content =& $mdb2->queryRow('SELECT * FROM nested_set_content WHERE nested_set_id = '.$id, '', MDB2_FETCHMODE_ASSOC);
+   
 
    if(empty($content) && $id!=1 )header("Location: /index.php",TRUE,301);
 

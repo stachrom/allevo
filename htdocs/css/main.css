@@ -182,7 +182,9 @@ input, select {
       color: hsla(57,100%,18%, 0.5);
    }
 
-
+   .githubfork{
+      position: absolute; top: 0; right: 0; border: 0;   
+   }
 
 
 	ul {

@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Orbitron:400,500,700,900&text=stachura.ch"  >
 <link rel="stylesheet" media="all" href="/css/main.css"> 
 <link rel="stylesheet" href="assets/anim/anim.css" >
+<link rel="stylesheet" href="css/animation.css" >
 
 <!--[if lt IE 9]>
 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -76,12 +77,29 @@
    <aside class="yui3-u-1-4"> 
       <div class="content">
       
+      	{foreach $content.sidepictures as $pic}
+			   {if $pic}
+			   <img src="img/upload/280px/{$pic}"  alt="{$pic}"  style="width:100%" > 
+			   {/if}
+			{/foreach}
       
       {if $navigation_2}
       
       <div id="toggle-work" class="yui3-module toggle-area">
          <div class="yui3-hd">
-            <h2>{$content.title}</h2> 
+         {foreach $breadcrumb as $nav} 
+            {if $smarty.session.level_2 == $nav.id}
+               <h2>{$nav.name}</h2> 
+            {elseif $content.nested_set_id == $smarty.session.level_2}  
+               <h2>{$content.title}</h2>             
+            {/if}
+            
+            
+            
+         {/foreach}
+         
+         
+         
          </div>
          <div class="yui3-bd">
             <ul>
@@ -249,8 +267,8 @@ YUI({
 
    var slideshow = new Y.Slideshow({ 
       srcNode: '#background',
-      duration: 5,
-      interval: 20
+      duration: 10,
+      interval: 60
    });
     
    slideshow.render();

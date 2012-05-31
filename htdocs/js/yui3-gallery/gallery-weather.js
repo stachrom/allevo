@@ -170,7 +170,7 @@
                 direction   = wind.direction,
                 city        = result.location.city,
                 barometer   = that._pressureMove(atmosphere.rising, strings.atmosphere),
-                lastupdate  = item.condition.date;
+                lastupdate  = item.condition.date,
                 temperatur  = item.condition.temp,
                 high        = item.forecast[0].high,
                 low         = item.forecast[0].low,
