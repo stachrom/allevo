@@ -140,11 +140,6 @@
             <li><a href="horde">Horde 4.0</a><sup>*</sup></li>
             <li><a href="/howtos/yql-horde.php">How To "YQL Open Table für Horde 4.0"</a></li>
          </ul>
-         <h2>Mixed:</h2>
-         <ul>
-            <li><a href="/protected/">PEAR</a><sup>*</sup></li>
-            <li><a href="https://github.com/">GitHUB</a></li>
-         </ul>
          <h2>Links:</h2>
          <ul>
             <li><a href="http://westciv.com/tools/box-properties/index.html">CSS3</a></li>
@@ -177,10 +172,15 @@
          <div class="yui3-u-11-12">  
            <div id="scrollview-content" class="yui3-scrollview-loading">
                <ul>
-                  <li><img src="http://farm5.static.flickr.com/4136/4802088086_c621e0b501.jpg" alt="Above The City II"></li>
-                  <li><img src="http://farm5.static.flickr.com/4114/4801461321_1373a0ef89.jpg" alt="Walls and Canyon"></li>
-                  <li><img src="http://farm5.static.flickr.com/4100/4801614015_4303e8eaea.jpg" alt="Stairs Using In Situ Stone"></li>
-                  <li><img src="http://farm5.static.flickr.com/4076/4801368583_854e8c0ef3.jpg" alt="Tree Silhouette"></li>
+                  <li><img src="img/work/finishers.jpg" alt="Finishers Winterthur"></li>
+                  <li><img src="img/work/singlespeed.jpg" alt="Singlespeed"></li>
+                  <li><img src="img/work/fotohaus.jpg" alt="Fotohaus"></li>
+                  <li><img src="img/work/gallery-dreyfus.jpg" alt="Gallery Dreyfus"></li>
+                  <li><img src="img/work/berater.jpg" alt="Berater und Partner"></li>
+                  <li><img src="img/work/leupartner.jpg" alt="Leupartner"></li>
+                  <li><img src="img/work/riset.jpg" alt="Riset AG"></li>
+                  <li><img src="img/work/gremper.jpg" alt="Gremper"></li>
+                  <li><img src="img/work/stadttheater.jpg" alt="Gremper"></li>
                </ul>
             </div>
          </div>
