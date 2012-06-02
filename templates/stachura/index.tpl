@@ -106,7 +106,7 @@
          {foreach $navigation_2 as $nav}
          
             {if $smarty.session.level_3 == $nav.id}
-               <li> <a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}"  title="{$nav.name}"  class="current" >{$nav.name}</a> </li> 
+               <li class="current nav_level2" > <a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}"  title="{$nav.name}"  >{$nav.name}</a> </li> 
             {else}
                <li class="nav_level2"  > <a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}" title="{$nav.name}"  >{$nav.name}</a> </li>
             {/if}
@@ -119,25 +119,14 @@
       {/if}
     
       {if $content.nested_set_id == 1}
-       
-         <div id="toggle-work" class="yui3-module toggle-area">
-            <div class="yui3-hd">
-               <h2>Kürzliche Arbeiten:</h2> 
-         </div>
-            <div class="yui3-bd">
-               <ul>
-                  <li><a href="http://www.stachura.ch/finishers">Finishers Preview</a></li>
-                  <li><a href="/sae/unterricht/">HTML5 Unterricht</a></li>
-                  <li><a href="http://prezi.com/o5lbewwiaz1f/soziale-medien/">Presentation: Soziale Medien </a></li>
-                  <li><a href="/sae/">HTML5 Workshop</a></li>
-                  <li><a href="http://www.stadttheater-olten.ch">Stadttheater Olten</a></li>
-                  <li><a href="http://webstarter.stachura.ch">Webstarter Delicious</a></li>
-                  <li><a href="http://www.spm.ch">SPM Google Apps </a></li>
-                  <li><a href="http://http://my-sport.sites.djangoeurope.com/">mysport trainigs tool</a><sup>*</sup></li>
-               </ul>
-            </div>
-         </div>   
-
+            <h2>Kürzliche Arbeiten:</h2> 
+            <ul>
+               <li><a href="/sae/unterricht/">HTML5 Unterricht</a></li>
+               <li><a href="http://prezi.com/o5lbewwiaz1f/soziale-medien/">Presentation: Soziale Medien </a></li>
+               <li><a href="/sae/">HTML5 Workshop</a></li>
+               <li><a href="http://http://my-sport.sites.djangoeurope.com/">mysport trainigs tool</a><sup>*</sup></li>
+            </ul>
+         <br>
          <h2>Long Term Projekte:</h2> 
          <ul>
             <li><a href="http://nodejs.org/">NodeJS</a>
@@ -169,6 +158,41 @@
    <div class="yui3-u-3-4"> 
       <div class="content">
       <div id="wetter"></div>
+      
+      {if $content.title === "Arbeiten"}
+      
+      <p>
+         Ein Auszug meiner bisherigen Arbeit aufgeteilt in <strong>Webentwicklung</strong>, 
+         <strong>Webdesign</strong>, <strong>Datenvisualisierung</strong> und <strong>Animationen</strong>.
+      </p> 
+<br>
+      <div class="yui3-g" >
+      
+         <div class="yui3-u-1-24">
+            <div class="content-nav">
+               <span id="scrollview-prev">‹‹</span>
+            </div>
+         </div>
+         
+         <div class="yui3-u-11-12">  
+           <div id="scrollview-content" class="yui3-scrollview-loading">
+               <ul>
+                  <li><img src="http://farm5.static.flickr.com/4136/4802088086_c621e0b501.jpg" alt="Above The City II"></li>
+                  <li><img src="http://farm5.static.flickr.com/4114/4801461321_1373a0ef89.jpg" alt="Walls and Canyon"></li>
+                  <li><img src="http://farm5.static.flickr.com/4100/4801614015_4303e8eaea.jpg" alt="Stairs Using In Situ Stone"></li>
+                  <li><img src="http://farm5.static.flickr.com/4076/4801368583_854e8c0ef3.jpg" alt="Tree Silhouette"></li>
+               </ul>
+            </div>
+         </div>
+         
+         <div class="yui3-u-1-24">
+            <div class="content-nav">
+               <span id="scrollview-next">››</span>
+            </div>
+         </div>
+      </div>
+   {/if}
+      
       {$content.content}
       </div> 
    </div> 
@@ -176,7 +200,6 @@
  
 <footer id="ft">
    <a href="http://www.w3.org/html/logo/"><img src="http://www.w3.org/html/logo/badge/html5-badge-h-connectivity-css3-device-graphics-multimedia-performance-semantics-storage.png" width="357" height="64" alt="HTML5 Powered with Connectivity / Realtime, CSS3 / Styling, Device Access, Graphics, 3D &amp; Effects, Multimedia, Performance &amp; Integration, Semantics, and Offline &amp; Storage" title="HTML5 Powered with Connectivity / Realtime, CSS3 / Styling, Device Access, Graphics, 3D &amp; Effects, Multimedia, Performance &amp; Integration, Semantics, and Offline &amp; Storage"></a>
-   
    <div class="login">
    
       {if $liveuser.loggedIn} 
@@ -262,6 +285,8 @@ YUI({
    'json',
    'plugin',
    'datatype',
+   'scrollview', 
+   'scrollview-paginator',
    'dump',  function (Y) {
    
 
@@ -285,9 +310,51 @@ YUI({
    //work_node.addClass('yui3-closed');
    //toggle_work.setStyle("height", "0");
    //toggle_work.fx.set('reverse', true);
-    
-{/literal}
    
+
+{/literal}
+
+
+{if $content.title === "Arbeiten"}
+
+   var scrollView = new Y.ScrollView({
+        id: "scrollview",
+        srcNode : '#scrollview-content',
+        width : 622,
+        flick: {
+            minDistance:10,
+            minVelocity:0.3,
+            axis: "x"
+        }
+   });
+
+    scrollView.plug(Y.Plugin.ScrollViewPaginator, {
+        selector: 'li'
+    });
+
+    scrollView.render();
+
+    var content = scrollView.get("contentBox");
+
+    content.delegate("click", function(e) {
+        // For mouse based devices, we need to make sure the click isn't fired
+        // at the end of a drag/flick. We use 2 as an arbitrary threshold.
+        if (Math.abs(scrollView.lastScrolledAmt) < 2) {
+            //alert(e.currentTarget.getAttribute("alt"));
+        }
+    }, "img");
+
+    // Prevent default image drag behavior
+    content.delegate("mousedown", function(e) {
+        e.preventDefault();
+    }, "img");
+
+    Y.one('#scrollview-next').on('click', Y.bind(scrollView.pages.next, scrollView.pages));
+    Y.one('#scrollview-prev').on('click', Y.bind(scrollView.pages.prev, scrollView.pages));
+
+{/if}
+
+
 {if $content.nested_set_id == 1}
 
    wetter = new Y.LocalWeather({
