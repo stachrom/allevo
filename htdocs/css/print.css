@@ -1,0 +1,38 @@
+@media print {
+   * {
+      background: transparent !important;
+      color: #000 !important; /* Black prints faster: h5bp.com/s */
+      box-shadow:none !important;
+      text-shadow: none !important;
+   }
+   
+  #background,
+  #logo, 
+  .nav, 
+  aside, 
+  .githubfork,
+  .content-nav{
+      display:none;
+  }
+  #scrollview ul {
+   list-style:none;
+  }
+
+  .full{
+      background-color:#000;
+      border:10px #000 solid !important;
+      width:0px !important;
+      height:1px !important;
+  }
+  
+  .square{
+      width:16px;
+      height:16px;
+      display:inline-block;
+      border:2px #000 solid;
+      margin:1px;
+  }
+  
+
+
+}

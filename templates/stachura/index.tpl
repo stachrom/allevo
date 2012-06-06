@@ -3,9 +3,11 @@
 <head>
 <title>Roman Stachura </title>
 <meta charset="utf-8" >
-<link rel="stylesheet" href="http://yui.yahooapis.com/combo?3.5.1/build/cssgrids/cssgrids-min.css&3.5.1/build/cssreset/cssreset-min.css&3.5.1/build/cssfonts/cssfonts-min.css&3.5.1/build/cssbase/cssbase-min.css&3.5.0/build/cssbutton/cssbutton-min.css">
-<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Orbitron:400,500,700,900&text=stachura.ch"  >
-<link rel="stylesheet" media="all" href="/css/main.css"> 
+<link rel="stylesheet" media="screen, projection" href="http://yui.yahooapis.com/combo?3.5.1/build/cssgrids/cssgrids-min.css&3.5.1/build/cssreset/cssreset-min.css&3.5.1/build/cssfonts/cssfonts-min.css&3.5.1/build/cssbase/cssbase-min.css&3.5.0/build/cssbutton/cssbutton-min.css">
+<link rel="stylesheet" media="screen, projection" href="http://fonts.googleapis.com/css?family=Orbitron:400,500,700,900&text=stachura.ch"  >
+<link rel="stylesheet" media="screen, projection" href="/css/main.css"> 
+<link rel="stylesheet" media="print" href="/css/print.css" >
+
 <link rel="stylesheet" href="assets/anim/anim.css" >
 <link rel="stylesheet" href="css/animation.css" >
 
@@ -21,7 +23,7 @@
 <div id="background">
 
 {foreach $BGPictures  as $BgP}
-<img class="stretch"  src="img/upload/{$BgP.sidepictures.0}" alt="hintergundbild">
+<img class="stretch"  src="img/upload/{$BgP.sidepictures.0}" alt="">
 {/foreach}
 
 </div>
@@ -93,13 +95,9 @@
             {elseif $content.nested_set_id == $smarty.session.level_2}  
                <h2>{$content.title}</h2>             
             {/if}
-            
-            
-            
+
          {/foreach}
-         
-         
-         
+
          </div>
          <div class="yui3-bd">
             <ul>
@@ -117,36 +115,7 @@
       </div>  
          
       {/if}
-    
-      {if $content.nested_set_id == 1}
-            <h2>Kürzliche Arbeiten:</h2> 
-            <ul>
-               <li><a href="/sae/unterricht/">HTML5 Unterricht</a></li>
-               <li><a href="http://prezi.com/o5lbewwiaz1f/soziale-medien/">Presentation: Soziale Medien </a></li>
-               <li><a href="/sae/">HTML5 Workshop</a></li>
-               <li><a href="http://http://my-sport.sites.djangoeurope.com/">mysport trainigs tool</a><sup>*</sup></li>
-            </ul>
-         <br>
-         <h2>Long Term Projekte:</h2> 
-         <ul>
-            <li><a href="http://nodejs.org/">NodeJS</a>
-               <ul>
-                  <li><a href="http://nodejs.stachura.ch:8000/">Nodejs Server</a></li>
-                  <li><a href="http://howtonode.org/">How To Node </a></li>
-                  <li><a href=" http://npm.mape.me/"><strong>N</strong>ode<strong>P</strong>ackage <strong>M</strong>anager </a></li>
-               </ul>
-            </li>   
-            <li><a href="http://www.kk.org/quantifiedself/">Quantified Self YQL YUI </a></li>
-            <li><a href="horde">Horde 4.0</a><sup>*</sup></li>
-            <li><a href="/howtos/yql-horde.php">How To "YQL Open Table für Horde 4.0"</a></li>
-         </ul>
-         <h2>Links:</h2>
-         <ul>
-            <li><a href="http://westciv.com/tools/box-properties/index.html">CSS3</a></li>
-         </ul>              
-         <sup>*</sup> Login ist erforderlich
 
-      {/if}         
       </div> 
    </aside> 
  
@@ -179,6 +148,8 @@
                   <li><img src="img/work/berater.jpg" alt="Berater und Partner"></li>
                   <li><img src="img/work/leupartner.jpg" alt="Leupartner"></li>
                   <li><img src="img/work/riset.jpg" alt="Riset AG"></li>
+                  <li><img src="img/work/stalder.jpg" alt="Stalder Monatgen"></li>
+                  <li><img src="img/work/stalder2.jpg" alt="Stalder Abdichtungen"></li>
                   <li><img src="img/work/gremper.jpg" alt="Gremper"></li>
                   <li><img src="img/work/stadttheater.jpg" alt="Gremper"></li>
                </ul>

@@ -122,10 +122,10 @@ session_start();
                unset($_SESSION['level_6']);
                break;    
             case '5':
-                $_SESSION['level_5']=$current_node['id'];
-                $navigation_5 = $NestedSets->getChildren($current_node['id'], true, true, false, $addSQL);
-                unset($_SESSION['level_6']);
-                break;              
+               $_SESSION['level_5']=$current_node['id'];
+               $navigation_5 = $NestedSets->getChildren($current_node['id'], true, true, false, $addSQL);
+               unset($_SESSION['level_6']);
+               break;              
       }
 
       if($breadcrumb = $NestedSets->getParents($id, true, true, false, $addSQL)){ 
