@@ -1,5 +1,36 @@
 <?php
+/**
+ * Copyright 2008-2012 Horde LLC (http://www.horde.org/)
+ *
+ * @author   Chuck Hagenbuch <chuck@horde.org>
+ * @author   Michael J. Rubinsky <mrubinsk@horde.org>
+ * @license  http://www.horde.org/licenses/bsd BSD
+ * @category Horde
+ * @package  Horde_Content
+ */
 
+/**
+ * @author   Chuck Hagenbuch <chuck@horde.org>
+ * @author   Michael J. Rubinsky <mrubinsk@horde.org>
+ * @author   Roman Stachura <roman@stachura.ch>
+ * @license  http://www.horde.org/licenses/bsd BSD
+ * @category Horde
+ * @package  Horde_Content
+ *
+ * References:
+ *   http://forge.mysql.com/wiki/TagSchema
+ *   http://www.slideshare.net/edbond/tagging-and-folksonomy-schema-design-for-scalability-and-performance
+ *   http://blog.thinkphp.de/archives/124-An-alternative-Approach-to-Tagging.html
+ *   http://code.google.com/p/freetag/
+ *
+ * @TODO:
+ *   need to add type_id to the rampage_tagged table for performance?
+ *   need stat tables by type_id?
+ *
+ * Potential features:
+ *   Infer data from combined tags (capital + washington d.c. - http://www.slideshare.net/kakul/tagging-web-2-expo-2008/)
+ *   Normalize tag text (http://tagsonomy.com/index.php/interview-with-gordon-luk-freetag/)
+ */
 class Content_Tagger
 {
 
