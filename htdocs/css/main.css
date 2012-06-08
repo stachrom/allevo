@@ -31,7 +31,7 @@ time, mark, audio, video {
 }
 
 body {
-    line-height:1.2em;
+    line-height:1.3em;
 }
 
 article,aside,details,figcaption,figure,
@@ -298,6 +298,15 @@ input, select {
    font-size:85%;
    
    }
+   
+aside .content img {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 5px;
+
+} 
+   
+   
 	
 /*##################################*/
 /*#######       SVG       ##########*/
@@ -834,6 +843,44 @@ blockquote cite {
    background-repeat: no-repeat;
 }
 
+/******************************************/
+/************    Twitter    **************/
+/****************************************/
+/* ------------------------------------------------------------ */
 
+.tweet .tweet-image {
+    float: left;
+    width: 46px;
+    height:46px;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 2px;
+    margin-right: 5px;
+}
+.tweet .tweet-image img{
+    width: 46px;
+    height:46px;
+}
+.tweet {
+   max-width:400px;
+   margin-bottom:1em;
+}
+
+.tweet .relativeTime  a{
+   font-size:75%;
+   color:#666666;
+   text-decoration:none;
+}
+.tweet .relativeTime  a:hover{
+
+   text-decoration:underline;
+}
+
+
+
+.tweet .relativeTime  {
+   text-align:left;
+   margin-left:50px;
+}
 
 

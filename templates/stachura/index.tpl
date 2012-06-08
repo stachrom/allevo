@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<title>Roman Stachura </title>
+<title>{$content.title}</title>
 <meta charset="utf-8" >
 <link rel="stylesheet" media="screen, projection" href="http://yui.yahooapis.com/combo?3.5.1/build/cssgrids/cssgrids-min.css&3.5.1/build/cssreset/cssreset-min.css&3.5.1/build/cssfonts/cssfonts-min.css&3.5.1/build/cssbase/cssbase-min.css&3.5.0/build/cssbutton/cssbutton-min.css">
 <link rel="stylesheet" media="screen, projection" href="http://fonts.googleapis.com/css?family=Orbitron:400,500,700,900&text=stachura.ch"  >
@@ -14,46 +14,52 @@
 <!--[if lt IE 9]>
 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
+<script type="text/javascript">
 
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-32485696-1']);
+  _gaq.push(['_setDomainName', 'stachura.ch']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
 <script src="http://yui.yahooapis.com/3.5.1/build/yui/yui-min.js"></script>
 </head>
-
 <body id="doc" class="yui3-skin-sam  yui-skin-sam" >
-
 <div id="background">
-
 {foreach $BGPictures  as $BgP}
 <img class="stretch"  src="img/upload/{$BgP.sidepictures.0}" alt="">
 {/foreach}
-
 </div>
-
-
 
 <header id="hd">  
    <div id="logo"> 
       <h1><span>stachura</span>.<small>ch</small></h1>
    </div>
-   <div id="logger"></div> 
-   
+   <div id="logger"></div>  
    <nav>
-      <ul class="nav">  
-		{foreach $navigation_1 as $nav}
-       
-		{if $nav.name == "Backgroundpictures"}
-			
-		{else}
-			{if $smarty.session.level_2 == $nav.id}
-				<li> <a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}"  title="{$nav.name}"  class="current" >{$nav.name}</a> </li> 
-			{else}
-				<li> <a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}" title="{$nav.name}"  >{$nav.name}</a> </li>
-			{/if}
-		{/if}                            
-		{/foreach}
-		</ul>
+      <ul class="nav">
+      {foreach $navigation_1 as $nav}
+      
+      {if $nav.name == "Backgroundpictures"}
+      
+      {else}
+         {if $smarty.session.level_2 == $nav.id}
+            <li><a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}"  title="{$nav.name}"  class="current" >{$nav.name}</a></li> 
+            {else}
+            <li><a href="?id={if $nav.link}{$nav.link}{else}{$nav.id}{/if}" title="{$nav.name}" >{$nav.name}</a></li>
+         {/if}
+      {/if}
+      
+      {/foreach}
+      </ul>
    </nav>
-   
-   
+
    <nav id="breadcrumb" class="yui3-u-1">
 			<ol role="navigation">   
 			{foreach $breadcrumb as $nav} 
@@ -81,7 +87,7 @@
       
       	{foreach $content.sidepictures as $pic}
 			   {if $pic}
-			   <img src="img/upload/280px/{$pic}"  alt="{$pic}"  style="width:100%" > 
+			   <img src="img/upload/280px/{$pic}"  alt="{$pic}"  style="width:95%" > 
 			   {/if}
 			{/foreach}
       
@@ -122,6 +128,7 @@
    <div class="yui3-u-3-4"> 
       <div class="content">
       <div id="wetter"></div>
+      
       
       {if $content.title === "Arbeiten"}
       
@@ -165,6 +172,7 @@
    {/if}
       
       {$content.content}
+      <div id="twitter-feed"></div>
       </div> 
    </div> 
 </div> 
@@ -238,6 +246,10 @@ YUI({
       'gallery-localWeather':{
 			fullpath : 'js/yui3-gallery/gallery-weather.js',
 			requires : ['widget', 'substitute', 'yql', 'datatype-date']
+		},
+      'gallery-twitter-status':{
+			fullpath : 'js/yui3-gallery/gallery-twitter-status.js',
+			requires : ['widget', 'substitute', 'yql', 'datatype-date']
 		}
 
    }
@@ -247,6 +259,11 @@ YUI({
    'gallery-notify',
    'gallery-localWeather',
    'gallery-yui-slideshow',
+{/literal}
+{if $content.title === "Twitter"}
+   'gallery-twitter-status',
+{/if}
+{literal}
    'overlay-login',
    'toggle-div',
    'gallery-yquery',

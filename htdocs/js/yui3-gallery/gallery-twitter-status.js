@@ -1,6 +1,6 @@
 YUI.add('gallery-twitter-status', function(Y) {
 
-   var query = "SELECT * FROM twitter.user.timeline(5) WHERE screen_name='stachrom'";
+   var query = "SELECT * FROM twitter.user.timeline(10) WHERE screen_name='stachrom'";
 
 
    function format_date (data) {
@@ -18,7 +18,7 @@ YUI.add('gallery-twitter-status', function(Y) {
          
       if(response.query.results){
          tweets = response.query.results.statuses.status;
-         html.push("<div class='divider' ><hr><h2>Twitter</h2></div>");
+         //html.push("<div class='divider' ><hr><h2>Twitter</h2></div>");
       }
 
       // Loop through each tweet

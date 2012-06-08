@@ -1,3 +1,10 @@
+# www.robotstxt.org/
+# www.google.com/support/webmasters/bin/answer.py?hl=en&answer=156449
+# developers.google.com/webmasters/control-crawl-index/docs/robots_txt
+
 User-Agent: *
-Allow: /
+Allow: /*
+Disallow: /*?id=668$
+Disallow: /img/upload/*
+
 
