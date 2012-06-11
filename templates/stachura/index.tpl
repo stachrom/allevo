@@ -3,8 +3,8 @@
 <head>
 <title>{$content.title}</title>
 <meta charset="utf-8" >
-<link rel="stylesheet" media="screen, projection" href="http://yui.yahooapis.com/combo?3.5.1/build/cssgrids/cssgrids-min.css&3.5.1/build/cssreset/cssreset-min.css&3.5.1/build/cssfonts/cssfonts-min.css&3.5.1/build/cssbase/cssbase-min.css&3.5.0/build/cssbutton/cssbutton-min.css">
-<link rel="stylesheet" media="screen, projection" href="http://fonts.googleapis.com/css?family=Orbitron:400,500,700,900&text=stachura.ch"  >
+<link rel="stylesheet" media="screen, projection" href="http://yui.yahooapis.com/combo?3.5.1/build/cssgrids/cssgrids-min.css&amp;3.5.1/build/cssreset/cssreset-min.css&amp;3.5.1/build/cssfonts/cssfonts-min.css&amp;3.5.1/build/cssbase/cssbase-min.css&amp;3.5.0/build/cssbutton/cssbutton-min.css">
+<link rel="stylesheet" media="screen, projection" href="http://fonts.googleapis.com/css?family=Orbitron:400,500,700,900&amp;text=stachura.ch"  >
 <link rel="stylesheet" media="screen, projection" href="/css/main.css"> 
 <link rel="stylesheet" media="print" href="/css/print.css" >
 
