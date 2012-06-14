@@ -15,12 +15,12 @@ include '../set_env.php';
 	$move_type		= array_key_exists('move_type', $_POST)  ? (string) trim($_POST['move_type'])  : $move_type;
 	$move_type   	= preg_match($pattern['alphanumeric'], $move_type)  ? $move_type  : '';
 
-	$copy 			= array_key_exists('copy', $_GET)   ? (bool) trim($_GET['copy'])   : false ;
-	$copy 			= array_key_exists('copy', $_POST)  ? (bool) trim($_POST['copy'])  : $copy;
+	$copy 	= array_key_exists('copy', $_GET)   ? (bool) trim($_GET['copy'])   : false ;
+	$copy 	= array_key_exists('copy', $_POST)  ? (bool) trim($_POST['copy'])  : $copy;
 
-	$name 			= array_key_exists('name', $_GET)   ? (string) trim($_GET['name'])   : false ;
-	$name 			= array_key_exists('name', $_POST)  ? (string) trim($_POST['name'])  : $name;
-	//$name   		= preg_match($pattern['alphanumeric'], $name)  ? $name  : '';	
+	$name 	= array_key_exists('name', $_GET)   ? (string) trim($_GET['name'])   : false ;
+	$name 	= array_key_exists('name', $_POST)  ? (string) trim($_POST['name'])  : $name;
+	$name  	= preg_match($pattern['nodeName'], $name)  ? $name : 'default';
 	
 	$uuid			= array_key_exists('uuid', $_GET)   ? (string) trim($_GET['uuid'])   : false ;
 	$uuid 			= array_key_exists('uuid', $_POST)  ? (string) trim($_POST['uuid'])  : $uuid;
@@ -768,7 +768,7 @@ if(isset($_REQUEST["server"])) {
 					}
 				}
 			
-				// query_string sortieren nach der "Rows" reihenfolge 
+				// query_string sortieren nach der "Rows" Reihenfolge 
 				$tmp = Array();
 				foreach($get_parameter as &$sortarray) $tmp[] = &$sortarray["Rows"];
 				array_multisort($tmp, $get_parameter);

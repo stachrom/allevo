@@ -335,17 +335,18 @@
    $pattern['bin']            ='/^[01]+$/';
    $pattern['int']	         ='/^[0-9]+$/';
    $pattern['int_kronolith']  ='/^[0-9]{10}?$/';
-   $pattern['alphanumeric']	='/^[a-zA-Z0-9_äÄöÖüÜß]+$/u';	
+   $pattern['alphanumeric']	='/^[\w_äÄöÖüÜß]+$/u';	
    $pattern['password']	      ='/^[a-zA-Z0-9-_?+*%$!&☺®.©()=@¦§äÄöÖüÜß]+$/u';
    $pattern['datum']          ='/^(0[1-9]|[12][0-9]|3[01])[\/\-](0[1-9]|1[012])[\/\-]\d{4}$/'; // DD-MM-YYYY or DD/MM/YYYY
-   $pattern['username']	      ='/^[a-zA-Z0-9-_äÄöÖüÜß]+$/u';
+   $pattern['username']	      ='/^[\w\-_äÄöÖüÜß]+$/u';
    $pattern['rightlevel']	   ='/^[1-3]+$/u';
    $pattern['eventUID']       ='/^[0-9]{14}[.][a-zA-Z0-9\-_]{23}@.+(.ch)$/';
-   $pattern['objectid']       ='/^[a-zA-Z0-9\-]{23}+$/';
-   $pattern['turbaID']        ='/^[a-zA-Z0-9\-]{23}+$/';
+   $pattern['objectid']       ='/^[\w\-]{23}+$/';
+   $pattern['turbaID']        ='/^[\w\-]{23}+$/';
    $pattern['0-5']            ='/^[0-5]{1}+$/';
-   $pattern['text']           ='/^[0-9a-zA-Z-]+$/';
+   $pattern['text']           ='/^[\w\s\-]+$/';
    $pattern['filter']         ='/^[ABCJSMFK45]{1,2}+$/';
+   $pattern['nodeName']       ='/^[\w\s\-\'"]{1,255}+$/';
 
 
 // ---------------- Liveuser --------------------  
