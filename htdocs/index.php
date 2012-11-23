@@ -90,7 +90,7 @@ session_start();
 
    if(!empty($current_node)){
 
-		switch ($current_node['level']) {
+	switch ($current_node['level']) {
             case '1':
                $_SESSION['level_1']=$current_node['id'];
                unset($_SESSION['level_2']);
